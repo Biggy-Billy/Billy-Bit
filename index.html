@@ -8,135 +8,129 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <main>
-        <!-- Header -->
-        <header>
-            <div class="header-content">
-                <div class="tagline">Welcome to</div>
+    <div class="greenhouse-container">
+        <!-- Glass roof panels -->
+        <div class="roof">
+            <div class="roof-panel"></div>
+            <div class="roof-panel"></div>
+            <div class="roof-panel"></div>
+        </div>
+
+        <!-- Sky background -->
+        <div class="sky"></div>
+
+        <!-- Wooden frame -->
+        <div class="frame left-frame"></div>
+        <div class="frame right-frame"></div>
+
+        <!-- Ground -->
+        <div class="ground"></div>
+
+        <!-- Content -->
+        <div class="greenhouse-content">
+            <!-- Header -->
+            <header class="greenhouse-header">
                 <h1>billy<span class="leaf-accent">🌿</span>bit</h1>
                 <p class="subtitle">A garden of creative projects</p>
+            </header>
+
+            <!-- Plants grid -->
+            <div class="plants-grid">
+                <!-- Plant 1 -->
+                <a href="/budgetingapp" class="plant-container">
+                    <div class="pot">
+                        <div class="pot-top"></div>
+                        <div class="pot-body"></div>
+                        <div class="pot-bottom"></div>
+                    </div>
+                    <div class="plant-leaves-container">
+                        <div class="plant-leaf" style="--delay: 0s; --rotation: -25deg;"></div>
+                        <div class="plant-leaf" style="--delay: 0.2s; --rotation: -10deg;"></div>
+                        <div class="plant-leaf" style="--delay: 0.4s; --rotation: 15deg;"></div>
+                        <div class="plant-leaf" style="--delay: 0.6s; --rotation: 30deg;"></div>
+                    </div>
+                    <div class="plant-info">
+                        <p class="plant-name">Budgeting App</p>
+                        <p class="plant-desc">Smart expense tracking</p>
+                    </div>
+                </a>
+
+                <!-- Plant 2 -->
+                <a href="/project2" class="plant-container">
+                    <div class="pot">
+                        <div class="pot-top"></div>
+                        <div class="pot-body"></div>
+                        <div class="pot-bottom"></div>
+                    </div>
+                    <div class="plant-leaves-container">
+                        <div class="plant-leaf" style="--delay: 0.1s; --rotation: -20deg;"></div>
+                        <div class="plant-leaf" style="--delay: 0.3s; --rotation: 0deg;"></div>
+                        <div class="plant-leaf" style="--delay: 0.5s; --rotation: 25deg;"></div>
+                    </div>
+                    <div class="plant-info">
+                        <p class="plant-name">Project 2</p>
+                        <p class="plant-desc">Coming soon</p>
+                    </div>
+                </a>
+
+                <!-- Plant 3 -->
+                <a href="/project3" class="plant-container">
+                    <div class="pot">
+                        <div class="pot-top"></div>
+                        <div class="pot-body"></div>
+                        <div class="pot-bottom"></div>
+                    </div>
+                    <div class="plant-leaves-container">
+                        <div class="plant-leaf" style="--delay: 0s; --rotation: -15deg;"></div>
+                        <div class="plant-leaf" style="--delay: 0.25s; --rotation: 10deg;"></div>
+                        <div class="plant-leaf" style="--delay: 0.5s; --rotation: 35deg;"></div>
+                        <div class="plant-leaf" style="--delay: 0.75s; --rotation: 5deg;"></div>
+                    </div>
+                    <div class="plant-info">
+                        <p class="plant-name">Project 3</p>
+                        <p class="plant-desc">Coming soon</p>
+                    </div>
+                </a>
+
+                <!-- Plant 4 -->
+                <a href="/project4" class="plant-container">
+                    <div class="pot">
+                        <div class="pot-top"></div>
+                        <div class="pot-body"></div>
+                        <div class="pot-bottom"></div>
+                    </div>
+                    <div class="plant-leaves-container">
+                        <div class="plant-leaf" style="--delay: 0.15s; --rotation: -30deg;"></div>
+                        <div class="plant-leaf" style="--delay: 0.35s; --rotation: 5deg;"></div>
+                        <div class="plant-leaf" style="--delay: 0.55s; --rotation: 20deg;"></div>
+                    </div>
+                    <div class="plant-info">
+                        <p class="plant-name">Project 4</p>
+                        <p class="plant-desc">Coming soon</p>
+                    </div>
+                </a>
             </div>
-        </header>
 
-        <!-- Main Container -->
-        <div class="container">
-            <!-- Greenhouse Section -->
-            <section class="greenhouse">
-                <div class="section-title">
-                    <h2>My Projects</h2>
-                    <p>Click a plant to explore</p>
-                </div>
-
-                <!-- Plants Garden -->
-                <div class="plants-garden">
-                    <!-- Budgeting App Plant -->
-                    <a href="/budgetingapp" class="plant-link">
-                        <div class="plant">
-                            <div class="plant-leaves">
-                                <div class="leaf leaf-1"></div>
-                                <div class="leaf leaf-2"></div>
-                                <div class="leaf leaf-3"></div>
-                                <div class="leaf leaf-4"></div>
-                            </div>
-                            <div class="plant-pot">
-                                <div class="pot-inner"></div>
-                            </div>
-                        </div>
-                        <div class="plant-label">
-                            <span>Budgeting App</span>
-                        </div>
-                        <p class="plant-description">Smart expense tracking</p>
-                    </a>
-
-                    <!-- Project 2 Plant -->
-                    <a href="/project2" class="plant-link">
-                        <div class="plant">
-                            <div class="plant-leaves">
-                                <div class="leaf leaf-1"></div>
-                                <div class="leaf leaf-2"></div>
-                                <div class="leaf leaf-3"></div>
-                            </div>
-                            <div class="plant-pot">
-                                <div class="pot-inner"></div>
-                            </div>
-                        </div>
-                        <div class="plant-label">
-                            <span>Project 2</span>
-                        </div>
-                        <p class="plant-description">Coming soon</p>
-                    </a>
-
-                    <!-- Project 3 Plant -->
-                    <a href="/project3" class="plant-link">
-                        <div class="plant">
-                            <div class="plant-leaves">
-                                <div class="leaf leaf-1"></div>
-                                <div class="leaf leaf-2"></div>
-                                <div class="leaf leaf-3"></div>
-                                <div class="leaf leaf-4"></div>
-                                <div class="leaf leaf-5"></div>
-                            </div>
-                            <div class="plant-pot">
-                                <div class="pot-inner"></div>
-                            </div>
-                        </div>
-                        <div class="plant-label">
-                            <span>Project 3</span>
-                        </div>
-                        <p class="plant-description">Coming soon</p>
-                    </a>
-
-                    <!-- Project 4 Plant -->
-                    <a href="/project4" class="plant-link">
-                        <div class="plant">
-                            <div class="plant-leaves">
-                                <div class="leaf leaf-1"></div>
-                                <div class="leaf leaf-2"></div>
-                                <div class="leaf leaf-3"></div>
-                            </div>
-                            <div class="plant-pot">
-                                <div class="pot-inner"></div>
-                            </div>
-                        </div>
-                        <div class="plant-label">
-                            <span>Project 4</span>
-                        </div>
-                        <p class="plant-description">Coming soon</p>
-                    </a>
-                </div>
-            </section>
-
-            <!-- About Section -->
-            <section class="about">
+            <!-- About section -->
+            <section class="about-section">
                 <h2>About this Garden</h2>
                 <p>
                     Welcome to my corner of the internet. I'm Billy Bit, a developer who loves growing ideas into reality. 
                     Each plant here represents a project—a seed of creativity that's been nurtured into something tangible.
                 </p>
-                <p>
-                    Think of this space as my digital greenhouse. Come back often to see what's new.
-                </p>
-
-                <!-- Social Links -->
                 <div class="social-links">
-                    <a href="https://github.com" class="social-link" title="GitHub">
-                        <span>🐙</span>
-                    </a>
-                    <a href="https://twitter.com" class="social-link" title="Twitter">
-                        <span>𝕏</span>
-                    </a>
-                    <a href="mailto:hello@billy-bit.com" class="social-link" title="Email">
-                        <span>✉️</span>
-                    </a>
+                    <a href="https://github.com" class="social-link" title="GitHub">🐙</a>
+                    <a href="https://twitter.com" class="social-link" title="Twitter">𝕏</a>
+                    <a href="mailto:hello@billy-bit.com" class="social-link" title="Email">✉️</a>
                 </div>
             </section>
         </div>
 
         <!-- Footer -->
-        <footer>
+        <footer class="greenhouse-footer">
             <p>&copy; 2024 billy-bit. Grown with care. 🌱</p>
         </footer>
-    </main>
+    </div>
 
     <script src="script.js"></script>
 </body>
