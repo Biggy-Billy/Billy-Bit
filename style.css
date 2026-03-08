@@ -1,401 +1,364 @@
-/* ===== CSS Variables ===== */
-:root {
-    --sage: #a8b89f;
-    --olive: #8b8c5c;
-    --pastel-lime: #d4e8a8;
-    --pastel-brown: #c4a582;
-    --soft-cream: #f5f4f0;
-    --dark-green: #5a6a47;
-    --accent-brown: #9d7d6a;
-    --pale-green: #e8f0e0;
-}
-
-/* ===== Global Styles ===== */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-html {
-    scroll-behavior: smooth;
+html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
 }
 
 body {
     font-family: 'Merriweather', serif;
-    background: linear-gradient(135deg, var(--soft-cream) 0%, #f9f7f2 100%);
-    color: var(--dark-green);
-    line-height: 1.8;
-    overflow-x: hidden;
-    min-height: 100vh;
 }
 
-/* Subtle texture background */
-body::before {
+/* ===== GREENHOUSE CONTAINER ===== */
+.greenhouse-container {
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+    overflow: hidden;
+}
+
+/* ===== SKY BACKGROUND ===== */
+.sky {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 50%;
+    background: linear-gradient(180deg, #a8d5ff 0%, #d4e8ff 100%);
+    z-index: 0;
+}
+
+/* ===== ROOF (GLASS PANELS) ===== */
+.roof {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 45%;
+    z-index: 3;
+    display: flex;
+}
+
+.roof-panel {
+    flex: 1;
+    border: 3px solid rgba(100, 100, 100, 0.3);
+    background: linear-gradient(135deg, rgba(220, 240, 255, 0.15) 0%, rgba(200, 230, 255, 0.1) 100%);
+    position: relative;
+}
+
+.roof-panel::after {
     content: '';
-    position: fixed;
+    position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-image: 
-        radial-gradient(circle at 20% 50%, rgba(168, 184, 159, 0.08) 0%, transparent 50%),
-        radial-gradient(circle at 80% 80%, rgba(212, 232, 168, 0.08) 0%, transparent 50%);
-    pointer-events: none;
-    z-index: 0;
+    background: repeating-linear-gradient(
+        90deg,
+        transparent,
+        transparent 2px,
+        rgba(255, 255, 255, 0.1) 2px,
+        rgba(255, 255, 255, 0.1) 4px
+    );
 }
 
-main {
-    position: relative;
-    z-index: 1;
-}
-
-/* ===== Header ===== */
-header {
-    padding: 3rem 2rem;
-    text-align: center;
-    background: linear-gradient(180deg, rgba(245, 244, 240, 0.95) 0%, rgba(232, 240, 224, 0.5) 100%);
-    border-bottom: 2px solid var(--pale-green);
-    position: relative;
-}
-
-.header-content {
-    max-width: 900px;
-    margin: 0 auto;
-    animation: fadeInDown 0.8s ease-out;
-}
-
-h1 {
-    font-size: clamp(2.5rem, 6vw, 4rem);
-    font-weight: 700;
-    margin-bottom: 0.5rem;
-    color: var(--dark-green);
-    letter-spacing: -1px;
-}
-
-.tagline {
-    font-size: 1rem;
-    color: var(--sage);
-    font-weight: 300;
-    margin-bottom: 0.5rem;
-}
-
-.subtitle {
-    font-size: 0.95rem;
-    color: var(--olive);
-    font-style: italic;
-}
-
-/* Decorative leaf accent */
-.leaf-accent {
-    display: inline-block;
-    font-size: 1.5rem;
-    animation: sway 3s ease-in-out infinite;
-    margin: 0 0.5rem;
-}
-
-@keyframes sway {
-    0%, 100% { 
-        transform: rotate(0deg);
-    }
-    50% { 
-        transform: rotate(3deg);
-    }
-}
-
-/* ===== Container ===== */
-.container {
-    max-width: 1000px;
-    margin: 0 auto;
-    padding: 3rem 2rem;
-}
-
-/* ===== Greenhouse Section ===== */
-.greenhouse {
-    background: linear-gradient(135deg, rgba(232, 240, 224, 0.6) 0%, rgba(212, 232, 168, 0.4) 100%);
-    border: 3px solid var(--sage);
-    border-radius: 20px;
-    padding: 3rem 2rem;
-    position: relative;
-    box-shadow: 
-        inset 0 1px 0 rgba(255, 255, 255, 0.5),
-        0 20px 60px rgba(0, 0, 0, 0.08);
-    margin-bottom: 3rem;
-}
-
-.greenhouse::before {
-    content: '';
+/* ===== WOODEN FRAMES ===== */
+.frame {
     position: absolute;
-    top: -12px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 80%;
-    height: 20px;
-    background: linear-gradient(90deg, 
-        transparent, 
-        var(--sage) 10%, 
-        var(--sage) 90%, 
-        transparent);
-    border-radius: 50%;
-    opacity: 0.5;
-}
-
-.section-title {
-    text-align: center;
-    margin-bottom: 2.5rem;
-    position: relative;
-}
-
-.section-title h2 {
-    font-size: 2rem;
-    color: var(--dark-green);
-    margin-bottom: 0.5rem;
-    font-weight: 600;
-}
-
-.section-title p {
-    color: var(--olive);
-    font-size: 1rem;
-    font-style: italic;
-}
-
-/* ===== Plants Garden ===== */
-.plants-garden {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 3rem 2.5rem;
-    margin-bottom: 2rem;
-}
-
-.plant-link {
-    text-decoration: none;
-    cursor: pointer;
-    transition: transform 0.3s ease;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-}
-
-.plant-link:hover {
-    transform: translateY(-15px);
-}
-
-.plant-link:hover .plant {
-    filter: brightness(1.1);
-}
-
-/* ===== Plant ===== */
-.plant {
-    position: relative;
-    height: 280px;
-    width: 140px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-end;
-    animation: plantGrow 0.8s ease-out backwards;
-}
-
-.plant:nth-child(1) { animation-delay: 0.1s; }
-.plant:nth-child(2) { animation-delay: 0.2s; }
-.plant:nth-child(3) { animation-delay: 0.3s; }
-.plant:nth-child(4) { animation-delay: 0.4s; }
-
-@keyframes plantGrow {
-    from {
-        opacity: 0;
-        transform: scaleY(0.3);
-    }
-    to {
-        opacity: 1;
-        transform: scaleY(1);
-    }
-}
-
-/* Pot */
-.plant-pot {
-    position: relative;
-    width: 100px;
-    height: 70px;
-    background: linear-gradient(135deg, var(--pastel-brown) 0%, var(--accent-brown) 100%);
-    border-radius: 8px 8px 12px 12px;
-    box-shadow: 
-        inset -2px -2px 4px rgba(0, 0, 0, 0.1),
-        0 10px 20px rgba(0, 0, 0, 0.15);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 2px solid var(--accent-brown);
+    top: 0;
+    width: 20px;
+    height: 100%;
+    background: linear-gradient(90deg, #6b4423 0%, #8b5a3c 50%, #6b4423 100%);
     z-index: 5;
+    box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.2), inset 0 -1px 2px rgba(0, 0, 0, 0.3);
 }
 
-.pot-inner {
-    width: 85px;
-    height: 55px;
-    background: linear-gradient(to bottom, #8b6f47, #a08060);
-    border-radius: 6px 6px 10px 10px;
-    position: relative;
+.left-frame {
+    left: 0;
 }
 
-.pot-inner::after {
+.right-frame {
+    right: 0;
+}
+
+/* ===== GROUND ===== */
+.ground {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 35%;
+    background: linear-gradient(180deg, #7a6b4d 0%, #5a4a2a 100%);
+    z-index: 2;
+}
+
+.ground::before {
     content: '';
     position: absolute;
     top: 0;
     left: 0;
-    right: 0;
-    bottom: 0;
-    background: radial-gradient(ellipse at center top, rgba(255,255,255,0.2) 0%, transparent 70%);
-    border-radius: 6px 6px 10px 10px;
+    width: 100%;
+    height: 20px;
+    background: repeating-linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0.05),
+        rgba(255, 255, 255, 0.05) 30px,
+        transparent 30px,
+        transparent 60px
+    );
 }
 
-/* Plant Leaves */
-.plant-leaves {
+/* ===== GREENHOUSE CONTENT ===== */
+.greenhouse-content {
     position: absolute;
-    bottom: 65px;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 4;
+    overflow-y: auto;
+}
+
+/* ===== HEADER ===== */
+.greenhouse-header {
+    text-align: center;
+    padding: 2rem;
+    margin-top: 2rem;
+    color: #5a6a47;
+    animation: fadeIn 1s ease-out;
+}
+
+.greenhouse-header h1 {
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    letter-spacing: -1px;
+}
+
+.greenhouse-header .subtitle {
+    font-size: 1.1rem;
+    color: #8b8c5c;
+    font-style: italic;
+}
+
+.leaf-accent {
+    display: inline-block;
+    margin: 0 0.5rem;
+    animation: sway 3s ease-in-out infinite;
+}
+
+@keyframes sway {
+    0%, 100% { transform: rotate(0deg); }
+    50% { transform: rotate(3deg); }
+}
+
+/* ===== PLANTS GRID ===== */
+.plants-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 3rem 2rem;
+    padding: 2rem;
+    max-width: 1200px;
+    width: 100%;
+    margin-top: 1rem;
+}
+
+/* ===== PLANT CONTAINER ===== */
+.plant-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    height: 350px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    position: relative;
+}
+
+.plant-container:hover {
+    transform: translateY(-20px);
+}
+
+.plant-container:hover .plant-leaf {
+    animation: leafWiggle 0.5s ease-in-out !important;
+}
+
+/* ===== POT ===== */
+.pot {
+    position: relative;
+    width: 120px;
+    height: 100px;
+    margin-bottom: 0;
+}
+
+.pot-top {
+    position: absolute;
+    bottom: 85px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 110px;
+    height: 20px;
+    background: linear-gradient(180deg, #d9a07d 0%, #c4935c 100%);
+    border-radius: 50%;
+    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.3);
+    z-index: 2;
+}
+
+.pot-body {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 110px;
+    height: 80px;
+    background: linear-gradient(135deg, #d9a07d 0%, #c4935c 100%);
+    border-radius: 10px 10px 15px 15px;
+    box-shadow: 
+        inset -3px -3px 8px rgba(0, 0, 0, 0.2),
+        0 10px 25px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+
+.pot-bottom {
+    position: absolute;
+    bottom: 5px;
+    left: 50%;
+    transform: translateX(-50%);
     width: 100px;
-    height: 140px;
-    z-index: 3;
+    height: 12px;
+    background: linear-gradient(180deg, #a87f5d 0%, #8b6545 100%);
+    border-radius: 0 0 15px 15px;
+    z-index: 0;
 }
 
-.leaf {
+/* ===== PLANT LEAVES ===== */
+.plant-leaves-container {
     position: absolute;
-    width: 25px;
-    height: 50px;
-    background: linear-gradient(135deg, var(--pastel-lime) 0%, #c8e0a0 100%);
-    border-radius: 50% 50% 50% 0;
-    transform-origin: bottom center;
-    opacity: 0.9;
-    filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.1));
+    bottom: 85px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 150px;
+    z-index: 2;
 }
 
-.leaf::after {
+.plant-leaf {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%) rotate(var(--rotation));
+    transform-origin: bottom center;
+    width: 20px;
+    height: 70px;
+    background: linear-gradient(135deg, #d4e8a8 0%, #b8d880 100%);
+    border-radius: 50% 50% 50% 0;
+    animation: leafFloat 3s ease-in-out infinite;
+    animation-delay: var(--delay);
+    filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.15));
+}
+
+.plant-leaf::before {
     content: '';
     position: absolute;
-    top: 50%;
+    top: 10%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translateX(-50%);
     width: 2px;
-    height: 35px;
-    background: rgba(0, 0, 0, 0.1);
+    height: 60%;
+    background: rgba(0, 0, 0, 0.15);
 }
 
-.leaf-1 {
-    left: 25px;
-    top: 10px;
-    transform: rotate(-25deg);
-    animation: leafFloat 3s ease-in-out infinite;
+.plant-leaf:nth-child(2) {
+    transform: translateX(-50%) rotate(var(--rotation)) translateX(-25px);
 }
 
-.leaf-2 {
-    left: 10px;
-    top: 30px;
-    transform: rotate(-45deg);
-    animation: leafFloat 3.5s ease-in-out infinite 0.2s;
+.plant-leaf:nth-child(3) {
+    transform: translateX(-50%) rotate(var(--rotation)) translateX(25px);
 }
 
-.leaf-3 {
-    right: 25px;
-    top: 10px;
-    transform: rotate(25deg);
-    animation: leafFloat 3.2s ease-in-out infinite 0.4s;
-}
-
-.leaf-4 {
-    right: 10px;
-    top: 30px;
-    transform: rotate(45deg);
-    animation: leafFloat 3.7s ease-in-out infinite 0.6s;
-}
-
-.leaf-5 {
-    left: 50%;
-    top: 5px;
-    transform: translateX(-50%) rotate(0deg);
-    animation: leafFloat 3.3s ease-in-out infinite 0.3s;
+.plant-leaf:nth-child(4) {
+    transform: translateX(-50%) rotate(var(--rotation)) translateX(-15px);
 }
 
 @keyframes leafFloat {
     0%, 100% {
-        transform: translateY(0px) rotate(var(--rotation));
+        transform: translateX(var(--tx, 0)) rotate(var(--rotation)) translateY(0px);
     }
     50% {
-        transform: translateY(-8px) rotate(calc(var(--rotation) + 2deg));
+        transform: translateX(var(--tx, 0)) rotate(var(--rotation)) translateY(-10px);
     }
 }
 
-.leaf-1 { --rotation: -25deg; }
-.leaf-2 { --rotation: -45deg; }
-.leaf-3 { --rotation: 25deg; }
-.leaf-4 { --rotation: 45deg; }
-.leaf-5 { --rotation: 0deg; }
+@keyframes leafWiggle {
+    0%, 100% { transform: rotate(var(--rotation)) translateY(0px) scaleX(1); }
+    25% { transform: rotate(calc(var(--rotation) + 5deg)) translateY(-5px) scaleX(1.05); }
+    50% { transform: rotate(calc(var(--rotation) - 5deg)) translateY(-10px) scaleX(1); }
+    75% { transform: rotate(calc(var(--rotation) + 3deg)) translateY(-5px) scaleX(1.05); }
+}
 
-/* Plant Label */
-.plant-label {
+/* ===== PLANT INFO ===== */
+.plant-info {
+    text-align: center;
     margin-top: 1rem;
+    z-index: 3;
+}
+
+.plant-name {
     font-family: 'Poppins', sans-serif;
     font-weight: 600;
-    color: var(--dark-green);
-    text-align: center;
-    position: relative;
-    z-index: 6;
+    color: #5a6a47;
+    font-size: 1.05rem;
+    margin-bottom: 0.3rem;
 }
 
-.plant-label span {
-    padding: 0.4rem 1rem;
-    background: rgba(255, 255, 255, 0.7);
-    border-radius: 20px;
-    border: 1px solid var(--sage);
-    display: inline-block;
-    font-size: 0.95rem;
-}
-
-.plant-description {
+.plant-desc {
     font-size: 0.85rem;
-    color: var(--olive);
-    margin-top: 0.5rem;
+    color: #8b8c5c;
     font-style: italic;
-    position: relative;
-    z-index: 6;
 }
 
-/* ===== About Section ===== */
-.about {
-    background: linear-gradient(135deg, rgba(232, 240, 224, 0.5) 0%, rgba(245, 244, 240, 0.8) 100%);
-    border: 2px solid var(--pale-green);
-    border-radius: 15px;
-    padding: 3rem;
-    margin-bottom: 3rem;
+/* ===== ABOUT SECTION ===== */
+.about-section {
     text-align: center;
+    padding: 2rem;
+    max-width: 600px;
+    margin-top: 2rem;
+    color: #5a6a47;
 }
 
-.about h2 {
+.about-section h2 {
     font-size: 1.8rem;
-    color: var(--dark-green);
+    margin-bottom: 1rem;
+}
+
+.about-section p {
+    font-size: 0.95rem;
+    line-height: 1.8;
+    color: #7a6b5d;
     margin-bottom: 1.5rem;
 }
 
-.about p {
-    color: var(--olive);
-    margin-bottom: 1rem;
-    font-size: 1rem;
-    max-width: 600px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-/* ===== Social Links ===== */
+/* ===== SOCIAL LINKS ===== */
 .social-links {
     display: flex;
-    gap: 1rem;
+    gap: 1.5rem;
     justify-content: center;
-    margin-top: 2rem;
+    margin-top: 1rem;
 }
 
 .social-link {
     width: 50px;
     height: 50px;
-    border: 2px solid var(--sage);
+    border: 2px solid #a8b89f;
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -407,23 +370,26 @@ h1 {
 }
 
 .social-link:hover {
-    background: var(--pastel-lime);
-    border-color: var(--dark-green);
+    background: #d4e8a8;
+    border-color: #5a6a47;
     transform: scale(1.15);
 }
 
-/* ===== Footer ===== */
-footer {
+/* ===== FOOTER ===== */
+.greenhouse-footer {
+    position: absolute;
+    bottom: 10px;
+    left: 0;
+    width: 100%;
     text-align: center;
-    padding: 2rem;
-    color: var(--olive);
-    border-top: 2px solid var(--pale-green);
-    font-size: 0.95rem;
-    background: linear-gradient(180deg, transparent, rgba(232, 240, 224, 0.3));
+    color: #5a6a47;
+    font-size: 0.9rem;
+    z-index: 4;
+    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.3);
 }
 
-/* ===== Animations ===== */
-@keyframes fadeInDown {
+/* ===== ANIMATIONS ===== */
+@keyframes fadeIn {
     from {
         opacity: 0;
         transform: translateY(-20px);
@@ -434,61 +400,50 @@ footer {
     }
 }
 
-/* ===== Responsive Design ===== */
+/* ===== RESPONSIVE ===== */
 @media (max-width: 768px) {
-    .container {
-        padding: 2rem 1rem;
+    .plants-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2rem 1rem;
+        padding: 1rem;
     }
 
-    .greenhouse {
-        padding: 2rem 1rem;
-        border-radius: 15px;
-    }
-
-    .plants-garden {
-        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-        gap: 2rem;
-    }
-
-    .section-title h2 {
-        font-size: 1.5rem;
-    }
-
-    h1 {
+    .greenhouse-header h1 {
         font-size: 2rem;
     }
 
-    .about {
-        padding: 2rem;
-        margin-bottom: 2rem;
+    .plant-container {
+        height: 300px;
     }
 
-    .about h2 {
-        font-size: 1.5rem;
+    .pot {
+        width: 90px;
+        height: 75px;
     }
 
-    .plant {
-        height: 250px;
+    .plant-leaves-container {
+        height: 120px;
     }
 }
 
 @media (max-width: 480px) {
-    header {
-        padding: 2rem 1rem;
-    }
-
-    .plants-garden {
+    .plants-grid {
         grid-template-columns: 1fr;
         gap: 1.5rem;
+        padding: 1rem;
     }
 
-    .social-links {
-        gap: 0.8rem;
+    .greenhouse-header h1 {
+        font-size: 1.5rem;
+    }
+
+    .plant-container {
+        height: 250px;
     }
 
     .social-link {
-        width: 45px;
-        height: 45px;
+        width: 40px;
+        height: 40px;
         font-size: 1.2rem;
     }
 }
