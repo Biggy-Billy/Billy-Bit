@@ -15,40 +15,50 @@ body {
     position: relative;
 }
 
-/* ===== GREENHOUSE CONTAINER ===== */
 .greenhouse-container {
     width: 100%;
     min-height: 100vh;
     position: relative;
 }
 
-/* ===== SKY BACKGROUND ===== */
 .sky {
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
-    height: 50%;
-    background: linear-gradient(180deg, #a8d5ff 0%, #d4e8ff 100%);
+    height: 100%;
+    background: linear-gradient(180deg, rgba(100, 150, 100, 0.3) 0%, rgba(80, 120, 80, 0.4) 100%), linear-gradient(135deg, #87ceeb 0%, #b0e0e6 50%, #98fb98 100%);
     z-index: 0;
 }
 
-/* ===== ROOF (GLASS PANELS) ===== */
 .roof {
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
-    height: 45%;
-    z-index: 3;
+    height: 100%;
+    z-index: 1;
     display: flex;
+    pointer-events: none;
 }
 
 .roof-panel {
     flex: 1;
-    border: 3px solid rgba(100, 100, 100, 0.3);
-    background: linear-gradient(135deg, rgba(220, 240, 255, 0.15) 0%, rgba(200, 230, 255, 0.1) 100%);
+    border: 6px solid #4a3c2a;
+    background: radial-gradient(ellipse at 30% 30%, rgba(255, 255, 255, 0.4) 0%, transparent 50%), linear-gradient(135deg, rgba(200, 230, 255, 0.2) 0%, rgba(100, 150, 100, 0.1) 100%);
     position: relative;
+    box-shadow: inset 0 2px 10px rgba(255, 255, 255, 0.3), inset 0 -2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.roof-panel::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: repeating-linear-gradient(0deg, transparent, transparent 40px, rgba(100, 100, 100, 0.05) 40px, rgba(100, 100, 100, 0.05) 80px);
+    pointer-events: none;
 }
 
 .roof-panel::after {
@@ -58,62 +68,52 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background: repeating-linear-gradient(
-        90deg,
-        transparent,
-        transparent 2px,
-        rgba(255, 255, 255, 0.1) 2px,
-        rgba(255, 255, 255, 0.1) 4px
-    );
+    background: repeating-linear-gradient(90deg, transparent, transparent 40px, rgba(100, 100, 100, 0.05) 40px, rgba(100, 100, 100, 0.05) 80px);
+    pointer-events: none;
 }
 
-/* ===== WOODEN FRAMES ===== */
 .frame {
-    position: absolute;
+    position: fixed;
     top: 0;
-    width: 20px;
+    width: 40px;
     height: 100%;
-    background: linear-gradient(90deg, #6b4423 0%, #8b5a3c 50%, #6b4423 100%);
-    z-index: 5;
-    box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.2), inset 0 -1px 2px rgba(0, 0, 0, 0.3);
+    background: linear-gradient(90deg, #3a2a1a 0%, #5a4a3a 20%, #4a3a2a 50%, #5a4a3a 80%, #3a2a1a 100%), repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(0,0,0,0.3) 2px, rgba(0,0,0,0.3) 4px), repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,255,255,0.1) 2px, rgba(255,255,255,0.1) 4px);
+    z-index: 6;
+    box-shadow: inset 0 1px 4px rgba(255, 255, 255, 0.3), inset -4px 0 8px rgba(0, 0, 0, 0.5), inset 4px 0 8px rgba(0, 0, 0, 0.5), 0 0 20px rgba(0, 0, 0, 0.3);
 }
 
 .left-frame {
     left: 0;
+    border-right: 4px solid rgba(0, 0, 0, 0.4);
 }
 
 .right-frame {
     right: 0;
+    border-left: 4px solid rgba(0, 0, 0, 0.4);
 }
 
-/* ===== GROUND ===== */
 .ground {
-    position: absolute;
+    position: fixed;
     bottom: 0;
     left: 0;
     width: 100%;
-    height: 35%;
-    background: linear-gradient(180deg, #7a6b4d 0%, #5a4a2a 100%);
+    height: 40%;
+    background: linear-gradient(180deg, #6b5d4f 0%, #4a3c2a 50%, #2a1c0a 100%), repeating-linear-gradient(90deg, transparent, transparent 4px, rgba(0,0,0,0.1) 4px, rgba(0,0,0,0.1) 8px), repeating-linear-gradient(0deg, transparent, transparent 4px, rgba(255,255,255,0.05) 4px, rgba(255,255,255,0.05) 8px);
     z-index: 2;
+    box-shadow: inset 0 20px 40px rgba(0, 0, 0, 0.3);
 }
 
 .ground::before {
     content: '';
     position: absolute;
-    top: 0;
+    top: -10px;
     left: 0;
     width: 100%;
-    height: 20px;
-    background: repeating-linear-gradient(
-        90deg,
-        rgba(255, 255, 255, 0.05),
-        rgba(255, 255, 255, 0.05) 30px,
-        transparent 30px,
-        transparent 60px
-    );
+    height: 15px;
+    background: linear-gradient(90deg, transparent 0%, rgba(139, 101, 137, 0.3) 25%, rgba(139, 101, 137, 0.3) 75%, transparent 100%), repeating-linear-gradient(90deg, transparent, transparent 20px, rgba(0,0,0,0.1) 20px, rgba(0,0,0,0.1) 40px);
+    border-top: 2px solid #3a2c1a;
 }
 
-/* ===== GREENHOUSE CONTENT ===== */
 .greenhouse-content {
     position: relative;
     width: 100%;
@@ -123,13 +123,13 @@ body {
     z-index: 4;
 }
 
-/* ===== HEADER ===== */
 .greenhouse-header {
     text-align: center;
     padding: 2rem;
     margin-top: 2rem;
     color: #5a6a47;
     animation: fadeIn 1s ease-out;
+    text-shadow: 0 2px 4px rgba(255, 255, 255, 0.5);
 }
 
 .greenhouse-header h1 {
@@ -137,11 +137,12 @@ body {
     font-weight: 700;
     margin-bottom: 0.5rem;
     letter-spacing: -1px;
+    text-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
 }
 
 .greenhouse-header .subtitle {
     font-size: 1.1rem;
-    color: #8b8c5c;
+    color: #6b7a57;
     font-style: italic;
 }
 
@@ -156,7 +157,6 @@ body {
     50% { transform: rotate(3deg); }
 }
 
-/* ===== PLANTS GRID ===== */
 .plants-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -167,7 +167,6 @@ body {
     margin-top: 1rem;
 }
 
-/* ===== PLANT CONTAINER ===== */
 .plant-container {
     display: flex;
     flex-direction: column;
@@ -178,17 +177,18 @@ body {
     cursor: pointer;
     transition: transform 0.3s ease;
     position: relative;
+    filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.2));
 }
 
 .plant-container:hover {
     transform: translateY(-20px);
+    filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.3));
 }
 
 .plant-container:hover .plant-leaf {
     animation: leafWiggle 0.5s ease-in-out !important;
 }
 
-/* ===== POT ===== */
 .pot {
     position: relative;
     width: 120px;
@@ -205,7 +205,7 @@ body {
     height: 20px;
     background: linear-gradient(180deg, #d9a07d 0%, #c4935c 100%);
     border-radius: 50%;
-    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.3);
+    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.3), 0 4px 8px rgba(0, 0, 0, 0.2);
     z-index: 2;
 }
 
@@ -218,9 +218,7 @@ body {
     height: 80px;
     background: linear-gradient(135deg, #d9a07d 0%, #c4935c 100%);
     border-radius: 10px 10px 15px 15px;
-    box-shadow: 
-        inset -3px -3px 8px rgba(0, 0, 0, 0.2),
-        0 10px 25px rgba(0, 0, 0, 0.2);
+    box-shadow: inset -3px -3px 8px rgba(0, 0, 0, 0.2), 0 10px 25px rgba(0, 0, 0, 0.25);
     z-index: 1;
 }
 
@@ -236,7 +234,6 @@ body {
     z-index: 0;
 }
 
-/* ===== PLANT LEAVES ===== */
 .plant-leaves-container {
     position: absolute;
     bottom: 85px;
@@ -301,11 +298,11 @@ body {
     75% { transform: rotate(calc(var(--rotation) + 3deg)) translateY(-5px) scaleX(1.05); }
 }
 
-/* ===== PLANT INFO ===== */
 .plant-info {
     text-align: center;
     margin-top: 1rem;
     z-index: 3;
+    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.3);
 }
 
 .plant-name {
@@ -318,17 +315,17 @@ body {
 
 .plant-desc {
     font-size: 0.85rem;
-    color: #8b8c5c;
+    color: #7a8a67;
     font-style: italic;
 }
 
-/* ===== ABOUT SECTION ===== */
 .about-section {
     text-align: center;
     padding: 2rem;
     max-width: 600px;
     margin-top: 2rem;
     color: #5a6a47;
+    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.3);
 }
 
 .about-section h2 {
@@ -339,11 +336,10 @@ body {
 .about-section p {
     font-size: 0.95rem;
     line-height: 1.8;
-    color: #7a6b5d;
+    color: #6b7b58;
     margin-bottom: 1.5rem;
 }
 
-/* ===== SOCIAL LINKS ===== */
 .social-links {
     display: flex;
     gap: 1.5rem;
@@ -354,7 +350,7 @@ body {
 .social-link {
     width: 50px;
     height: 50px;
-    border: 2px solid #a8b89f;
+    border: 2px solid #8b9b7a;
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -362,16 +358,17 @@ body {
     font-size: 1.5rem;
     text-decoration: none;
     transition: all 0.3s ease;
-    background: rgba(255, 255, 255, 0.5);
+    background: rgba(212, 232, 168, 0.4);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
 .social-link:hover {
     background: #d4e8a8;
     border-color: #5a6a47;
     transform: scale(1.15);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
 }
 
-/* ===== FOOTER ===== */
 .greenhouse-footer {
     position: relative;
     left: 0;
@@ -380,11 +377,10 @@ body {
     color: #5a6a47;
     font-size: 0.9rem;
     z-index: 4;
-    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.3);
+    text-shadow: 0 2px 4px rgba(255, 255, 255, 0.5);
     padding: 2rem 0 1rem;
 }
 
-/* ===== ANIMATIONS ===== */
 @keyframes fadeIn {
     from {
         opacity: 0;
@@ -396,27 +392,22 @@ body {
     }
 }
 
-/* ===== RESPONSIVE ===== */
 @media (max-width: 768px) {
     .plants-grid {
         grid-template-columns: repeat(2, 1fr);
         gap: 2rem 1rem;
         padding: 1rem;
     }
-
     .greenhouse-header h1 {
         font-size: 2rem;
     }
-
     .plant-container {
         height: 300px;
     }
-
     .pot {
         width: 90px;
         height: 75px;
     }
-
     .plant-leaves-container {
         height: 120px;
     }
@@ -428,15 +419,12 @@ body {
         gap: 1.5rem;
         padding: 1rem;
     }
-
     .greenhouse-header h1 {
         font-size: 1.5rem;
     }
-
     .plant-container {
         height: 250px;
     }
-
     .social-link {
         width: 40px;
         height: 40px;
