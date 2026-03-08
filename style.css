@@ -163,7 +163,7 @@ h1 {
 .plants-garden {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 2.5rem;
+    gap: 3rem 2.5rem;
     margin-bottom: 2rem;
 }
 
@@ -171,16 +171,25 @@ h1 {
     text-decoration: none;
     cursor: pointer;
     transition: transform 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
 }
 
 .plant-link:hover {
-    transform: translateY(-10px);
+    transform: translateY(-15px);
+}
+
+.plant-link:hover .plant {
+    filter: brightness(1.1);
 }
 
 /* ===== Plant ===== */
 .plant {
     position: relative;
     height: 280px;
+    width: 140px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -244,8 +253,8 @@ h1 {
 .plant-leaves {
     position: absolute;
     bottom: 65px;
-    width: 80px;
-    height: 120px;
+    width: 100px;
+    height: 140px;
     z-index: 3;
 }
 
