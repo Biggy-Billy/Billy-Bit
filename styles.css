@@ -1,0 +1,77 @@
+body {
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  background: #040814;
+  background: 
+    radial-gradient(ellipse at 10% 20%, rgba(138, 43, 226, 0.1), transparent 50%),
+    radial-gradient(ellipse at 90% 80%, rgba(75, 0, 130, 0.08), transparent 50%),
+    radial-gradient(ellipse at 50% 90%, rgba(255, 20, 147, 0.06), transparent 50%),
+    radial-gradient(ellipse at 70% 10%, rgba(0, 191, 255, 0.04), transparent 50%),
+    radial-gradient(ellipse at 30% 60%, rgba(186, 85, 211, 0.05), transparent 50%),
+    radial-gradient(ellipse at 80% 40%, rgba(25, 25, 112, 0.03), transparent 50%),
+    #040814;
+}
+
+.site-name {
+  font-size: 1rem;
+  left: 2%;
+  top: 2%;
+  position: absolute;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.8rem;
+  font-weight: 900;
+  color: #e8f2ff;
+  letter-spacing: 0.1em;
+  text-shadow: 0 0 20px rgba(74,143,255,2), 0 0 60px rgb(169, 204, 255);
+}
+
+.project-details {
+    text-align: right;
+    right: 3%;
+    bottom: 3.5%;
+    position: absolute;
+    font-family: 'Exo 2', sans-serif;
+    font-size: 0.9rem;
+    color: #4a6a9a;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+}
+
+.detail-values {
+    text-align: right;
+    right: 2%;
+    bottom: 3.5%;
+    position: absolute;
+    font-family: 'Exo 2', sans-serif;
+    font-size: 0.9rem;
+    color: #abcfff;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+}
+
+.site-sub {
+  left: 2%;
+  top: 5.5%;
+  position: absolute;
+  font-family: 'Exo 2', sans-serif;
+  font-size: 0.9rem;
+  color: #4a6a9a;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  margin-top: 0.25rem;
+}
+
+.scanlines {
+  position: fixed;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 0px,
+    rgba(0,0,20,0.2) 2px,
+    rgba(0,0,20,0.2) 4px
+  );
+  pointer-events: none;
+  z-index: 1000000000000000;
+}
