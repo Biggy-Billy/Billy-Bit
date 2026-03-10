@@ -1,8 +1,14 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
 body {
   margin: 0;
   padding: 0;
   height: 100vh;
-  background: #040814;
+  overflow: hidden;
   background: 
     radial-gradient(ellipse at 10% 20%, rgba(138, 43, 226, 0.4), transparent 50%),
     radial-gradient(ellipse at 90% 80%, rgba(75, 0, 130, 0.08), transparent 50%),
@@ -19,45 +25,21 @@ body {
   height: 100px;
   top: 50%;
   left: 50%;
+  transform: translate(-50%, -50%);
   border-radius: 50%;
   background: radial-gradient(circle at 35% 30%, #90c0ff, #2a6abf 50%, #0a2a5a);
 }
 
 .site-name {
-  font-size: 1rem;
   left: 2%;
   top: 2%;
   position: absolute;
   font-family: 'Orbitron', sans-serif;
-  font-size: 1.8rem;
+  font-size: clamp(1rem, 3vw, 1.8rem);
   font-weight: 900;
   color: #e8f2ff;
   letter-spacing: 0.1em;
   text-shadow: 0 0 20px rgba(74,143,255,2), 0 0 60px rgb(169, 204, 255);
-}
-
-.project-details {
-    text-align: right;
-    right: 3%;
-    bottom: 3.5%;
-    position: absolute;
-    font-family: 'Exo 2', sans-serif;
-    font-size: 0.9rem;
-    color: #4a6a9a;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-}
-
-.detail-values {
-    text-align: right;
-    right: 2%;
-    bottom: 3.5%;
-    position: absolute;
-    font-family: 'Exo 2', sans-serif;
-    font-size: 0.9rem;
-    color: #abcfff;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
 }
 
 .site-sub {
@@ -65,11 +47,37 @@ body {
   top: 5.5%;
   position: absolute;
   font-family: 'Exo 2', sans-serif;
-  font-size: 0.9rem;
+  font-size: clamp(0.6rem, 1.5vw, 0.9rem);
   color: #4a6a9a;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  margin-top: 0.25rem;
+}
+
+.project-details {
+  text-align: right;
+  right: 3%;
+  bottom: 3.5%;
+  position: absolute;
+  font-family: 'Exo 2', sans-serif;
+  font-size: clamp(0.6rem, 1.5vw, 0.9rem);
+  color: #4a6a9a;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  line-height: 2;
+}
+
+.detail-values {
+  text-align: left;
+  right: 3%;
+  bottom: 3.5%;
+  position: absolute;
+  font-family: 'Exo 2', sans-serif;
+  font-size: clamp(0.6rem, 1.5vw, 0.9rem);
+  color: #abcfff;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  line-height: 2;
+  transform: translateX(-110%);
 }
 
 .scanlines {
@@ -84,4 +92,11 @@ body {
   );
   pointer-events: none;
   z-index: 1000000000000000;
+}
+
+@media (max-width: 480px) {
+  .project-details,
+  .detail-values {
+    display: none;
+  }
 }
