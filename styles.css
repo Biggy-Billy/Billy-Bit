@@ -17,7 +17,14 @@ body {
         #040814;
 }
 
-.planet {
+.solar-system {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.planet-center {
     position: absolute;
     width: 100px;
     height: 100px;
@@ -26,6 +33,115 @@ body {
     transform: translate(-50%, -50%);
     border-radius: 50%;
     background: radial-gradient(circle at 35% 30%, #90c0ff, #2a6abf 50%, #0a2a5a);
+    z-index: 10;
+    cursor: pointer;
+    transition: box-shadow 0.3s;
+}
+
+.planet-center:hover {
+    box-shadow: 0 0 30px rgba(74, 143, 255, 0.6);
+}
+
+.planet-1,
+.planet-2,
+.planet-3,
+.planet-4,
+.planet-5,
+.planet-6,
+.planet-7,
+.planet-8 {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+}
+
+.planet-1 { width: 180px;  height: 180px; }
+.planet-2 { width: 260px;  height: 260px; }
+.planet-3 { width: 340px;  height: 340px; }
+.planet-4 { width: 420px;  height: 420px; }
+.planet-5 { width: 500px;  height: 500px; }
+.planet-6 { width: 580px;  height: 580px; }
+.planet-7 { width: 660px;  height: 660px; }
+.planet-8 { width: 740px;  height: 740px; }
+
+.planet-ring {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    border: 1px solid rgba(100, 150, 255, 0.1);
+}
+
+.planet-spinner {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    animation: planet-spin linear infinite;
+}
+
+.planet-1 .planet-spinner { animation-duration: 12s; }
+.planet-2 .planet-spinner { animation-duration: 18s; }
+.planet-3 .planet-spinner { animation-duration: 25s; }
+.planet-4 .planet-spinner { animation-duration: 33s; }
+.planet-5 .planet-spinner { animation-duration: 42s; }
+.planet-6 .planet-spinner { animation-duration: 52s; }
+.planet-7 .planet-spinner { animation-duration: 63s; }
+.planet-8 .planet-spinner { animation-duration: 75s; }
+
+@keyframes planet-spin {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+}
+
+.planet-link {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: block;
+}
+
+.planet {
+    border-radius: 50%;
+    transition: box-shadow 0.3s;
+    animation: counter-spin linear infinite;
+}
+
+.planet-1 .planet { animation-duration: 12s; }
+.planet-2 .planet { animation-duration: 18s; }
+.planet-3 .planet { animation-duration: 25s; }
+.planet-4 .planet { animation-duration: 33s; }
+.planet-5 .planet { animation-duration: 42s; }
+.planet-6 .planet { animation-duration: 52s; }
+.planet-7 .planet { animation-duration: 63s; }
+.planet-8 .planet { animation-duration: 75s; }
+
+@keyframes counter-spin {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(-360deg); }
+}
+
+.planet:hover {
+    box-shadow: 0 0 20px rgba(74, 143, 255, 0.5);
+}
+
+.planet-sm {
+    width: 28px;
+    height: 28px;
+    background: radial-gradient(circle at 35% 30%, #c0a0ff, #6a3abf 50%, #1a0a4a);
+}
+
+.planet-md {
+    width: 42px;
+    height: 42px;
+    background: radial-gradient(circle at 35% 30%, #a0e8b0, #2abf6a 50%, #0a2a1a);
+}
+
+.planet-lg {
+    width: 58px;
+    height: 58px;
+    background: radial-gradient(circle at 35% 30%, #f0c080, #bf7a2a 50%, #2a1a00);
 }
 
 .hud-tl {
@@ -97,7 +213,5 @@ body {
 }
 
 @media (max-width: 480px) {
-    .hud-br {
-        display: none;
-    }
+    .hud-br { display: none; }
 }
