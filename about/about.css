@@ -156,3 +156,14 @@ h1 {
   letter-spacing: 0.2em;
   text-transform: uppercase;
 }
+
+.contact-link {
+  color: #4a6a9a;
+  text-decoration: none;
+  letter-spacing: 0.1em;
+  transition: color 0.2s;
+}
+
+.contact-link:hover {
+  color: #abcfff;
+}
