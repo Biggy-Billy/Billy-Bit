@@ -112,12 +112,9 @@ body {
     pointer-events: all;
     z-index: 10;    
     position: absolute;
-    top: 50%;
+    top: 0;
     left: 50%;
-    transform: translate(-50%, -100%);
-    display: block;
-    margin: 0 auto;
-    transform: translateY(-50%);
+    transform: translateX(-50%);
 }
 
 .planet-1 .planet { animation-duration: 12s; animation-delay: -3s; }
