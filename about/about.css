@@ -40,7 +40,7 @@ body {
 
 .site-name {
   font-family: 'Orbitron', sans-serif;
-  font-size: 1.8rem;
+  font-size: clamp(1rem, 3vw, 1.8rem);
   font-weight: 900;
   color: #e8f2ff;
   letter-spacing: 0.1em;
@@ -49,7 +49,7 @@ body {
 
 .site-sub {
   font-family: 'Exo 2', sans-serif;
-  font-size: 0.9rem;
+  font-size: clamp(0.6rem, 1.5vw, 0.9rem);
   color: #4a6a9a;
   letter-spacing: 0.2em;
   text-transform: uppercase;
@@ -61,7 +61,7 @@ body {
   right: 3%;
   top: 2.5%;
   font-family: 'Exo 2', sans-serif;
-  font-size: 0.8rem;
+  font-size: clamp(0.6rem, 1.5vw, 0.8rem);
   color: #4a6a9a;
   letter-spacing: 0.2em;
   text-transform: uppercase;
@@ -89,7 +89,7 @@ body {
 
 h1 {
   font-family: 'Orbitron', sans-serif;
-  font-size: clamp(2rem, 5vw, 3rem);
+  font-size: clamp(1.5rem, 5vw, 3rem);
   font-weight: 900;
   color: #e8f2ff;
   letter-spacing: 0.05em;
@@ -112,7 +112,7 @@ h1 {
 }
 
 .block p {
-  font-size: 0.95rem;
+  font-size: clamp(0.85rem, 2vw, 0.95rem);
   color: #8aaad0;
   line-height: 1.9;
   margin-bottom: 0.9rem;
@@ -130,7 +130,7 @@ h1 {
 .quote {
   margin-top: 3.5rem;
   font-family: 'Exo 2', sans-serif;
-  font-size: 0.95rem;
+  font-size: clamp(0.85rem, 2vw, 0.95rem);
   color: #abcfff;
   line-height: 1.6;
   letter-spacing: 0.05em;
@@ -151,7 +151,7 @@ h1 {
   bottom: 3.5%;
   text-align: right;
   font-family: 'Exo 2', sans-serif;
-  font-size: 0.9rem;
+  font-size: clamp(0.6rem, 1.5vw, 0.9rem);
   color: #4a6a9a;
   letter-spacing: 0.2em;
   text-transform: uppercase;
@@ -166,4 +166,14 @@ h1 {
 
 .contact-link:hover {
   color: #abcfff;
+}
+
+@media (max-width: 480px) {
+  body {
+    padding: 5rem 1.25rem 4rem;
+  }
+
+  .hud-br {
+    display: none;
+  }
 }
