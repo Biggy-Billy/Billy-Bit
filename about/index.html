@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>billy-bit · About</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0e0e10; --surface: #18181c; --border: #2a2a32;
+      --accent: #f0c040; --accent2: #5ee8b0; --accent3: #a0b4f0;
+      --text: #e8e8f0; --muted: #888898;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'IBM Plex Sans', sans-serif;
+      min-height: 100vh;
+      padding: 4rem 1.5rem 6rem;
+    }
+
+    .container { max-width: 720px; margin: 0 auto; }
+
+    .label {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--accent);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+    }
+
+    h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(2.5rem, 6vw, 3.5rem);
+      font-weight: 800;
+      line-height: 1.05;
+      color: #fff;
+      margin-bottom: 2.5rem;
+    }
+
+    .block {
+      border-left: 2px solid var(--border);
+      padding-left: 1.5rem;
+      margin-bottom: 3rem;
+    }
+
+    .block-label {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      margin-bottom: 1rem;
+    }
+
+    .block p {
+      font-size: 1rem;
+      color: #b0b0c0;
+      line-height: 1.85;
+      margin-bottom: 1rem;
+    }
+
+    .block p:last-child { margin-bottom: 0; }
+
+    .block p strong { color: var(--text); font-weight: 500; }
+
+    .block.highlight { border-left-color: var(--accent); }
+    .block.highlight .block-label { color: var(--accent); }
+
+    .block.green { border-left-color: var(--accent2); }
+    .block.green .block-label { color: var(--accent2); }
+
+    .block.blue { border-left-color: var(--accent3); }
+    .block.blue .block-label { color: var(--accent3); }
+
+    .stat-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-top: 1.25rem;
+    }
+
+    .stat {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.75rem 1.1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+    }
+
+    .stat-val {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: #fff;
+    }
+
+    .stat-key {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--muted);
+    }
+
+    .quote {
+      margin: 3rem 0;
+      padding: 1.5rem 1.75rem;
+      background: var(--surface);
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      font-family: 'Syne', sans-serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.5;
+    }
+
+    .quote span {
+      display: block;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.72rem;
+      font-weight: 400;
+      color: var(--muted);
+      margin-top: 0.6rem;
+    }
+
+    footer {
+      margin-top: 4rem;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.75rem;
+      color: #444455;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+<div class="label">billy-bit · about</div>
+
+<div style="display:flex; align-items:flex-end; gap:2rem; margin-bottom:2.5rem; flex-wrap:wrap;">
+  <img 
+    src="Picture1.png" 
+    alt="billy-bit" 
+    style="height:260px; width:auto; display:block;"
+  />
+  <h1 style="margin-bottom:0;">Who's<br>behind this.</h1>
+</div>
+
+    <div class="block highlight">
+      <div class="block-label">The basics</div>
+      <p>I'm a 13 year old from Australia who builds things on the internet for fun. Into basketball, jazzy hip hop, and anything design related. Aiming for something in web dev, game dev, or robotics — haven't decided which yet, so I'm just building until it becomes obvious.</p>
+      <div class="stat-row">
+        <div class="stat"><span class="stat-val">13</span><span class="stat-key">years old</span></div>
+        <div class="stat"><span class="stat-val">Australia</span><span class="stat-key">based</span></div>
+        <div class="stat"><span class="stat-val">HTML · CSS · JS</span><span class="stat-key">current stack</span></div>
+        <div class="stat"><span class="stat-val">building for fun</span><span class="stat-key">motivation</span></div>
+      </div>
+    </div>
+
+    <div class="block green">
+      <div class="block-label">The honest version</div>
+      <p>I tried to learn to code more than once. Both times I quit. Not because it was too hard — because I was going about it the wrong way. Trying to finish courses, trying to memorise syntax, waiting until I felt ready to actually make something.</p>
+      <p>Life has a way of teaching you that waiting until you're ready is just another way of not starting. I've had to learn that in more areas than just code. Eventually something clicks — not the material, but the <strong>approach</strong>. You stop preparing to do the thing and you just do it.</p>
+      <p>For me that click came from building something with a friend. I did the HTML and CSS, she handled the JavaScript — an interactive 3D map of the Glass House Mountains. I was jealous of what she could do. That jealousy turned into motivation. And here we are.</p>
+    </div>
+
+    <div class="block blue">
+      <div class="block-label">What this site is</div>
+      <p>billy-bit.com is space-themed. Every planet is a project. Space made sense because it's endless — there's always somewhere further out to go, always something new on the horizon. The site grows as I grow.</p>
+      <p>It's also a journal. Code notes, things I had to figure out the hard way, shortcuts that saved me hours. A record of the doing. If someone finds something here that saves them time or stops them from quitting, that's the whole point.</p>
+      <p>I'm not an expert. I'm 13 and I'm figuring it out. But I think that's exactly why this site might be useful to someone — <strong>it's not written from the top of the mountain.</strong></p>
+    </div>
+
+    <div class="block">
+      <div class="block-label">What I'm aiming for</div>
+      <p>Somewhere in web development, game development, or robotics. Probably all three at different points. Right now I'm focused on getting good at the fundamentals — HTML, CSS, JavaScript — and building things that actually work.</p>
+      <p>Long term, I want to make things that other people use and enjoy. That's it. No big mission statement. Just make good stuff.</p>
+    </div>
+
+    <div class="quote">
+      "we learn by doing"
+      <span>— John Dewey. took me three tries to believe it.</span>
+    </div>
+
+    <footer>billy-bit.com · built from scratch · updated as I go</footer>
+
+  </div>
+</body>
+</html>
