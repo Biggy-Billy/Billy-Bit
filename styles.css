@@ -77,7 +77,7 @@ body {
 /* Planet sits at top-centre of its orbit ring */
 .planet {
     position: absolute;
-    top: 0;
+    top: 20%;
     left: 50%;
     transform: translateX(-50%);
     border-radius: 50%;
