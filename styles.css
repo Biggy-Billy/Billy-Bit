@@ -17,6 +17,110 @@ body {
         #040814;
 }
 
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: #020d1f;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+/* --- Small stars (35) --- */
+.stars-small {
+  position: fixed;
+  width: 1px;
+  height: 1px;
+  border-radius: 50%;
+  background: transparent;
+  box-shadow:
+  1181px 879px 0 rgba(255,255,255,0.45),
+  1045px 747px 0 rgba(255,255,255,0.40),
+  1189px 206px 0 rgba(255,255,255,0.42),
+  872px  13px  0 rgba(255,255,255,0.39),
+  295px  736px 0 rgba(255,255,255,0.46),
+  1054px 492px 0 rgba(255,255,255,0.59),
+  1121px 521px 0 rgba(255,255,255,0.70),
+  926px  719px 0 rgba(255,255,255,0.50),
+  452px  13px  0 rgba(255,255,255,0.63),
+  880px  571px 0 rgba(255,255,255,0.44),
+  1273px 700px 0 rgba(255,255,255,0.60),
+  945px  217px 0 rgba(255,255,255,0.55),
+  1230px 98px  0 rgba(255,255,255,0.31),
+  904px  33px  0 rgba(255,255,255,0.53),
+  337px  347px 0 rgba(255,255,255,0.39),
+  887px  753px 0 rgba(255,255,255,0.60),
+  1163px 801px 0 rgba(255,255,255,0.43),
+  335px  354px 0 rgba(255,255,255,0.69),
+  955px  443px 0 rgba(255,255,255,0.56),
+  418px  472px 0 rgba(255,255,255,0.39),
+  133px  125px 0 rgba(255,255,255,0.67),
+  344px  130px 0 rgba(255,255,255,0.31),
+  280px  608px 0 rgba(255,255,255,0.30),
+  976px  642px 0 rgba(255,255,255,0.36),
+  284px  741px 0 rgba(255,255,255,0.34),
+  1215px 327px 0 rgba(255,255,255,0.41),
+  266px  335px 0 rgba(255,255,255,0.32),
+  345px  278px 0 rgba(255,255,255,0.33),
+  1086px 419px 0 rgba(255,255,255,0.41),
+  428px  29px  0 rgba(255,255,255,0.67),
+  418px  7px   0 rgba(255,255,255,0.47),
+  595px  288px 0 rgba(255,255,255,0.41),
+  353px  454px 0 rgba(255,255,255,0.64),
+  378px  872px 0 rgba(255,255,255,0.40),
+  1181px 280px 0 rgba(255,255,255,0.47);
+  animation: twinkle 4s ease-in-out infinite alternate;
+}
+
+/* --- Medium stars (12) --- */
+.stars-medium {
+  position: fixed;
+  width: 2px;
+  height: 2px;
+  border-radius: 50%;
+  background: transparent;
+  box-shadow:
+  1133px 21px  0 rgba(255,255,255,0.74),
+  60px   157px 0 rgba(255,255,255,0.77),
+  1152px 250px 0 rgba(255,255,255,0.80),
+  665px  831px 0 rgba(255,255,255,0.74),
+  103px  366px 0 rgba(255,255,255,0.68),
+  235px  838px 0 rgba(255,255,255,0.68),
+  317px  654px 0 rgba(255,255,255,0.64),
+  695px  668px 0 rgba(255,255,255,0.86),
+  1226px 251px 0 rgba(255,255,255,0.64),
+  503px  29px  0 rgba(255,255,255,0.62),
+  978px  630px 0 rgba(255,255,255,0.90),
+  434px  484px 0 rgba(255,255,255,0.76);
+  animation: twinkle 6s ease-in-out infinite alternate;
+  animation-delay: 1.5s;
+}
+
+/* --- Large bright stars (3) --- */
+.stars-large {
+  position: fixed;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: transparent;
+  box-shadow:
+  41px   179px 0 rgba(255,255,255,0.96),
+  1129px 425px 0 rgba(255,255,255,0.90),
+  317px  225px 0 rgba(255,255,255,0.99);
+  animation: twinkle 8s ease-in-out infinite alternate;
+  animation-delay: 3s;
+}
+
+@keyframes twinkle {
+  0%   { opacity: 1; }
+  40%  { opacity: 0.3; }
+  70%  { opacity: 0.8; }
+  100% { opacity: 0.5; }
+}
+
 .solar-system {
     position: fixed;
     top: 50%;
