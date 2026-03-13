@@ -1,0 +1,368 @@
+/*fonts*/
+  @import url('https://fonts.googleapis.com/css2?family=Metal+Mania&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Titan+One&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+  .metal-mania-regular {
+    font-family: "Metal Mania", system-ui;
+    font-weight: 400;
+  }
+  .titan-one-regular {
+    font-family: "Titan One", sans-serif;
+    font-weight: 400;
+  }
+
+  .roboto-regular {
+    font-family: "Roboto", sans-serif;
+    font-weight: 400;
+  }
+
+/* text, etc.*/
+  h4 {
+    font-family: 'Titan One', normal;
+    text-align: left;
+    font-weight: bold;
+    font-size: 40px;
+    color: #255f06;
+    background: #edf7ee;
+    text-shadow: 0.2px 0.2px 0.8px rgb(214, 226, 223);
+    display: inline-block;
+    margin-bottom: 10px;
+    border-radius: 15px;
+    padding: 10px 24px;
+    outline:rgb(32, 77, 2) solid 1px;
+
+  }
+
+  h3 {
+    clear: both;
+    background: #edf7ee;
+    outline:rgb(32, 77, 2) solid 1px;
+    border-radius: 14px;
+    padding: 10px 24px;
+    text-align: left;
+    margin: 24px auto 16px 10px;
+    width: fit-content;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    color: #255f06;
+    font-weight: 600;
+  }
+
+  h2 {
+    font-family: 'Metal Mania', normal;
+    font-weight: 600;
+    font-style: bold;
+    font-size: 50px;
+    color: #255f06;
+    text-shadow: 0.2px 0.2px 0.8px black;
+    text-decoration: underline 8px;
+    text-decoration-color: #03300a;
+    display: inline-block;
+    margin-bottom: 10px;
+    text-underline-offset: 20px;
+  }
+
+  body {
+    margin: 0;
+    overflow: hidden;
+    background: black;
+    color: white;
+    text-align: justify;
+    font-family: "roboto", sans-serif;
+    box-sizing: border-box;
+  }
+
+  canvas {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw !important;
+    height: 100vh !important;
+    z-index: 1;
+    pointer-events: auto;
+  }
+
+  span {
+      text-shadow: 0px 0px 0px rgb(1, 23, 2);
+    font-size: 28px;
+    margin-top: 10px;
+    display: inline-block;
+    font-family: 'Titan One', normal;
+    font-weight: 20;
+    font-style: bold;
+    color: #043603;
+  }
+
+/*opening*/
+  #introPanel {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 620px;
+    max-width: 90vw;
+    background: rgba(255, 255, 255, 0.99);
+    box-shadow: 2px 0 10px rgba(0,0,0,0.3);
+    border-radius: 25px;
+    padding: 32px 18px;
+    z-index: 100;
+    text-align: center;
+    color: black;
+    opacity: 1;
+
+    max-height: none;
+    height: auto;
+    overflow: hidden;
+  }
+
+  #introPanel p {
+    text-align: center;
+  }
+
+
+  .paragraphs {
+    text-align: justify;
+  }
+
+  #closeBtn {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 15px;
+    background: rgb(32, 77, 2);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  #closeBtn:hover {
+    background: #98d496;
+  }
+
+  #introPanel.hidden {
+    display: none;
+  }
+
+
+
+/*info panel*/
+  .heading-box {
+    background: #e0e0ee;
+    border-radius: 15px;
+    padding: 18px 32px;
+    display: block;
+    margin-bottom: 28px;
+    width: 100%;
+    box-sizing: border-box;
+    position: static;
+    top: auto;
+    left: auto;
+    transform: none;
+    z-index: auto;
+  }
+
+  .heading-box h2 {
+    margin: 0;
+  }
+
+  button {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif, normal;
+    font-size: 15px;
+    background-color: #024120;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+/*image grid*/
+  .image-frame {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none; 
+    z-index: 10;
+  }
+
+  .image-frame.hidden {
+    display: none !important;
+  }
+
+  .images {
+    z-index: 10;
+  }
+
+  .images.hidden {
+    display: none !important;
+  }
+
+  .img-corner, .img-edge, .img-extra {
+    position: absolute;
+    width: 20vw;
+    height: 20vw;
+    min-width: 120px;
+    min-height: 120px;
+    max-width: 25vw;
+    max-height: 25vw;
+    object-fit: cover;
+    pointer-events: auto;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.18);
+  }
+
+  .img-corner.top-left {
+    top: 0; left: 0;
+  }
+  .img-corner.top-right {
+    top: 0; right: 0;
+  }
+  .img-corner.bottom-left {
+    bottom: 0; left: 0;
+  }
+  .img-corner.bottom-right {
+    bottom: 0; right: 0;
+  }
+
+p {
+  text-align: left;
+}
+
+  .img-edge.top {
+    top: 0; left: 50%; transform: translateX(-50%);
+  }
+  .img-edge.right {
+    right: 0; top: 50%; transform: translateY(-50%);
+  }
+  .img-edge.bottom {
+    bottom: 0; left: 50%; transform: translateX(-50%);
+  }
+  .img-edge.left {
+    left: 0; top: 50%; transform: translateY(-50%);
+  }
+
+  .img-extra.extra1 { top: 10%; left: 10%; }
+  .img-extra.extra2 { top: 10%; right: 10%; }
+  .img-extra.extra3 { bottom: 10%; left: 10%; }
+  .img-extra.extra4 { bottom: 10%; right: 10%; }
+  .img-extra.extra5 { top: 50%; left: 10%; transform: translateY(-50%); }
+  .img-extra.extra6 { top: 50%; right: 10%; transform: translateY(-50%); }
+  .img-extra.extra7 { left: 50%; top: 10%; transform: translateX(-50%); }
+
+  .image-grid {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    z-index: 10;
+    pointer-events: none;
+
+    opacity: 1;           
+    transition: opacity 0.4s ease; 
+  }
+
+  .image-grid.hidden {
+    opacity: 0;            
+    pointer-events: none;
+    z-index: -1;
+  }
+
+  .image-grid img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    pointer-events: none; 
+  }
+
+#tooltip {
+  position: absolute;
+  background: rgba(0, 0, 0, 0.85);
+  color: white;
+  padding: 6px 10px;
+  border-radius: 6px;
+  pointer-events: none; /* so mouse can still interact with scene */
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  font-family: sans-serif;
+  font-size: 14px;
+  white-space: nowrap;
+  z-index: 9999; /* 👈 force above WebGL canvas */
+}
+
+/* info panel */
+#infoPanel {
+  position: fixed;
+  right: 0;
+  top: 0;
+  width: 30%;
+  height: 100%;
+  background: rgba(255,255,255,0.95);
+  box-shadow: -2px 0 10px rgba(0,0,0,0.3);
+  padding: 20px;
+  color: black;
+  transform: translateX(100%); /* start hidden off screen */
+  transition: transform 0.5s ease;
+  z-index: 200;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+#infoPanel.show {
+  transform: translateX(0);
+}
+
+#infoPanel button#closeInfo {
+  margin-top: auto;
+  align-self: flex-end;
+  position: sticky;
+  bottom: 30px;
+  z-index: 10;
+  box-shadow: 0 -2px 8px rgba(0,0,0,0.08);
+  padding: 12px 24px;
+  font-size: 18px;
+  width: 100%;
+  left: 0;
+  right: 0;
+  margin-bottom: 16px;
+  background-color: #024120;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* home button */
+  #homeBtn {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 500; /* above canvas but below intro panel */
+    background: #024120;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    font-size: 22px; /* icon size */
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+  }
+
+  #homeBtn:hover {
+    background: #046a38;
+  }
+
+  #homeBtn i {
+    pointer-events: none; /* ensures clicks hit the button, not the icon */
+  }
+
+   
