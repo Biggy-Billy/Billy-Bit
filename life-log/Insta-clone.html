@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <title>Best Days</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400;1,600&family=DM+Sans:wght@300;400;500&display=swap">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: #0D0C0B;
+      min-height: 100vh;
+      color: #EDE8DF;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    #app {
+      width: 100%;
+      max-width: 390px;
+      height: 100vh;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* KEY */
+    .key-shell {
+      display: flex; flex-direction: column; align-items: center;
+      justify-content: center; gap: 32px; height: 100vh; padding: 48px; text-align: center;
+    }
+    .key-title { font-family: 'Lora', serif; font-size: 30px; font-style: italic; color: #EDE8DF; line-height: 1.35; }
+    .key-sub { font-size: 13px; color: #5A5550; line-height: 1.7; font-weight: 300; margin-top: -12px; }
+    .key-input-wrap { width: 100%; display: flex; flex-direction: column; align-items: center; gap: 12px; }
+    .key-field {
+      background: transparent; border: none; border-bottom: 1px solid #2E2C2A;
+      color: #EDE8DF; font-size: 28px; padding: 10px 0; width: 100%;
+      outline: none; font-family: 'DM Sans', sans-serif; font-weight: 300;
+      text-align: center; letter-spacing: 6px; transition: border-color 0.2s;
+    }
+    .key-field.error { border-bottom-color: #C87A7A; }
+    .key-error { font-size: 12px; color: #C87A7A; letter-spacing: 1px; }
+    .key-btn {
+      padding: 13px 40px; border-radius: 100px; border: none; background: #C8A87A;
+      color: #0D0C0B; font-size: 13px; font-weight: 600; cursor: pointer;
+      font-family: 'DM Sans', sans-serif;
+    }
+
+    /* STORY */
+    .story-shell { width: 100%; height: 100vh; position: relative; display: flex; flex-direction: column; }
+    .card { flex: 1; position: relative; overflow: hidden; transition: opacity 0.18s ease; }
+    .card.fading { opacity: 0; }
+    .card-photo { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .no-photo {
+      width: 100%; height: 100%; background: #181614;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: 12px; color: #3A3835;
+    }
+    .no-photo-icon { font-size: 48px; line-height: 1; }
+    .no-photo-text { font-size: 12px; }
+    .overlay {
+      position: absolute; inset: 0; pointer-events: none;
+      background: linear-gradient(to top, rgba(8,7,6,0.92) 0%, rgba(8,7,6,0.5) 45%, rgba(8,7,6,0.15) 70%, transparent 100%);
+    }
+    .info { position: absolute; bottom: 96px; left: 28px; right: 28px; }
+    .entry-date { font-size: 11px; letter-spacing: 2.5px; text-transform: uppercase; color: #C8A87A; margin-bottom: 10px; }
+    .entry-title { font-family: 'Lora', serif; font-size: 30px; font-weight: 600; line-height: 1.2; color: #F5F0E8; margin-bottom: 10px; }
+    .entry-caption { font-size: 14px; line-height: 1.65; color: rgba(237,232,223,0.72); font-weight: 300; }
+    .tap-zone { position: absolute; top: 0; height: 100%; width: 38%; z-index: 4; cursor: pointer; }
+    .tap-left { left: 0; }
+    .tap-right { right: 0; }
+    .counter {
+      position: absolute; top: 20px; left: 50%; transform: translateX(-50%);
+      font-size: 11px; letter-spacing: 2px; color: rgba(237,232,223,0.5);
+      text-transform: uppercase; z-index: 5; white-space: nowrap;
+    }
+    .lock-btn {
+      position: absolute; top: 16px; right: 20px; z-index: 10;
+      background: none; border: none; color: rgba(237,232,223,0.35);
+      font-size: 16px; cursor: pointer; padding: 4px;
+    }
+    .actions { position: absolute; bottom: 28px; left: 28px; right: 28px; display: flex; gap: 10px; z-index: 5; }
+    .btn-ghost {
+      flex: 1; padding: 12px; border-radius: 100px;
+      border: 1px solid rgba(237,232,223,0.2); background: rgba(0,0,0,0.35);
+      backdrop-filter: blur(10px); color: #EDE8DF; font-size: 13px; cursor: pointer;
+      font-family: 'DM Sans', sans-serif;
+    }
+    .btn-gold {
+      flex: 2; padding: 12px; border-radius: 100px; border: none;
+      background: #C8A87A; color: #0D0C0B; font-size: 13px; font-weight: 600;
+      cursor: pointer; font-family: 'DM Sans', sans-serif;
+    }
+
+    /* EMPTY */
+    .empty-shell {
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: 20px; height: 100vh; padding: 48px; text-align: center;
+    }
+    .empty-title { font-family: 'Lora', serif; font-size: 28px; font-style: italic; font-weight: 400; line-height: 1.3; color: #EDE8DF; }
+    .empty-body { font-size: 14px; color: #5A5550; line-height: 1.7; font-weight: 300; }
+    .btn-gold-standalone {
+      padding: 13px 32px; border-radius: 100px; border: none; background: #C8A87A;
+      color: #0D0C0B; font-size: 13px; font-weight: 600; cursor: pointer;
+      margin-top: 8px; font-family: 'DM Sans', sans-serif;
+    }
+    .change-key-btn { font-size: 12px; color: #3A3835; background: none; border: none; cursor: pointer; font-family: 'DM Sans', sans-serif; }
+
+    /* ADD */
+    .add-shell {
+      width: 100%; min-height: 100vh; padding: 56px 28px 40px;
+      display: flex; flex-direction: column; gap: 28px; overflow-y: auto;
+    }
+    .add-heading { font-family: 'Lora', serif; font-size: 24px; font-style: italic; color: #EDE8DF; }
+    .add-sub { font-size: 13px; color: #5A5550; margin-top: 4px; font-weight: 300; }
+    .upload-box {
+      width: 100%; aspect-ratio: 3/4; background: #161412; border: 1px dashed #2E2C2A;
+      border-radius: 14px; overflow: hidden; cursor: pointer; display: flex;
+      align-items: center; justify-content: center; flex-direction: column;
+      gap: 10px; color: #3A3835; position: relative;
+    }
+    .upload-box img { width: 100%; height: 100%; object-fit: cover; position: absolute; inset: 0; }
+    .upload-plus { font-size: 28px; }
+    .upload-text { font-size: 12px; letter-spacing: 1px; }
+    .field-wrap { display: flex; flex-direction: column; gap: 6px; }
+    .field-label { font-size: 10px; letter-spacing: 2.5px; text-transform: uppercase; color: #5A5550; }
+    .field-input {
+      background: transparent; border: none; border-bottom: 1px solid #2E2C2A;
+      color: #EDE8DF; font-size: 15px; padding: 10px 0; width: 100%;
+      outline: none; font-family: 'DM Sans', sans-serif; font-weight: 300;
+    }
+    .field-textarea {
+      background: transparent; border: none; border-bottom: 1px solid #2E2C2A;
+      color: #EDE8DF; font-size: 15px; padding: 10px 0; width: 100%;
+      outline: none; font-family: 'DM Sans', sans-serif; resize: none; height: 80px; font-weight: 300;
+    }
+    .add-actions { display: flex; gap: 10px; }
+    .btn-cancel {
+      flex: 1; padding: 13px; border-radius: 100px; border: 1px solid #2E2C2A;
+      background: transparent; color: #EDE8DF; font-size: 13px; cursor: pointer; font-family: 'DM Sans', sans-serif;
+    }
+    .btn-save {
+      flex: 2; padding: 13px; border-radius: 100px; border: none; background: #C8A87A;
+      color: #0D0C0B; font-size: 13px; font-weight: 600; cursor: pointer; font-family: 'DM Sans', sans-serif;
+    }
+
+    .loading-view { display: flex; align-items: center; justify-content: center; height: 100vh; font-size: 13px; color: #3A3835; }
+    input[type="date"]::-webkit-calendar-picker-indicator { filter: invert(0.5); }
+    ::placeholder { color: #3A3835; }
+  </style>
+</head>
+<body>
+<div id="app"></div>
+<script>
+  const state = {
+    key: null,
+    keyInput: '',
+    keyError: false,
+    entries: [],
+    currentIndex: 0,
+    view: 'key',
+    form: { photo: null, title: '', caption: '', date: '' },
+    fading: false,
+  };
+
+  const storageKey = k => `best-days-${k.trim()}`;
+
+  const formatDate = d => {
+    if (!d) return '';
+    return new Date(d + 'T12:00:00').toLocaleDateString('en-AU', { day: 'numeric', month: 'long', year: 'numeric' });
+  };
+
+  function render() {
+    const app = document.getElementById('app');
+
+    if (state.view === 'loading') {
+      app.innerHTML = `<div class="loading-view">loading...</div>`;
+      return;
+    }
+
+    if (state.view === 'key') {
+      app.innerHTML = `
+        <div class="key-shell">
+          <div class="key-title">the best days<br>of your life</div>
+          <div class="key-sub">enter your key to continue</div>
+          <div class="key-input-wrap">
+            <input id="key-field" class="key-field${state.keyError ? ' error' : ''}" type="password" placeholder="····" autocomplete="off">
+            ${state.keyError ? '<div class="key-error">wrong key</div>' : ''}
+          </div>
+          <button class="key-btn" id="key-btn">enter</button>
+        </div>`;
+      const f = document.getElementById('key-field');
+      f.focus();
+      f.addEventListener('input', e => { state.keyInput = e.target.value; state.keyError = false; f.classList.remove('error'); });
+      f.addEventListener('keydown', e => { if (e.key === 'Enter') submitKey(); });
+      document.getElementById('key-btn').addEventListener('click', submitKey);
+      return;
+    }
+
+    if (state.view === 'add') {
+      app.innerHTML = `
+        <div class="add-shell">
+          <div>
+            <div class="add-heading">a new day</div>
+            <div class="add-sub">something worth keeping</div>
+          </div>
+          <div class="upload-box" id="upload-box">
+            ${state.form.photo ? `<img src="${state.form.photo}" alt="preview">` : `<div class="upload-plus">+</div><div class="upload-text">add a photo</div>`}
+            <input type="file" accept="image/*" id="file-input" style="display:none">
+          </div>
+          <div class="field-wrap">
+            <label class="field-label">title</label>
+            <input class="field-input" id="f-title" placeholder="what made this day?" value="${state.form.title}">
+          </div>
+          <div class="field-wrap">
+            <label class="field-label">date</label>
+            <input class="field-input" type="date" id="f-date" value="${state.form.date}">
+          </div>
+          <div class="field-wrap">
+            <label class="field-label">caption</label>
+            <textarea class="field-textarea" id="f-caption" placeholder="anything you want to remember...">${state.form.caption}</textarea>
+          </div>
+          <div class="add-actions">
+            <button class="btn-cancel" id="btn-cancel">cancel</button>
+            <button class="btn-save" id="btn-save">save this day</button>
+          </div>
+        </div>`;
+      document.getElementById('upload-box').addEventListener('click', () => document.getElementById('file-input').click());
+      document.getElementById('file-input').addEventListener('change', handlePhoto);
+      document.getElementById('f-title').addEventListener('input', e => state.form.title = e.target.value);
+      document.getElementById('f-date').addEventListener('input', e => state.form.date = e.target.value);
+      document.getElementById('f-caption').addEventListener('input', e => state.form.caption = e.target.value);
+      document.getElementById('btn-cancel').addEventListener('click', () => { state.view = state.entries.length ? 'story' : 'empty'; render(); });
+      document.getElementById('btn-save').addEventListener('click', handleSave);
+      return;
+    }
+
+    if (state.view === 'empty') {
+      app.innerHTML = `
+        <div class="empty-shell">
+          <div class="empty-title">nothing here yet</div>
+          <div class="empty-body">start logging the moments<br>worth remembering</div>
+          <button class="btn-gold-standalone" id="btn-add-first">add your first day</button>
+          <button class="change-key-btn" id="btn-change-key">← change key</button>
+        </div>`;
+      document.getElementById('btn-add-first').addEventListener('click', () => { state.view = 'add'; render(); });
+      document.getElementById('btn-change-key').addEventListener('click', lockOut);
+      return;
+    }
+
+    // STORY
+    const entry = state.entries[state.currentIndex];
+    const total = state.entries.length;
+    app.innerHTML = `
+      <div class="story-shell">
+        ${total > 1 ? `<div class="counter">${state.currentIndex + 1} / ${total}</div>` : ''}
+        <button class="lock-btn" id="btn-lock">🔒</button>
+        <div class="card${state.fading ? ' fading' : ''}" id="card">
+          ${entry.photo
+            ? `<img class="card-photo" src="${entry.photo}" alt="">`
+            : `<div class="no-photo"><div class="no-photo-icon">◈</div><div class="no-photo-text">no photo</div></div>`}
+          <div class="overlay"></div>
+          <div class="info">
+            <div class="entry-date">${formatDate(entry.date)}</div>
+            <div class="entry-title">${entry.title}</div>
+            ${entry.caption ? `<div class="entry-caption">${entry.caption}</div>` : ''}
+          </div>
+          ${state.currentIndex > 0 ? `<div class="tap-zone tap-left" id="tap-left"></div>` : ''}
+          ${state.currentIndex < total - 1 ? `<div class="tap-zone tap-right" id="tap-right"></div>` : ''}
+        </div>
+        <div class="actions">
+          <button class="btn-ghost" id="btn-remove">remove</button>
+          <button class="btn-gold" id="btn-add">+ add day</button>
+        </div>
+      </div>`;
+    document.getElementById('btn-lock').addEventListener('click', lockOut);
+    document.getElementById('btn-remove').addEventListener('click', handleDelete);
+    document.getElementById('btn-add').addEventListener('click', () => { state.view = 'add'; render(); });
+    document.getElementById('tap-left')?.addEventListener('click', () => navigate(-1));
+    document.getElementById('tap-right')?.addEventListener('click', () => navigate(1));
+  }
+
+  async function submitKey() {
+    const trimmed = state.keyInput.trim();
+    if (!trimmed) return;
+    state.view = 'loading'; render();
+    try {
+      const result = await window.storage.get(storageKey(trimmed), true);
+      state.entries = result?.value ? JSON.parse(result.value) : [];
+    } catch (_) { state.entries = []; }
+    state.key = trimmed;
+    state.currentIndex = 0;
+    state.view = state.entries.length === 0 ? 'empty' : 'story';
+    render();
+  }
+
+  async function persist(list) {
+    try { await window.storage.set(storageKey(state.key), JSON.stringify(list), true); } catch (_) {}
+  }
+
+  function lockOut() {
+    state.key = null; state.keyInput = ''; state.keyError = false;
+    state.entries = []; state.currentIndex = 0; state.view = 'key';
+    render();
+  }
+
+  function navigate(dir) {
+    if (state.fading) return;
+    const next = state.currentIndex + dir;
+    if (next < 0 || next >= state.entries.length) return;
+    state.fading = true; render();
+    setTimeout(() => { state.currentIndex = next; state.fading = false; render(); }, 180);
+  }
+
+  function handlePhoto(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = () => { state.form.photo = reader.result; render(); };
+    reader.readAsDataURL(file);
+  }
+
+  async function handleSave() {
+    if (!state.form.title.trim() || !state.form.date) return;
+    const entry = { id: Date.now(), photo: state.form.photo, title: state.form.title, caption: state.form.caption, date: state.form.date };
+    const updated = [...state.entries, entry];
+    state.entries = updated;
+    await persist(updated);
+    state.currentIndex = updated.length - 1;
+    state.form = { photo: null, title: '', caption: '', date: '' };
+    state.view = 'story'; render();
+  }
+
+  async function handleDelete() {
+    if (!confirm('Remove this day?')) return;
+    const updated = state.entries.filter((_, i) => i !== state.currentIndex);
+    state.entries = updated;
+    await persist(updated);
+    state.currentIndex = Math.max(0, state.currentIndex - 1);
+    state.view = updated.length === 0 ? 'empty' : 'story';
+    render();
+  }
+
+  render();
+</script>
+</body>
+</html>
