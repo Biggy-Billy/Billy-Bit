@@ -182,7 +182,11 @@ const esc=s=>(s||’’).replace(/&/g,’&’).replace(/</g,’<’).replace(/>/
 const fmt=d=>d?new Date(d+‘T12:00:00’).toLocaleDateString(‘en-AU’,{day:‘numeric’,month:‘long’,year:‘numeric’}):’’;
 const fmtS=d=>d?new Date(d+‘T12:00:00’).toLocaleDateString(‘en-AU’,{day:‘numeric’,month:‘short’}):’’;
 const dateLabel=e=>e.type===‘trip’?`${fmtS(e.startDate)} → ${fmtS(e.endDate)}`:fmt(e.date);
-async function hashKey(k){const buf=await crypto.subtle.digest(‘SHA-256’,new TextEncoder().encode(k+’:bd-salt’));return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,‘0’)).join(’’)}
+async function hashKey(k){
+try{if(window.crypto&&crypto.subtle){const buf=await crypto.subtle.digest(‘SHA-256’,new TextEncoder().encode(k+’:bd-salt’));return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,‘0’)).join(’’);}}catch(_){}
+let h=5381;for(let i=0;i<k.length;i++)h=(h*33^k.charCodeAt(i))>>>0;
+return ‘fb-’+h.toString(36)+’-’+(k.length*7+13).toString(36);
+}
 const go=v=>{S.view=v;render()};
 
 // ━━ RENDER ━━
@@ -422,7 +426,12 @@ await DB.put(e);S.entries=[e,…S.entries];S.openEntry=e;go(‘memory’);
 function setupUpload(inputId,boxId,field){const box=$(boxId),inp=$(inputId);if(!box||!inp)return;box.onclick=()=>inp.click();inp.onchange=async e=>{const f=e.target.files[0];if(!f)return;S.form[field]=await compress(f);render()}}
 
 // ━━ INIT ━━
-(async()=>{render();await DB.init();go(‘key’)})();
+(async()=>{
+try{render();await DB.init();go(‘key’);}
+catch(err){
+document.getElementById(‘view’).innerHTML=`<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;gap:16px;padding:40px;text-align:center"><div style="font-size:13px;color:#C87A7A">something went wrong loading the app</div><div style="font-size:11px;color:#484440;word-break:break-all">${err?.message||'unknown error'}</div><button onclick="location.reload()" style="margin-top:8px;background:#C8A87A;color:#0C0B0A;border:none;padding:12px 24px;border-radius:100px;cursor:pointer;font-family:DM Sans,sans-serif;font-size:13px;font-weight:600">retry</button></div>`;
+}
+})();
 </script>
 
 </body>
