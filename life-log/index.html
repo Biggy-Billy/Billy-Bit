@@ -1,352 +1,660 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-  <title>Best Days</title>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400;1,600&family=DM+Sans:wght@300;400;500&display=swap">
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Best Days</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400;1,600&family=DM+Sans:wght@300;400;500&display=swap">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden;background:#0C0B0A}
+body{font-family:'DM Sans',sans-serif;color:#EDE8DF;display:flex;justify-content:center;align-items:center}
+#app{width:100%;max-width:430px;height:100vh;position:relative;overflow:hidden}
+.scroll{height:100vh;overflow-y:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.scroll::-webkit-scrollbar{display:none}
+.inner{padding:62px 26px 60px;display:flex;flex-direction:column;gap:24px}
+::placeholder{color:#282522}
+input[type="date"]::-webkit-calendar-picker-indicator{filter:invert(0.35)}
 
-    body {
-      font-family: 'DM Sans', sans-serif;
-      background: #0D0C0B;
-      min-height: 100vh;
-      color: #EDE8DF;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      overflow: hidden;
-    }
+/* BUTTONS */
+.btn{border:none;cursor:pointer;font-family:'DM Sans',sans-serif;transition:opacity .15s}
+.btn:active{opacity:.7}
+.btn-gold{background:#C8A87A;color:#0D0C0B;font-size:14px;font-weight:600;padding:13px 24px;border-radius:100px}
+.btn-ghost{background:rgba(0,0,0,.5);border:1px solid rgba(237,232,223,.18);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);color:#EDE8DF;font-size:13px;padding:12px 20px;border-radius:100px}
+.btn-bare{background:none;color:#5A5550;font-size:13px;padding:4px 0}
+.btn-icon{background:none;color:rgba(237,232,223,.35);font-size:18px;padding:4px;border:none;cursor:pointer}
 
-    #app {
-      width: 100%;
-      max-width: 390px;
-      height: 100vh;
-      position: relative;
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-    }
+/* FIELDS */
+.field{display:flex;flex-direction:column;gap:8px}
+.lbl{font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:#4A4845}
+.fin,.fta{background:transparent;border:none;border-bottom:1px solid #1E1C1A;color:#EDE8DF;font-size:15px;padding:10px 0;width:100%;outline:none;font-family:'DM Sans',sans-serif;font-weight:300}
+.fta{resize:none;height:80px}
+.row2{display:flex;gap:16px}.row2 .field{flex:1}
 
-    /* KEY */
-    .key-shell {
-      display: flex; flex-direction: column; align-items: center;
-      justify-content: center; gap: 32px; height: 100vh; padding: 48px; text-align: center;
-    }
-    .key-title { font-family: 'Lora', serif; font-size: 30px; font-style: italic; color: #EDE8DF; line-height: 1.35; }
-    .key-sub { font-size: 13px; color: #5A5550; line-height: 1.7; font-weight: 300; margin-top: -12px; }
-    .key-input-wrap { width: 100%; display: flex; flex-direction: column; align-items: center; gap: 12px; }
-    .key-field {
-      background: transparent; border: none; border-bottom: 1px solid #2E2C2A;
-      color: #EDE8DF; font-size: 28px; padding: 10px 0; width: 100%;
-      outline: none; font-family: 'DM Sans', sans-serif; font-weight: 300;
-      text-align: center; letter-spacing: 6px; transition: border-color 0.2s;
-    }
-    .key-field.error { border-bottom-color: #C87A7A; }
-    .key-error { font-size: 12px; color: #C87A7A; letter-spacing: 1px; }
-    .key-btn {
-      padding: 13px 40px; border-radius: 100px; border: none; background: #C8A87A;
-      color: #0D0C0B; font-size: 13px; font-weight: 600; cursor: pointer;
-      font-family: 'DM Sans', sans-serif;
-    }
+/* UPLOAD */
+.ubox{width:100%;background:#111009;border:1px dashed #222;border-radius:14px;overflow:hidden;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;color:#2A2826;position:relative}
+.ubox img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.ubox-cover{aspect-ratio:4/5}
+.uico{font-size:24px;position:relative;z-index:1}
+.utxt{font-size:12px;letter-spacing:.5px;position:relative;z-index:1}
 
-    /* STORY */
-    .story-shell { width: 100%; height: 100vh; position: relative; display: flex; flex-direction: column; }
-    .card { flex: 1; position: relative; overflow: hidden; transition: opacity 0.18s ease; }
-    .card.fading { opacity: 0; }
-    .card-photo { width: 100%; height: 100%; object-fit: cover; display: block; }
-    .no-photo {
-      width: 100%; height: 100%; background: #181614;
-      display: flex; flex-direction: column; align-items: center; justify-content: center;
-      gap: 12px; color: #3A3835;
-    }
-    .no-photo-icon { font-size: 48px; line-height: 1; }
-    .no-photo-text { font-size: 12px; }
-    .overlay {
-      position: absolute; inset: 0; pointer-events: none;
-      background: linear-gradient(to top, rgba(8,7,6,0.92) 0%, rgba(8,7,6,0.5) 45%, rgba(8,7,6,0.15) 70%, transparent 100%);
-    }
-    .info { position: absolute; bottom: 96px; left: 28px; right: 28px; }
-    .entry-date { font-size: 11px; letter-spacing: 2.5px; text-transform: uppercase; color: #C8A87A; margin-bottom: 10px; }
-    .entry-title { font-family: 'Lora', serif; font-size: 30px; font-weight: 600; line-height: 1.2; color: #F5F0E8; margin-bottom: 10px; }
-    .entry-caption { font-size: 14px; line-height: 1.65; color: rgba(237,232,223,0.72); font-weight: 300; }
-    .tap-zone { position: absolute; top: 0; height: 100%; width: 38%; z-index: 4; cursor: pointer; }
-    .tap-left { left: 0; }
-    .tap-right { right: 0; }
-    .counter {
-      position: absolute; top: 20px; left: 50%; transform: translateX(-50%);
-      font-size: 11px; letter-spacing: 2px; color: rgba(237,232,223,0.5);
-      text-transform: uppercase; z-index: 5; white-space: nowrap;
-    }
-    .lock-btn {
-      position: absolute; top: 16px; right: 20px; z-index: 10;
-      background: none; border: none; color: rgba(237,232,223,0.35);
-      font-size: 16px; cursor: pointer; padding: 4px;
-    }
-    .actions { position: absolute; bottom: 28px; left: 28px; right: 28px; display: flex; gap: 10px; z-index: 5; }
-    .btn-ghost {
-      flex: 1; padding: 12px; border-radius: 100px;
-      border: 1px solid rgba(237,232,223,0.2); background: rgba(0,0,0,0.35);
-      backdrop-filter: blur(10px); color: #EDE8DF; font-size: 13px; cursor: pointer;
-      font-family: 'DM Sans', sans-serif;
-    }
-    .btn-gold {
-      flex: 2; padding: 12px; border-radius: 100px; border: none;
-      background: #C8A87A; color: #0D0C0B; font-size: 13px; font-weight: 600;
-      cursor: pointer; font-family: 'DM Sans', sans-serif;
-    }
+/* KEY */
+.key-wrap{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:36px;height:100vh;padding:52px;text-align:center}
+.key-title{font-family:'Lora',serif;font-size:32px;font-style:italic;line-height:1.3;color:#EDE8DF}
+.key-sub{font-size:13px;color:#4A4845;line-height:1.7;font-weight:300;margin-top:-18px}
+.key-in{background:transparent;border:none;border-bottom:1px solid #1E1C1A;color:#EDE8DF;font-size:38px;padding:10px 0;width:100%;outline:none;font-family:'DM Sans',sans-serif;font-weight:300;text-align:center;letter-spacing:12px}
+.key-err{font-size:12px;color:#C87A7A;min-height:16px;text-align:center}
 
-    /* EMPTY */
-    .empty-shell {
-      display: flex; flex-direction: column; align-items: center; justify-content: center;
-      gap: 20px; height: 100vh; padding: 48px; text-align: center;
-    }
-    .empty-title { font-family: 'Lora', serif; font-size: 28px; font-style: italic; font-weight: 400; line-height: 1.3; color: #EDE8DF; }
-    .empty-body { font-size: 14px; color: #5A5550; line-height: 1.7; font-weight: 300; }
-    .btn-gold-standalone {
-      padding: 13px 32px; border-radius: 100px; border: none; background: #C8A87A;
-      color: #0D0C0B; font-size: 13px; font-weight: 600; cursor: pointer;
-      margin-top: 8px; font-family: 'DM Sans', sans-serif;
-    }
-    .change-key-btn { font-size: 12px; color: #3A3835; background: none; border: none; cursor: pointer; font-family: 'DM Sans', sans-serif; }
+/* HOME */
+.home-wrap{height:100vh;display:flex;flex-direction:column}
+.home-hdr{padding:56px 22px 14px;display:flex;align-items:flex-end;justify-content:space-between;flex-shrink:0}
+.home-title{font-family:'Lora',serif;font-size:26px;font-style:italic}
+.home-count{font-size:12px;color:#4A4845;margin-bottom:3px}
+.filters{padding:0 22px 14px;display:flex;gap:8px;overflow-x:auto;flex-shrink:0;scrollbar-width:none}
+.filters::-webkit-scrollbar{display:none}
+.chip{padding:7px 16px;border-radius:100px;border:1px solid #1E1C1A;background:transparent;color:#4A4845;font-size:12px;cursor:pointer;font-family:'DM Sans',sans-serif;white-space:nowrap;transition:all .2s;flex-shrink:0}
+.chip.on{border-color:#C8A87A;color:#C8A87A;background:rgba(200,168,122,.08)}
+.grid{flex:1;overflow-y:auto;padding:2px 16px 100px;display:grid;grid-template-columns:1fr 1fr;gap:10px;align-content:start;scrollbar-width:none}
+.grid::-webkit-scrollbar{display:none}
 
-    /* ADD */
-    .add-shell {
-      width: 100%; min-height: 100vh; padding: 56px 28px 40px;
-      display: flex; flex-direction: column; gap: 28px; overflow-y: auto;
-    }
-    .add-heading { font-family: 'Lora', serif; font-size: 24px; font-style: italic; color: #EDE8DF; }
-    .add-sub { font-size: 13px; color: #5A5550; margin-top: 4px; font-weight: 300; }
-    .upload-box {
-      width: 100%; aspect-ratio: 3/4; background: #161412; border: 1px dashed #2E2C2A;
-      border-radius: 14px; overflow: hidden; cursor: pointer; display: flex;
-      align-items: center; justify-content: center; flex-direction: column;
-      gap: 10px; color: #3A3835; position: relative;
-    }
-    .upload-box img { width: 100%; height: 100%; object-fit: cover; position: absolute; inset: 0; }
-    .upload-plus { font-size: 28px; }
-    .upload-text { font-size: 12px; letter-spacing: 1px; }
-    .field-wrap { display: flex; flex-direction: column; gap: 6px; }
-    .field-label { font-size: 10px; letter-spacing: 2.5px; text-transform: uppercase; color: #5A5550; }
-    .field-input {
-      background: transparent; border: none; border-bottom: 1px solid #2E2C2A;
-      color: #EDE8DF; font-size: 15px; padding: 10px 0; width: 100%;
-      outline: none; font-family: 'DM Sans', sans-serif; font-weight: 300;
-    }
-    .field-textarea {
-      background: transparent; border: none; border-bottom: 1px solid #2E2C2A;
-      color: #EDE8DF; font-size: 15px; padding: 10px 0; width: 100%;
-      outline: none; font-family: 'DM Sans', sans-serif; resize: none; height: 80px; font-weight: 300;
-    }
-    .add-actions { display: flex; gap: 10px; }
-    .btn-cancel {
-      flex: 1; padding: 13px; border-radius: 100px; border: 1px solid #2E2C2A;
-      background: transparent; color: #EDE8DF; font-size: 13px; cursor: pointer; font-family: 'DM Sans', sans-serif;
-    }
-    .btn-save {
-      flex: 2; padding: 13px; border-radius: 100px; border: none; background: #C8A87A;
-      color: #0D0C0B; font-size: 13px; font-weight: 600; cursor: pointer; font-family: 'DM Sans', sans-serif;
-    }
+/* CARDS */
+.card{border-radius:14px;overflow:hidden;cursor:pointer;position:relative;aspect-ratio:3/4;background:#111009}
+.card-wide{grid-column:1/-1;aspect-ratio:16/9}
+.card img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.card-grad{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.88) 0%,transparent 55%)}
+.card-body{position:absolute;bottom:0;left:0;right:0;padding:14px 14px 13px}
+.card-badge{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:rgba(237,232,223,.45);margin-bottom:4px;display:block}
+.card-title{font-family:'Lora',serif;font-size:15px;font-weight:600;color:#F5F0E8;line-height:1.2;margin-bottom:3px}
+.card-date{font-size:11px;color:rgba(237,232,223,.45);font-weight:300}
+.card-no-photo{display:flex;align-items:center;justify-content:center;height:100%;color:#1E1C1A;font-size:32px}
+.card-text-preview{position:absolute;inset:0;padding:18px 16px;display:flex;flex-direction:column;justify-content:flex-end}
+.card-text-snip{font-size:12px;color:rgba(237,232,223,.55);line-height:1.5;font-weight:300;overflow:hidden;display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical}
 
-    .loading-view { display: flex; align-items: center; justify-content: center; height: 100vh; font-size: 13px; color: #3A3835; }
-    input[type="date"]::-webkit-calendar-picker-indicator { filter: invert(0.5); }
-    ::placeholder { color: #3A3835; }
-  </style>
+/* FAB */
+.fab{position:fixed;bottom:28px;right:calc(50% - 215px + 22px);width:58px;height:58px;border-radius:50%;background:#C8A87A;border:none;cursor:pointer;font-size:26px;color:#0C0B0A;box-shadow:0 4px 24px rgba(200,168,122,.35);z-index:20;transition:transform .15s,box-shadow .15s}
+.fab:active{transform:scale(.9);box-shadow:0 2px 12px rgba(200,168,122,.25)}
+@media(max-width:430px){.fab{right:22px}}
+.empty-state{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;height:60vh;text-align:center;padding:40px;grid-column:1/-1}
+.empty-icon{font-size:38px;opacity:.2}
+.empty-txt{font-size:14px;color:#4A4845;line-height:1.7}
+
+/* TEMPLATE */
+.tmpl-wrap{display:flex;flex-direction:column;justify-content:center;gap:22px;height:100vh;padding:48px 26px}
+.tmpl-head{font-family:'Lora',serif;font-size:24px;font-style:italic}
+.tmpl-sub{font-size:13px;color:#4A4845;font-weight:300;margin-top:-10px}
+.tmpl-list{display:flex;flex-direction:column;gap:10px}
+.tmpl-card{padding:18px 20px;border-radius:16px;border:1px solid #1A1815;cursor:pointer;display:flex;align-items:center;gap:16px;background:#0F0D0B;transition:border-color .2s,background .2s}
+.tmpl-card:hover,.tmpl-card:active{border-color:#C8A87A;background:#151210}
+.tmpl-icon{font-size:26px;width:34px;text-align:center}
+.tmpl-name{font-size:15px;font-weight:500;margin-bottom:2px}
+.tmpl-desc{font-size:12px;color:#4A4845;font-weight:300;line-height:1.35}
+
+/* STORY */
+.story{position:absolute;inset:0;transition:opacity .18s ease}
+.story-bg{position:absolute;inset:0;background:#0C0B0A}
+.story-bg img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.story-gt{position:absolute;top:0;left:0;right:0;height:160px;background:linear-gradient(to bottom,rgba(0,0,0,.75) 0%,transparent 100%);pointer-events:none;z-index:2}
+.story-gb{position:absolute;bottom:0;left:0;right:0;height:62%;background:linear-gradient(to top,rgba(0,0,0,.96) 0%,rgba(0,0,0,.5) 42%,transparent 100%);pointer-events:none;z-index:2}
+.prog{position:absolute;top:12px;left:12px;right:12px;display:flex;gap:3px;z-index:10}
+.pseg{flex:1;height:2px;border-radius:1px;background:rgba(255,255,255,.25);overflow:hidden;cursor:pointer}
+.pfill{height:100%;border-radius:1px;background:rgba(255,255,255,.9);width:0}
+.pseg.past .pfill,.pseg.curr .pfill{width:100%}
+.story-top{position:absolute;top:24px;left:14px;right:14px;display:flex;align-items:center;justify-content:space-between;z-index:10}
+.story-badge{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.45)}
+.story-info{position:absolute;bottom:90px;left:24px;right:24px;z-index:5}
+.story-super{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:5px}
+.story-date{font-size:11px;letter-spacing:2.5px;text-transform:uppercase;color:#C8A87A;margin-bottom:9px}
+.story-title{font-family:'Lora',serif;font-size:30px;font-weight:600;line-height:1.2;color:#F5F0E8;margin-bottom:10px}
+.story-cap{font-size:14px;line-height:1.65;color:rgba(237,232,223,.7);font-weight:300}
+.story-mem-body{position:absolute;inset:0;overflow-y:auto;padding:100px 28px 100px}
+.story-mem-text{font-size:16px;line-height:1.85;color:rgba(237,232,223,.82);font-weight:300;white-space:pre-wrap}
+.tap-l,.tap-r{position:absolute;top:58px;bottom:82px;width:38%;z-index:8;cursor:pointer}
+.tap-l{left:0}.tap-r{right:0}
+.story-acts{position:absolute;bottom:24px;left:24px;right:24px;display:flex;gap:8px;z-index:10}
+.story-acts .btn-ghost{flex:1;font-size:12px;padding:11px 12px}
+.story-acts .btn-gold{flex:1;font-size:12px;padding:11px 12px}
+
+/* COLLAGE */
+.collage{position:absolute;inset:0;display:grid;gap:2px}
+.collage-1{grid-template-columns:1fr}
+.collage-2{grid-template-columns:1fr 1fr}
+.collage-3{grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr}
+.collage-4{grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr}
+.ci{overflow:hidden;background:#111009}
+.ci img{width:100%;height:100%;object-fit:cover}
+
+/* STOPS */
+.stops-list{display:flex;flex-direction:column;gap:14px}
+.stop-card{background:#0F0D0B;border:1px solid #1A1815;border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:14px}
+.stop-hdr{display:flex;align-items:center;justify-content:space-between}
+.stop-num{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#4A4845}
+.sphoto{width:80px;height:80px;border-radius:10px;background:#0C0B0A;border:1px dashed #1E1C1A;overflow:hidden;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#2A2826;font-size:20px;position:relative;flex-shrink:0}
+.sphoto img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+
+/* MOMENT PHOTOS */
+.mphoto-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.mphoto-slot{aspect-ratio:1;border-radius:10px;overflow:hidden;background:#111009;position:relative}
+.mphoto-slot img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.mphoto-del{position:absolute;top:4px;right:4px;background:rgba(0,0,0,.65);border-radius:50%;width:20px;height:20px;display:flex;align-items:center;justify-content:center;font-size:12px;color:#fff;cursor:pointer;z-index:2;border:none;font-family:'DM Sans',sans-serif;line-height:1}
+.mphoto-add{aspect-ratio:1;border-radius:10px;border:1px dashed #222;background:#111009;display:flex;align-items:center;justify-content:center;color:#2A2826;cursor:pointer;font-size:22px}
+
+/* FORM HEADER */
+.form-title{font-family:'Lora',serif;font-size:22px;font-style:italic}
+.form-sub{font-size:13px;color:#4A4845;font-weight:300;margin-top:4px}
+.form-acts{display:flex;gap:10px;padding-top:4px}
+.form-acts .btn-ghost{flex:1}
+.form-acts .btn-gold{flex:2}
+
+/* ANIMATIONS */
+.fade-in{animation:fi .22s ease}
+.slide-up{animation:su .25s ease}
+@keyframes fi{from{opacity:0}to{opacity:1}}
+@keyframes su{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+</style>
 </head>
 <body>
 <div id="app"></div>
 <script>
-  const state = {
-    key: null,
-    keyInput: '',
-    keyError: false,
-    entries: [],
-    currentIndex: 0,
-    view: 'key',
-    form: { photo: null, title: '', caption: '', date: '' },
-    fading: false,
-  };
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// INDEXEDDB
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+const DB = {
+  db: null,
+  init() {
+    return new Promise((ok, fail) => {
+      const req = indexedDB.open('best-days-v2', 1);
+      req.onupgradeneeded = e => {
+        const d = e.target.result;
+        if (!d.objectStoreNames.contains('entries'))  d.createObjectStore('entries',  { keyPath: 'id' });
+        if (!d.objectStoreNames.contains('settings')) d.createObjectStore('settings', { keyPath: 'k' });
+      };
+      req.onsuccess = e => { this.db = e.target.result; ok(); };
+      req.onerror   = () => fail(req.error);
+    });
+  },
+  tx(store, mode) { return this.db.transaction(store, mode).objectStore(store); },
+  getAll()  { return new Promise((ok,f) => { const r=this.tx('entries','readonly').getAll(); r.onsuccess=()=>ok(r.result||[]); r.onerror=()=>f(r.error); }); },
+  put(e)    { return new Promise((ok,f) => { const t=this.db.transaction('entries','readwrite'); t.objectStore('entries').put(e); t.oncomplete=ok; t.onerror=()=>f(t.error); }); },
+  del(id)   { return new Promise((ok,f) => { const t=this.db.transaction('entries','readwrite'); t.objectStore('entries').delete(id); t.oncomplete=ok; t.onerror=()=>f(t.error); }); },
+  getSetting(k) { return new Promise(ok => { try { const r=this.tx('settings','readonly').get(k); r.onsuccess=()=>ok(r.result?.v); r.onerror=()=>ok(null); } catch(_){ok(null);} }); },
+  setSetting(k,v){ return new Promise((ok,f) => { const t=this.db.transaction('settings','readwrite'); t.objectStore('settings').put({k,v}); t.oncomplete=ok; t.onerror=()=>f(t.error); }); },
+};
 
-  const storageKey = k => `best-days-${k.trim()}`;
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// IMAGE COMPRESSION
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+function compress(file, maxW=1200, q=0.82) {
+  return new Promise(ok => {
+    const rd = new FileReader();
+    rd.onload = e => {
+      const img = new Image();
+      img.onload = () => {
+        const ratio = Math.min(maxW/img.width, maxW/img.height, 1);
+        const c = document.createElement('canvas');
+        c.width = img.width*ratio; c.height = img.height*ratio;
+        c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
+        ok(c.toDataURL('image/jpeg', q));
+      };
+      img.src = e.target.result;
+    };
+    rd.readAsDataURL(file);
+  });
+}
 
-  const formatDate = d => {
-    if (!d) return '';
-    return new Date(d + 'T12:00:00').toLocaleDateString('en-AU', { day: 'numeric', month: 'long', year: 'numeric' });
-  };
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// STATE
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+const S = { view:'loading', entries:[], filter:'all', slides:[], si:0, fading:false, form:null };
+const blankForm = (type='day') => ({ type, photo:null, photos:[], title:'', caption:'', date:'', startDate:'', endDate:'', description:'', text:'', stops:[] });
 
-  function render() {
-    const app = document.getElementById('app');
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// UTILS
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+const $ = id => document.getElementById(id);
+const app = () => document.getElementById('app');
+const fmt  = d => d ? new Date(d+'T12:00:00').toLocaleDateString('en-AU',{day:'numeric',month:'long',year:'numeric'}) : '';
+const fmtS = d => d ? new Date(d+'T12:00:00').toLocaleDateString('en-AU',{day:'numeric',month:'short'}) : '';
+const esc  = s => (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 
-    if (state.view === 'loading') {
-      app.innerHTML = `<div class="loading-view">loading...</div>`;
-      return;
+async function hashKey(k) {
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(k+':bd-2025'));
+  return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
+}
+
+function dateLabel(e) {
+  if (e.type==='trip') return `${fmtS(e.startDate)} → ${fmtS(e.endDate)}`;
+  return fmt(e.date);
+}
+
+function buildSlides(entries) {
+  const slides = [];
+  entries.forEach(e => {
+    if (e.type==='trip') {
+      slides.push({ kind:'trip-cover', entry:e });
+      (e.stops||[]).forEach((stop,i) => slides.push({ kind:'trip-stop', entry:e, stop, si:i }));
+    } else {
+      slides.push({ kind:e.type, entry:e });
     }
+  });
+  return slides;
+}
 
-    if (state.view === 'key') {
-      app.innerHTML = `
-        <div class="key-shell">
-          <div class="key-title">the best days<br>of your life</div>
-          <div class="key-sub">enter your key to continue</div>
-          <div class="key-input-wrap">
-            <input id="key-field" class="key-field${state.keyError ? ' error' : ''}" type="password" placeholder="····" autocomplete="off">
-            ${state.keyError ? '<div class="key-error">wrong key</div>' : ''}
-          </div>
-          <button class="key-btn" id="key-btn">enter</button>
-        </div>`;
-      const f = document.getElementById('key-field');
-      f.focus();
-      f.addEventListener('input', e => { state.keyInput = e.target.value; state.keyError = false; f.classList.remove('error'); });
-      f.addEventListener('keydown', e => { if (e.key === 'Enter') submitKey(); });
-      document.getElementById('key-btn').addEventListener('click', submitKey);
-      return;
-    }
+function filtered() { return S.filter==='all' ? S.entries : S.entries.filter(e=>e.type===S.filter); }
 
-    if (state.view === 'add') {
-      app.innerHTML = `
-        <div class="add-shell">
-          <div>
-            <div class="add-heading">a new day</div>
-            <div class="add-sub">something worth keeping</div>
-          </div>
-          <div class="upload-box" id="upload-box">
-            ${state.form.photo ? `<img src="${state.form.photo}" alt="preview">` : `<div class="upload-plus">+</div><div class="upload-text">add a photo</div>`}
-            <input type="file" accept="image/*" id="file-input" style="display:none">
-          </div>
-          <div class="field-wrap">
-            <label class="field-label">title</label>
-            <input class="field-input" id="f-title" placeholder="what made this day?" value="${state.form.title}">
-          </div>
-          <div class="field-wrap">
-            <label class="field-label">date</label>
-            <input class="field-input" type="date" id="f-date" value="${state.form.date}">
-          </div>
-          <div class="field-wrap">
-            <label class="field-label">caption</label>
-            <textarea class="field-textarea" id="f-caption" placeholder="anything you want to remember...">${state.form.caption}</textarea>
-          </div>
-          <div class="add-actions">
-            <button class="btn-cancel" id="btn-cancel">cancel</button>
-            <button class="btn-save" id="btn-save">save this day</button>
-          </div>
-        </div>`;
-      document.getElementById('upload-box').addEventListener('click', () => document.getElementById('file-input').click());
-      document.getElementById('file-input').addEventListener('change', handlePhoto);
-      document.getElementById('f-title').addEventListener('input', e => state.form.title = e.target.value);
-      document.getElementById('f-date').addEventListener('input', e => state.form.date = e.target.value);
-      document.getElementById('f-caption').addEventListener('input', e => state.form.caption = e.target.value);
-      document.getElementById('btn-cancel').addEventListener('click', () => { state.view = state.entries.length ? 'story' : 'empty'; render(); });
-      document.getElementById('btn-save').addEventListener('click', handleSave);
-      return;
-    }
+function go(view) { S.view=view; render(); }
 
-    if (state.view === 'empty') {
-      app.innerHTML = `
-        <div class="empty-shell">
-          <div class="empty-title">nothing here yet</div>
-          <div class="empty-body">start logging the moments<br>worth remembering</div>
-          <button class="btn-gold-standalone" id="btn-add-first">add your first day</button>
-          <button class="change-key-btn" id="btn-change-key">← change key</button>
-        </div>`;
-      document.getElementById('btn-add-first').addEventListener('click', () => { state.view = 'add'; render(); });
-      document.getElementById('btn-change-key').addEventListener('click', lockOut);
-      return;
-    }
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// RENDER
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+function render() {
+  const el = app(); el.innerHTML = '';
+  ({ loading:rLoading, key:rKey, home:rHome, story:rStory,
+     'add-template':rTemplate, 'add-day':rAddDay, 'add-trip':rAddTrip,
+     'add-moment':rAddMoment, 'add-memory':rAddMemory
+  }[S.view] || rLoading)(el);
+}
 
-    // STORY
-    const entry = state.entries[state.currentIndex];
-    const total = state.entries.length;
-    app.innerHTML = `
-      <div class="story-shell">
-        ${total > 1 ? `<div class="counter">${state.currentIndex + 1} / ${total}</div>` : ''}
-        <button class="lock-btn" id="btn-lock">🔒</button>
-        <div class="card${state.fading ? ' fading' : ''}" id="card">
-          ${entry.photo
-            ? `<img class="card-photo" src="${entry.photo}" alt="">`
-            : `<div class="no-photo"><div class="no-photo-icon">◈</div><div class="no-photo-text">no photo</div></div>`}
-          <div class="overlay"></div>
-          <div class="info">
-            <div class="entry-date">${formatDate(entry.date)}</div>
-            <div class="entry-title">${entry.title}</div>
-            ${entry.caption ? `<div class="entry-caption">${entry.caption}</div>` : ''}
-          </div>
-          ${state.currentIndex > 0 ? `<div class="tap-zone tap-left" id="tap-left"></div>` : ''}
-          ${state.currentIndex < total - 1 ? `<div class="tap-zone tap-right" id="tap-right"></div>` : ''}
+function rLoading(el) {
+  el.innerHTML='<div style="display:flex;align-items:center;justify-content:center;height:100vh;font-size:13px;color:#3A3835">loading...</div>';
+}
+
+// ━━ KEY ━━
+function rKey(el) {
+  el.innerHTML=`
+    <div class="key-wrap fade-in">
+      <div class="key-title">the best days<br>of your life</div>
+      <div class="key-sub">enter your key to continue</div>
+      <div style="width:100%">
+        <input id="kf" class="key-in" type="password" placeholder="····" autocomplete="off" spellcheck="false">
+        <div id="ke" class="key-err" style="margin-top:10px"></div>
+      </div>
+      <button class="btn btn-gold" id="kb" style="width:100%;padding:15px 0">enter</button>
+    </div>`;
+  $('kf').focus();
+  $('kf').onkeydown = e => { if(e.key==='Enter') submitKey($('kf').value); };
+  $('kb').onclick = () => submitKey($('kf').value);
+}
+
+async function submitKey(raw) {
+  raw = (raw||'').trim(); if(!raw) return;
+  go('loading');
+  const hash = await hashKey(raw);
+  const stored = await DB.getSetting('keyHash');
+  if (!stored) { await DB.setSetting('keyHash', hash); }
+  else if (stored !== hash) {
+    S.view='key'; render();
+    setTimeout(()=>{ if($('ke')) $('ke').textContent='wrong key'; if($('kf')){$('kf').value='';$('kf').focus();} },40);
+    return;
+  }
+  S.entries = (await DB.getAll()).sort((a,b)=>(b.date||b.startDate||'').localeCompare(a.date||a.startDate||''));
+  go('home');
+}
+
+// ━━ HOME ━━
+function rHome(el) {
+  const entries = filtered();
+  el.innerHTML=`
+    <div class="home-wrap fade-in">
+      <div class="home-hdr">
+        <div>
+          <div class="home-title">best days</div>
+          <div class="home-count">${S.entries.length} ${S.entries.length===1?'memory':'memories'}</div>
         </div>
-        <div class="actions">
-          <button class="btn-ghost" id="btn-remove">remove</button>
-          <button class="btn-gold" id="btn-add">+ add day</button>
-        </div>
+        <button class="btn-icon" id="btn-lock">🔒</button>
+      </div>
+      <div class="filters">
+        ${['all','day','trip','moment','memory'].map(f=>`<button class="btn chip${S.filter===f?' on':''}" data-f="${f}">${f==='all'?'All':f[0].toUpperCase()+f.slice(1)+'s'}</button>`).join('')}
+      </div>
+      <div class="grid" id="grid">
+        ${entries.length ? entries.map((e,i)=>cardHTML(e,i)).join('') : `<div class="empty-state"><div class="empty-icon">◈</div><div class="empty-txt">your best days<br>will live here</div></div>`}
+      </div>
+    </div>
+    <button class="fab" id="fab">+</button>`;
+  $('btn-lock').onclick=()=>{S.entries=[];S.filter='all';go('key');};
+  $('fab').onclick=()=>{S.form=blankForm();go('add-template');};
+  el.querySelectorAll('.chip').forEach(c=>{ c.onclick=()=>{S.filter=c.dataset.f;rHome(el);}; });
+  el.querySelectorAll('.card').forEach((c,i)=>{ c.onclick=()=>openStory(entries,i); });
+}
+
+function cardHTML(e,i) {
+  const isWide = e.type==='trip';
+  const cover = e.photo || e.photos?.[0] || e.stops?.find(s=>s.photo)?.photo || null;
+  const date = dateLabel(e);
+
+  if (e.type==='memory' && !cover) {
+    return `<div class="card${isWide?' card-wide':''}" data-i="${i}">
+      <div class="card-no-photo" style="background:#0F0D0B"></div>
+      <div class="card-text-preview">
+        <span class="card-badge">memory</span>
+        <div class="card-title" style="margin-bottom:6px">${esc(e.title)}</div>
+        <div class="card-text-snip">${esc(e.text||'')}</div>
+        <div class="card-date" style="margin-top:8px">${date}</div>
+      </div>
+    </div>`;
+  }
+
+  if (e.type==='moment' && (e.photos||[]).length > 1) {
+    const photos=e.photos.slice(0,4); const n=photos.length;
+    const grid=n===2?'grid-template-columns:1fr 1fr':n===3?'grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr':'grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr';
+    return `<div class="card${isWide?' card-wide':''}" data-i="${i}">
+      <div style="position:absolute;inset:0;display:grid;gap:2px;${grid}">
+        ${photos.map((p,pi)=>`<div style="overflow:hidden;background:#111009;${n===3&&pi===0?'grid-row:1/3':''}"><img src="${p}" style="width:100%;height:100%;object-fit:cover" loading="lazy"></div>`).join('')}
+      </div>
+      <div class="card-grad"></div>
+      <div class="card-body"><span class="card-badge">moment</span><div class="card-title">${esc(e.title||'untitled')}</div><div class="card-date">${date}</div></div>
+    </div>`;
+  }
+
+  return `<div class="card${isWide?' card-wide':''}" data-i="${i}">
+    ${cover?`<img src="${cover}" loading="lazy">`:`<div class="card-no-photo">◈</div>`}
+    <div class="card-grad"></div>
+    <div class="card-body"><span class="card-badge">${e.type}</span><div class="card-title">${esc(e.title||'untitled')}</div><div class="card-date">${date}</div></div>
+  </div>`;
+}
+
+function openStory(entries, idx) {
+  S.slides = buildSlides(entries);
+  const target = entries[idx];
+  const found = S.slides.findIndex(sl=>sl.entry.id===target.id);
+  S.si = found >= 0 ? found : 0;
+  go('story');
+}
+
+// ━━ STORY ━━
+function rStory(el) {
+  const total = S.slides.length;
+  const slide = S.slides[S.si];
+  const { entry } = slide;
+  let bg='', extra='', info='';
+
+  if (slide.kind==='day') {
+    bg = entry.photo ? `<img src="${entry.photo}">` : '';
+    info = `<div class="story-date">${fmt(entry.date)}</div><div class="story-title">${esc(entry.title||'untitled')}</div>${entry.caption?`<div class="story-cap">${esc(entry.caption)}</div>`:''}`;
+  } else if (slide.kind==='trip-cover') {
+    bg = entry.photo ? `<img src="${entry.photo}">` : '';
+    info = `<div class="story-date">${fmtS(entry.startDate)} → ${fmtS(entry.endDate)}</div><div class="story-title">${esc(entry.title||'untitled')}</div>${entry.description?`<div class="story-cap">${esc(entry.description)}</div>`:''}`;
+  } else if (slide.kind==='trip-stop') {
+    bg = slide.stop.photo ? `<img src="${slide.stop.photo}">` : '';
+    info = `<div class="story-super">${esc(entry.title)}</div><div class="story-date">stop ${slide.si+1} of ${entry.stops.length}</div><div class="story-title">${esc(slide.stop.name||'stop')}</div>${slide.stop.notes?`<div class="story-cap">${esc(slide.stop.notes)}</div>`:''}`;
+  } else if (slide.kind==='moment') {
+    const photos = entry.photos||[];
+    if (photos.length===1) { bg=`<img src="${photos[0]}">`; }
+    else if (photos.length>1) {
+      const n=Math.min(photos.length,4);
+      const grid=n===2?'grid-template-columns:1fr 1fr':n===3?'grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr':'grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr';
+      extra=`<div class="collage" style="${grid}">
+        ${photos.slice(0,4).map((p,pi)=>`<div class="ci" style="${n===3&&pi===0?'grid-row:1/3':''}"><img src="${p}"></div>`).join('')}
       </div>`;
-    document.getElementById('btn-lock').addEventListener('click', lockOut);
-    document.getElementById('btn-remove').addEventListener('click', handleDelete);
-    document.getElementById('btn-add').addEventListener('click', () => { state.view = 'add'; render(); });
-    document.getElementById('tap-left')?.addEventListener('click', () => navigate(-1));
-    document.getElementById('tap-right')?.addEventListener('click', () => navigate(1));
+    }
+    info = `<div class="story-date">${fmt(entry.date)}</div>${entry.title?`<div class="story-title">${esc(entry.title)}</div>`:''}${entry.caption?`<div class="story-cap">${esc(entry.caption)}</div>`:''}`;
+  } else if (slide.kind==='memory') {
+    extra = `<div class="story-mem-body"><div class="story-date" style="position:relative;z-index:1">${fmt(entry.date)}</div><div class="story-title" style="margin-top:6px;margin-bottom:18px;font-size:26px;position:relative;z-index:1">${esc(entry.title||'untitled')}</div><div class="story-mem-text">${esc(entry.text||'')}</div></div>`;
+    info = '';
   }
 
-  async function submitKey() {
-    const trimmed = state.keyInput.trim();
-    if (!trimmed) return;
-    state.view = 'loading'; render();
-    try {
-      const result = await window.storage.get(storageKey(trimmed), true);
-      state.entries = result?.value ? JSON.parse(result.value) : [];
-    } catch (_) { state.entries = []; }
-    state.key = trimmed;
-    state.currentIndex = 0;
-    state.view = state.entries.length === 0 ? 'empty' : 'story';
-    render();
-  }
+  const badgeMap = {'day':'DAY','trip-cover':'TRIP','trip-stop':'TRIP / STOP','moment':'MOMENT','memory':'MEMORY'};
 
-  async function persist(list) {
-    try { await window.storage.set(storageKey(state.key), JSON.stringify(list), true); } catch (_) {}
-  }
+  el.innerHTML=`
+    <div class="story fade-in">
+      <div class="story-bg">${bg}</div>
+      ${extra}
+      ${slide.kind!=='memory'?'<div class="story-gt"></div><div class="story-gb"></div>':''}
+      <div class="prog">
+        ${S.slides.map((_,i)=>`<div class="pseg${i<S.si?' past':i===S.si?' curr':''}" data-i="${i}"><div class="pfill"></div></div>`).join('')}
+      </div>
+      <div class="story-top">
+        <span class="story-badge">${badgeMap[slide.kind]||''}</span>
+        <button class="btn-icon" id="s-lock">🔒</button>
+      </div>
+      ${info?`<div class="story-info">${info}</div>`:''}
+      ${S.si>0?'<div class="tap-l" id="tap-l"></div>':''}
+      ${S.si<total-1?'<div class="tap-r" id="tap-r"></div>':''}
+      <div class="story-acts">
+        <button class="btn btn-ghost" id="s-back">← back</button>
+        <button class="btn btn-ghost" id="s-del">remove</button>
+        <button class="btn btn-gold" id="s-add">+ add</button>
+      </div>
+    </div>`;
 
-  function lockOut() {
-    state.key = null; state.keyInput = ''; state.keyError = false;
-    state.entries = []; state.currentIndex = 0; state.view = 'key';
-    render();
-  }
+  $('s-lock').onclick=()=>{S.entries=[];S.filter='all';go('key');};
+  $('s-back').onclick=()=>go('home');
+  $('s-del').onclick=deleteEntry;
+  $('s-add').onclick=()=>{S.form=blankForm();go('add-template');};
+  $('tap-l')?.addEventListener('click',()=>nav(-1));
+  $('tap-r')?.addEventListener('click',()=>nav(1));
+  el.querySelectorAll('.pseg').forEach(seg=>{
+    seg.onclick=e=>{e.stopPropagation();const i=parseInt(seg.dataset.i);if(i!==S.si){S.si=i;rStory(el);}};
+  });
+  let tx=0;
+  el.querySelector('.story').addEventListener('touchstart',e=>{tx=e.touches[0].clientX;},{passive:true});
+  el.querySelector('.story').addEventListener('touchend',e=>{const dx=e.changedTouches[0].clientX-tx;if(Math.abs(dx)>48)nav(dx<0?1:-1);},{passive:true});
+  document.onkeydown=e=>{if(e.key==='ArrowLeft')nav(-1);if(e.key==='ArrowRight')nav(1);if(e.key==='Escape')go('home');};
+}
 
-  function navigate(dir) {
-    if (state.fading) return;
-    const next = state.currentIndex + dir;
-    if (next < 0 || next >= state.entries.length) return;
-    state.fading = true; render();
-    setTimeout(() => { state.currentIndex = next; state.fading = false; render(); }, 180);
-  }
+function nav(dir) {
+  if(S.fading) return;
+  const n=S.si+dir;
+  if(n<0||n>=S.slides.length) return;
+  S.fading=true;
+  const s=app().querySelector('.story'); if(s) s.style.opacity='0';
+  setTimeout(()=>{S.si=n;S.fading=false;rStory(app());},160);
+}
 
-  function handlePhoto(e) {
-    const file = e.target.files[0];
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = () => { state.form.photo = reader.result; render(); };
-    reader.readAsDataURL(file);
-  }
+// ━━ TEMPLATE ━━
+function rTemplate(el) {
+  el.innerHTML=`
+    <div class="tmpl-wrap slide-up">
+      <div class="tmpl-head">what kind of memory?</div>
+      <div class="tmpl-sub">choose a template</div>
+      <div class="tmpl-list">
+        ${[
+          {t:'day',    i:'📷',n:'Day',    d:'A single standout day — one photo, date and a caption'},
+          {t:'trip',   i:'🗺️',n:'Trip',   d:'A multi-day journey with a timeline of stops'},
+          {t:'moment', i:'✨',n:'Moment', d:'Just a vibe — up to 6 photos, minimal text'},
+          {t:'memory', i:'📝',n:'Memory', d:'A written memory, no photo needed'},
+        ].map(x=>`<div class="tmpl-card" data-t="${x.t}"><div class="tmpl-icon">${x.i}</div><div><div class="tmpl-name">${x.n}</div><div class="tmpl-desc">${x.d}</div></div></div>`).join('')}
+      </div>
+      <button class="btn btn-bare" id="tb">← back</button>
+    </div>`;
+  el.querySelectorAll('.tmpl-card').forEach(c=>{c.onclick=()=>{S.form=blankForm(c.dataset.t);go('add-'+c.dataset.t);};});
+  $('tb').onclick=()=>go('home');
+}
 
-  async function handleSave() {
-    if (!state.form.title.trim() || !state.form.date) return;
-    const entry = { id: Date.now(), photo: state.form.photo, title: state.form.title, caption: state.form.caption, date: state.form.date };
-    const updated = [...state.entries, entry];
-    state.entries = updated;
-    await persist(updated);
-    state.currentIndex = updated.length - 1;
-    state.form = { photo: null, title: '', caption: '', date: '' };
-    state.view = 'story'; render();
-  }
+// ━━ ADD DAY ━━
+function rAddDay(el) {
+  el.innerHTML=`
+    <div class="scroll slide-up"><div class="inner">
+      <div><div class="form-title">a new day</div><div class="form-sub">something worth keeping</div></div>
+      <div class="ubox ubox-cover" id="ub"><div class="uico">+</div><div class="utxt">add a photo</div><input type="file" accept="image/*" id="ufi" style="display:none">${S.form.photo?`<img src="${S.form.photo}">`:''}
+      </div>
+      <div class="field"><label class="lbl">title</label><input class="fin" id="f-t" placeholder="what made this day?" value="${esc(S.form.title)}"></div>
+      <div class="field"><label class="lbl">date</label><input class="fin" id="f-d" type="date" value="${S.form.date}"></div>
+      <div class="field"><label class="lbl">caption</label><textarea class="fta" id="f-c" placeholder="anything you want to remember...">${esc(S.form.caption)}</textarea></div>
+      <div class="form-acts">
+        <button class="btn btn-ghost" id="fb">back</button>
+        <button class="btn btn-gold" id="fs">save this day</button>
+      </div>
+    </div></div>`;
+  setupUpload('ufi','ub','photo');
+  $('f-t').oninput=e=>S.form.title=e.target.value;
+  $('f-d').oninput=e=>S.form.date=e.target.value;
+  $('f-c').oninput=e=>S.form.caption=e.target.value;
+  $('fb').onclick=()=>go('add-template');
+  $('fs').onclick=async()=>{
+    if(!S.form.title.trim()||!S.form.date){alert('Title and date required');return;}
+    const e={id:Date.now(),type:'day',photo:S.form.photo,title:S.form.title,date:S.form.date,caption:S.form.caption};
+    await DB.put(e); S.entries=[e,...S.entries]; afterSave(e.id);
+  };
+}
 
-  async function handleDelete() {
-    if (!confirm('Remove this day?')) return;
-    const updated = state.entries.filter((_, i) => i !== state.currentIndex);
-    state.entries = updated;
-    await persist(updated);
-    state.currentIndex = Math.max(0, state.currentIndex - 1);
-    state.view = updated.length === 0 ? 'empty' : 'story';
-    render();
-  }
+// ━━ ADD TRIP ━━
+function rAddTrip(el) {
+  el.innerHTML=`
+    <div class="scroll slide-up"><div class="inner">
+      <div><div class="form-title">a new trip</div><div class="form-sub">a journey across multiple days</div></div>
+      <div class="ubox ubox-cover" id="ub"><div class="uico">+</div><div class="utxt">cover photo</div><input type="file" accept="image/*" id="ufi" style="display:none">${S.form.photo?`<img src="${S.form.photo}">`:''}
+      </div>
+      <div class="field"><label class="lbl">trip name</label><input class="fin" id="f-t" placeholder="where did you go?" value="${esc(S.form.title)}"></div>
+      <div class="row2">
+        <div class="field"><label class="lbl">from</label><input class="fin" id="f-s" type="date" value="${S.form.startDate}"></div>
+        <div class="field"><label class="lbl">to</label><input class="fin" id="f-e" type="date" value="${S.form.endDate}"></div>
+      </div>
+      <div class="field"><label class="lbl">description</label><textarea class="fta" id="f-d" placeholder="what was this trip about...">${esc(S.form.description)}</textarea></div>
+      <div>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+          <div class="lbl">timeline stops</div>
+          <button class="btn btn-bare" id="add-stop" style="color:#C8A87A;font-size:12px">+ add stop</button>
+        </div>
+        <div class="stops-list" id="slist">${stopsHTML()}</div>
+      </div>
+      <div class="form-acts">
+        <button class="btn btn-ghost" id="fb">back</button>
+        <button class="btn btn-gold" id="fs">save this trip</button>
+      </div>
+    </div></div>`;
+  setupUpload('ufi','ub','photo');
+  $('f-t').oninput=e=>S.form.title=e.target.value;
+  $('f-s').oninput=e=>S.form.startDate=e.target.value;
+  $('f-e').oninput=e=>S.form.endDate=e.target.value;
+  $('f-d').oninput=e=>S.form.description=e.target.value;
+  $('add-stop').onclick=()=>{S.form.stops.push({photo:null,name:'',notes:''});refreshStops();};
+  $('fb').onclick=()=>go('add-template');
+  $('fs').onclick=async()=>{
+    if(!S.form.title.trim()||!S.form.startDate||!S.form.endDate){alert('Trip name and dates required');return;}
+    const e={id:Date.now(),type:'trip',photo:S.form.photo,title:S.form.title,startDate:S.form.startDate,endDate:S.form.endDate,description:S.form.description,stops:S.form.stops};
+    await DB.put(e); S.entries=[e,...S.entries]; afterSave(e.id);
+  };
+  bindStops();
+}
 
+function stopsHTML() {
+  if(!S.form.stops.length) return `<div style="font-size:13px;color:#3A3835;text-align:center;padding:14px">no stops yet</div>`;
+  return S.form.stops.map((s,i)=>`
+    <div class="stop-card">
+      <div class="stop-hdr"><div class="stop-num">stop ${i+1}</div><button class="btn btn-bare" style="color:#C87A7A;font-size:11px" data-del="${i}">remove</button></div>
+      <div class="sphoto" data-spi="${i}">${s.photo?`<img src="${s.photo}">`:'+'}<input type="file" accept="image/*" class="sfi" data-fi="${i}" style="display:none"></div>
+      <div class="field"><label class="lbl">location name</label><input class="fin sname" data-i="${i}" placeholder="e.g. Boonah, The Pyramid..." value="${esc(s.name)}"></div>
+      <div class="field"><label class="lbl">notes</label><textarea class="fta snotes" data-i="${i}" placeholder="what happened here...">${esc(s.notes)}</textarea></div>
+    </div>`).join('');
+}
+
+function refreshStops() { $('slist').innerHTML=stopsHTML(); bindStops(); }
+
+function bindStops() {
+  document.querySelectorAll('[data-del]').forEach(b=>{b.onclick=()=>{S.form.stops.splice(+b.dataset.del,1);refreshStops();};});
+  document.querySelectorAll('.sname').forEach(inp=>{inp.oninput=e=>S.form.stops[+inp.dataset.i].name=e.target.value;});
+  document.querySelectorAll('.snotes').forEach(ta=>{ta.oninput=e=>S.form.stops[+ta.dataset.i].notes=e.target.value;});
+  document.querySelectorAll('[data-spi]').forEach(box=>{
+    const i=+box.dataset.spi; const fi=box.querySelector('.sfi');
+    box.onclick=()=>fi.click();
+    fi.onchange=async e=>{const f=e.target.files[0];if(!f)return;S.form.stops[i].photo=await compress(f);refreshStops();};
+  });
+}
+
+// ━━ ADD MOMENT ━━
+function rAddMoment(el) {
+  el.innerHTML=`
+    <div class="scroll slide-up"><div class="inner">
+      <div><div class="form-title">a moment</div><div class="form-sub">photos say everything</div></div>
+      <div><div class="lbl" style="margin-bottom:12px">photos (up to 6)</div><div class="mphoto-grid" id="mpg">${momentPhotosHTML()}</div></div>
+      <div class="field"><label class="lbl">title (optional)</label><input class="fin" id="f-t" placeholder="name this moment..." value="${esc(S.form.title)}"></div>
+      <div class="field"><label class="lbl">date</label><input class="fin" id="f-d" type="date" value="${S.form.date}"></div>
+      <div class="field"><label class="lbl">caption (optional)</label><textarea class="fta" id="f-c" placeholder="how did it feel?">${esc(S.form.caption)}</textarea></div>
+      <div class="form-acts">
+        <button class="btn btn-ghost" id="fb">back</button>
+        <button class="btn btn-gold" id="fs">save this moment</button>
+      </div>
+    </div></div>`;
+  bindMomentPhotos();
+  $('f-t').oninput=e=>S.form.title=e.target.value;
+  $('f-d').oninput=e=>S.form.date=e.target.value;
+  $('f-c').oninput=e=>S.form.caption=e.target.value;
+  $('fb').onclick=()=>go('add-template');
+  $('fs').onclick=async()=>{
+    if(!S.form.photos.length||!S.form.date){alert('At least one photo and a date required');return;}
+    const e={id:Date.now(),type:'moment',photos:S.form.photos,title:S.form.title,date:S.form.date,caption:S.form.caption};
+    await DB.put(e); S.entries=[e,...S.entries]; afterSave(e.id);
+  };
+}
+
+function momentPhotosHTML() {
+  return [
+    ...S.form.photos.map((p,i)=>`<div class="mphoto-slot"><img src="${p}"><button class="mphoto-del" data-mdi="${i}">×</button></div>`),
+    ...(S.form.photos.length<6?[`<div class="mphoto-add" id="mp-add">+<input type="file" accept="image/*" multiple id="mp-fi" style="display:none"></div>`]:[])
+  ].join('');
+}
+
+function bindMomentPhotos() {
+  document.querySelectorAll('.mphoto-del').forEach(b=>{b.onclick=e=>{e.stopPropagation();S.form.photos.splice(+b.dataset.mdi,1);$('mpg').innerHTML=momentPhotosHTML();bindMomentPhotos();};});
+  const add=$('mp-add');
+  if(add){
+    add.onclick=()=>$('mp-fi').click();
+    $('mp-fi').onchange=async e=>{
+      const files=Array.from(e.target.files).slice(0,6-S.form.photos.length);
+      for(const f of files) S.form.photos.push(await compress(f));
+      $('mpg').innerHTML=momentPhotosHTML(); bindMomentPhotos();
+    };
+  }
+}
+
+// ━━ ADD MEMORY ━━
+function rAddMemory(el) {
+  el.innerHTML=`
+    <div class="scroll slide-up"><div class="inner">
+      <div><div class="form-title">a memory</div><div class="form-sub">write it down before it fades</div></div>
+      <div class="field"><label class="lbl">title</label><input class="fin" id="f-t" placeholder="give it a name..." value="${esc(S.form.title)}"></div>
+      <div class="field"><label class="lbl">date</label><input class="fin" id="f-d" type="date" value="${S.form.date}"></div>
+      <div class="field">
+        <label class="lbl">write it out</label>
+        <textarea id="f-tx" style="background:transparent;border:none;border-bottom:1px solid #1E1C1A;color:#EDE8DF;font-size:15px;padding:10px 0;width:100%;outline:none;font-family:'DM Sans',sans-serif;resize:none;height:240px;font-weight:300;line-height:1.75" placeholder="everything you want to remember...">${esc(S.form.text)}</textarea>
+      </div>
+      <div class="form-acts">
+        <button class="btn btn-ghost" id="fb">back</button>
+        <button class="btn btn-gold" id="fs">save this memory</button>
+      </div>
+    </div></div>`;
+  $('f-t').oninput=e=>S.form.title=e.target.value;
+  $('f-d').oninput=e=>S.form.date=e.target.value;
+  $('f-tx').oninput=e=>S.form.text=e.target.value;
+  $('fb').onclick=()=>go('add-template');
+  $('fs').onclick=async()=>{
+    if(!S.form.title.trim()||!S.form.date){alert('Title and date required');return;}
+    const e={id:Date.now(),type:'memory',title:S.form.title,date:S.form.date,text:S.form.text};
+    await DB.put(e); S.entries=[e,...S.entries]; afterSave(e.id);
+  };
+}
+
+// ━━ SHARED ━━
+function setupUpload(inputId, boxId, field) {
+  const box=$( boxId), inp=$(inputId); if(!box||!inp) return;
+  box.onclick=()=>inp.click();
+  inp.onchange=async e=>{const f=e.target.files[0];if(!f)return;S.form[field]=await compress(f);render();};
+}
+
+function afterSave(id) {
+  const entries = filtered();
+  S.slides = buildSlides(entries);
+  const si = S.slides.findIndex(sl=>sl.entry.id===id);
+  S.si = si>=0?si:0;
+  go('story');
+}
+
+async function deleteEntry() {
+  if(!confirm('Remove this memory?')) return;
+  const id = S.slides[S.si].entry.id;
+  await DB.del(id);
+  S.entries = S.entries.filter(e=>e.id!==id);
+  S.slides = buildSlides(filtered());
+  S.si = Math.max(0,S.si-1);
+  go('home');
+}
+
+// ━━ INIT ━━
+(async()=>{
   render();
+  await DB.init();
+  go('key');
+})();
 </script>
 </body>
 </html>
