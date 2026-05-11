@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -7,654 +8,422 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400;1,600&family=DM+Sans:wght@300;400;500&display=swap">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html,body{height:100%;overflow:hidden;background:#0C0B0A}
-body{font-family:'DM Sans',sans-serif;color:#EDE8DF;display:flex;justify-content:center;align-items:center}
-#app{width:100%;max-width:430px;height:100vh;position:relative;overflow:hidden}
+html,body{height:100%;overflow:hidden;background:#080707}
+body{font-family:'DM Sans',sans-serif;color:#EDE8DF}
+#app{width:100%;height:100vh;position:relative;overflow:hidden;display:flex;justify-content:center}
+#view{width:100%;max-width:430px;height:100vh;position:relative;overflow:hidden}
+
+/* ── SHARED ── */
 .scroll{height:100vh;overflow-y:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
 .scroll::-webkit-scrollbar{display:none}
-.inner{padding:62px 26px 60px;display:flex;flex-direction:column;gap:24px}
-::placeholder{color:#282522}
-input[type="date"]::-webkit-calendar-picker-indicator{filter:invert(0.35)}
-
-/* BUTTONS */
-.btn{border:none;cursor:pointer;font-family:'DM Sans',sans-serif;transition:opacity .15s}
+::placeholder{color:#282420}
+input[type=“date”]::-webkit-calendar-picker-indicator{filter:invert(.35)}
+.btn{border:none;cursor:pointer;font-family:‘DM Sans’,sans-serif;transition:opacity .15s}
 .btn:active{opacity:.7}
-.btn-gold{background:#C8A87A;color:#0D0C0B;font-size:14px;font-weight:600;padding:13px 24px;border-radius:100px}
-.btn-ghost{background:rgba(0,0,0,.5);border:1px solid rgba(237,232,223,.18);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);color:#EDE8DF;font-size:13px;padding:12px 20px;border-radius:100px}
-.btn-bare{background:none;color:#5A5550;font-size:13px;padding:4px 0}
-.btn-icon{background:none;color:rgba(237,232,223,.35);font-size:18px;padding:4px;border:none;cursor:pointer}
-
-/* FIELDS */
+.gold{background:#C8A87A;color:#0C0B0A;font-size:14px;font-weight:600;padding:13px 24px;border-radius:100px}
+.ghost{background:rgba(0,0,0,.5);border:1px solid rgba(237,232,223,.16);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);color:#EDE8DF;font-size:13px;padding:12px 20px;border-radius:100px}
+.bare{background:none;color:#5A5550;font-size:13px;padding:4px 0}
 .field{display:flex;flex-direction:column;gap:8px}
-.lbl{font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:#4A4845}
-.fin,.fta{background:transparent;border:none;border-bottom:1px solid #1E1C1A;color:#EDE8DF;font-size:15px;padding:10px 0;width:100%;outline:none;font-family:'DM Sans',sans-serif;font-weight:300}
-.fta{resize:none;height:80px}
+.lbl{font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:#484440}
+.fin,.fta{background:transparent;border:none;border-bottom:1px solid #1A1816;color:#EDE8DF;font-size:15px;padding:10px 0;width:100%;outline:none;font-family:‘DM Sans’,sans-serif;font-weight:300}
+.fta{resize:none;height:82px}
 .row2{display:flex;gap:16px}.row2 .field{flex:1}
-
-/* UPLOAD */
-.ubox{width:100%;background:#111009;border:1px dashed #222;border-radius:14px;overflow:hidden;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;color:#2A2826;position:relative}
+.ubox{width:100%;background:#0F0D0B;border:1px dashed #1E1B18;border-radius:14px;overflow:hidden;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;color:#2A2623;position:relative}
 .ubox img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-.ubox-cover{aspect-ratio:4/5}
 .uico{font-size:24px;position:relative;z-index:1}
 .utxt{font-size:12px;letter-spacing:.5px;position:relative;z-index:1}
+.ubox-tall{aspect-ratio:4/5}
+.inner{padding:62px 26px 60px;display:flex;flex-direction:column;gap:24px}
+.form-head{font-family:‘Lora’,serif;font-size:22px;font-style:italic}
+.form-sub{font-size:13px;color:#4A4540;font-weight:300;margin-top:4px}
+.form-acts{display:flex;gap:10px;padding-top:4px}
+.form-acts .ghost{flex:1}.form-acts .gold{flex:2}
+.fade{animation:fi .22s ease}
+.up{animation:su .25s ease}
+@keyframes fi{from{opacity:0}to{opacity:1}}
+@keyframes su{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
 
-/* KEY */
+/* ── KEY ── */
 .key-wrap{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:36px;height:100vh;padding:52px;text-align:center}
-.key-title{font-family:'Lora',serif;font-size:32px;font-style:italic;line-height:1.3;color:#EDE8DF}
-.key-sub{font-size:13px;color:#4A4845;line-height:1.7;font-weight:300;margin-top:-18px}
-.key-in{background:transparent;border:none;border-bottom:1px solid #1E1C1A;color:#EDE8DF;font-size:38px;padding:10px 0;width:100%;outline:none;font-family:'DM Sans',sans-serif;font-weight:300;text-align:center;letter-spacing:12px}
+.key-title{font-family:‘Lora’,serif;font-size:34px;font-style:italic;line-height:1.3}
+.key-sub{font-size:13px;color:#484440;line-height:1.7;font-weight:300;margin-top:-18px}
+.key-in{background:transparent;border:none;border-bottom:1px solid #1A1816;color:#EDE8DF;font-size:40px;padding:10px 0;width:100%;outline:none;font-family:‘DM Sans’,sans-serif;font-weight:300;text-align:center;letter-spacing:14px}
 .key-err{font-size:12px;color:#C87A7A;min-height:16px;text-align:center}
 
-/* HOME */
-.home-wrap{height:100vh;display:flex;flex-direction:column}
-.home-hdr{padding:56px 22px 14px;display:flex;align-items:flex-end;justify-content:space-between;flex-shrink:0}
-.home-title{font-family:'Lora',serif;font-size:26px;font-style:italic}
-.home-count{font-size:12px;color:#4A4845;margin-bottom:3px}
-.filters{padding:0 22px 14px;display:flex;gap:8px;overflow-x:auto;flex-shrink:0;scrollbar-width:none}
-.filters::-webkit-scrollbar{display:none}
-.chip{padding:7px 16px;border-radius:100px;border:1px solid #1E1C1A;background:transparent;color:#4A4845;font-size:12px;cursor:pointer;font-family:'DM Sans',sans-serif;white-space:nowrap;transition:all .2s;flex-shrink:0}
-.chip.on{border-color:#C8A87A;color:#C8A87A;background:rgba(200,168,122,.08)}
-.grid{flex:1;overflow-y:auto;padding:2px 16px 100px;display:grid;grid-template-columns:1fr 1fr;gap:10px;align-content:start;scrollbar-width:none}
-.grid::-webkit-scrollbar{display:none}
+/* ── CONSTELLATION ── */
+.constellation{position:absolute;inset:0;overflow:hidden;background:#080707}
+canvas#stars{position:absolute;inset:0;pointer-events:none}
+.dot-wrap{position:absolute;inset:0;overflow:hidden}
+.dot{position:absolute;cursor:pointer;transform:translate(-50%,-50%);display:flex;align-items:center;justify-content:center;transition:transform .2s}
+.dot:active{transform:translate(-50%,-50%) scale(.85)}
+.dot-inner{border-radius:50%;transition:box-shadow .3s,transform .3s}
+.dot.day .dot-inner{width:10px;height:10px;background:#C8A87A;box-shadow:0 0 8px 2px rgba(200,168,122,.5)}
+.dot.trip .dot-inner{width:13px;height:13px;background:#A8C8C0;box-shadow:0 0 10px 3px rgba(168,200,192,.5)}
+.dot.moment .dot-inner{width:9px;height:9px;background:#C8A8C0;box-shadow:0 0 8px 2px rgba(200,168,192,.5)}
+.dot.memory .dot-inner{width:8px;height:8px;background:#A0A8C8;box-shadow:0 0 6px 2px rgba(160,168,200,.45)}
+.dot:hover .dot-inner{transform:scale(1.7);box-shadow:0 0 18px 6px rgba(255,255,255,.25)}
+.dot-photo{position:absolute;width:52px;height:52px;border-radius:50%;object-fit:cover;opacity:0;transition:opacity .3s;pointer-events:none;border:1.5px solid rgba(255,255,255,.12)}
+.dot:hover .dot-photo{opacity:1}
+.dot-label{position:absolute;bottom:-22px;left:50%;transform:translateX(-50%);font-size:10px;color:rgba(237,232,223,.4);white-space:nowrap;pointer-events:none;letter-spacing:.5px;opacity:0;transition:opacity .3s}
+.dot:hover .dot-label{opacity:1}
+.const-hdr{position:absolute;top:0;left:0;right:0;padding:18px 20px 0;display:flex;align-items:center;justify-content:space-between;z-index:10;pointer-events:none}
+.const-title{font-family:‘Lora’,serif;font-size:18px;font-style:italic;color:rgba(237,232,223,.5)}
+.const-count{font-size:11px;color:rgba(237,232,223,.3);letter-spacing:1px}
+.const-btns{position:absolute;bottom:28px;right:20px;display:flex;flex-direction:column;gap:10px;z-index:10}
+.const-add{width:52px;height:52px;border-radius:50%;background:#C8A87A;border:none;cursor:pointer;font-size:22px;color:#0C0B0A;box-shadow:0 4px 20px rgba(200,168,122,.4);display:flex;align-items:center;justify-content:center;transition:transform .15s}
+.const-add:active{transform:scale(.88)}
+.const-lock{width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.const-empty{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;text-align:center;pointer-events:none}
+.const-empty-icon{font-size:32px;opacity:.15}
+.const-empty-txt{font-size:14px;color:#3A3530;line-height:1.7}
 
-/* CARDS */
-.card{border-radius:14px;overflow:hidden;cursor:pointer;position:relative;aspect-ratio:3/4;background:#111009}
-.card-wide{grid-column:1/-1;aspect-ratio:16/9}
-.card img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-.card-grad{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.88) 0%,transparent 55%)}
-.card-body{position:absolute;bottom:0;left:0;right:0;padding:14px 14px 13px}
-.card-badge{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:rgba(237,232,223,.45);margin-bottom:4px;display:block}
-.card-title{font-family:'Lora',serif;font-size:15px;font-weight:600;color:#F5F0E8;line-height:1.2;margin-bottom:3px}
-.card-date{font-size:11px;color:rgba(237,232,223,.45);font-weight:300}
-.card-no-photo{display:flex;align-items:center;justify-content:center;height:100%;color:#1E1C1A;font-size:32px}
-.card-text-preview{position:absolute;inset:0;padding:18px 16px;display:flex;flex-direction:column;justify-content:flex-end}
-.card-text-snip{font-size:12px;color:rgba(237,232,223,.55);line-height:1.5;font-weight:300;overflow:hidden;display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical}
+/* ── MEMORY PAGE ── */
+.mem-page{position:absolute;inset:0;overflow-y:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;background:#080707}
+.mem-page::-webkit-scrollbar{display:none}
+.mem-hero{width:100%;aspect-ratio:4/5;position:relative;overflow:hidden;background:#111009;flex-shrink:0}
+.mem-hero img{width:100%;height:100%;object-fit:cover;display:block}
+.mem-hero-grad{position:absolute;bottom:0;left:0;right:0;height:55%;background:linear-gradient(to top,#080707 0%,transparent 100%);pointer-events:none}
+.mem-hero-overlay{position:absolute;bottom:0;left:0;right:0;padding:28px 24px 24px}
+.mem-back{position:absolute;top:16px;left:16px;width:36px;height:36px;border-radius:50%;background:rgba(0,0,0,.5);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:none;cursor:pointer;color:rgba(237,232,223,.7);font-size:16px;display:flex;align-items:center;justify-content:center;z-index:10}
+.mem-badge{font-size:9px;letter-spacing:2.5px;text-transform:uppercase;color:rgba(237,232,223,.4);margin-bottom:8px}
+.mem-title{font-family:‘Lora’,serif;font-size:32px;font-weight:600;line-height:1.2;color:#F5F0E8;margin-bottom:6px}
+.mem-date{font-size:12px;letter-spacing:2px;text-transform:uppercase;color:#C8A87A}
+.mem-body{padding:28px 24px 80px;display:flex;flex-direction:column;gap:32px}
+.mem-caption{font-size:16px;line-height:1.75;color:rgba(237,232,223,.75);font-weight:300}
+.mem-text-full{font-size:16px;line-height:1.85;color:rgba(237,232,223,.8);font-weight:300;white-space:pre-wrap}
+.mem-section-lbl{font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:#484440;margin-bottom:14px}
+.mem-photos{display:grid;gap:8px}
+.mem-photos-1{grid-template-columns:1fr}
+.mem-photos-2{grid-template-columns:1fr 1fr}
+.mem-photos-3{grid-template-columns:1fr 1fr;grid-template-rows:auto auto}
+.mem-photo{border-radius:12px;overflow:hidden;background:#111009}
+.mem-photo img{width:100%;display:block;object-fit:cover}
+.mem-photo-tall{aspect-ratio:3/4}
+.mem-photo-sq{aspect-ratio:1}
+.mem-photo-wide{aspect-ratio:16/9}
+.mem-photos-3 .mem-photo:first-child{grid-column:1/-1;aspect-ratio:16/9}
+.mem-photos-1 .mem-photo{aspect-ratio:4/5}
+.mem-no-photo{width:100%;aspect-ratio:4/5;background:#0F0D0B;border-radius:12px;display:flex;align-items:center;justify-content:center;color:#1E1B18;font-size:40px}
 
-/* FAB */
-.fab{position:fixed;bottom:28px;right:calc(50% - 215px + 22px);width:58px;height:58px;border-radius:50%;background:#C8A87A;border:none;cursor:pointer;font-size:26px;color:#0C0B0A;box-shadow:0 4px 24px rgba(200,168,122,.35);z-index:20;transition:transform .15s,box-shadow .15s}
-.fab:active{transform:scale(.9);box-shadow:0 2px 12px rgba(200,168,122,.25)}
-@media(max-width:430px){.fab{right:22px}}
-.empty-state{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;height:60vh;text-align:center;padding:40px;grid-column:1/-1}
-.empty-icon{font-size:38px;opacity:.2}
-.empty-txt{font-size:14px;color:#4A4845;line-height:1.7}
+/* TRIP STOPS */
+.stop-item{display:flex;flex-direction:column;gap:12px;padding:20px;background:#0F0D0B;border-radius:16px;border:1px solid #1A1816}
+.stop-num-lbl{font-size:9px;letter-spacing:2.5px;text-transform:uppercase;color:#484440}
+.stop-name-txt{font-family:‘Lora’,serif;font-size:20px;font-weight:600;color:#EDE8DF;line-height:1.2}
+.stop-notes-txt{font-size:14px;line-height:1.65;color:rgba(237,232,223,.65);font-weight:300}
+.stop-photo-view{width:100%;aspect-ratio:16/9;border-radius:12px;overflow:hidden;background:#111009}
+.stop-photo-view img{width:100%;height:100%;object-fit:cover;display:block}
 
-/* TEMPLATE */
+/* MOMENT collage on mem page */
+.moment-collage{display:grid;gap:6px;border-radius:14px;overflow:hidden}
+.mc-1{grid-template-columns:1fr}
+.mc-2{grid-template-columns:1fr 1fr}
+.mc-3{grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr}
+.mc-4{grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr}
+.mc-cell{overflow:hidden;background:#111009;aspect-ratio:1}
+.mc-3 .mc-cell:first-child{grid-row:1/3;aspect-ratio:auto}
+.mc-cell img{width:100%;height:100%;object-fit:cover;display:block}
+
+.mem-del{background:none;border:1px solid rgba(200,120,120,.25);color:rgba(200,120,120,.6);font-size:12px;padding:10px 20px;border-radius:100px;cursor:pointer;font-family:‘DM Sans’,sans-serif;align-self:flex-start}
+.mem-del:hover{border-color:rgba(200,120,120,.5);color:rgba(200,120,120,.9)}
+
+/* ── TEMPLATE ── */
 .tmpl-wrap{display:flex;flex-direction:column;justify-content:center;gap:22px;height:100vh;padding:48px 26px}
-.tmpl-head{font-family:'Lora',serif;font-size:24px;font-style:italic}
-.tmpl-sub{font-size:13px;color:#4A4845;font-weight:300;margin-top:-10px}
+.tmpl-head{font-family:‘Lora’,serif;font-size:24px;font-style:italic}
 .tmpl-list{display:flex;flex-direction:column;gap:10px}
-.tmpl-card{padding:18px 20px;border-radius:16px;border:1px solid #1A1815;cursor:pointer;display:flex;align-items:center;gap:16px;background:#0F0D0B;transition:border-color .2s,background .2s}
-.tmpl-card:hover,.tmpl-card:active{border-color:#C8A87A;background:#151210}
-.tmpl-icon{font-size:26px;width:34px;text-align:center}
+.tmpl-card{padding:18px 20px;border-radius:16px;border:1px solid #181512;cursor:pointer;display:flex;align-items:center;gap:16px;background:#0D0B09;transition:border-color .2s}
+.tmpl-card:hover,.tmpl-card:active{border-color:#C8A87A}
+.tmpl-icon{font-size:24px;width:32px;text-align:center}
 .tmpl-name{font-size:15px;font-weight:500;margin-bottom:2px}
-.tmpl-desc{font-size:12px;color:#4A4845;font-weight:300;line-height:1.35}
+.tmpl-desc{font-size:12px;color:#4A4540;font-weight:300;line-height:1.35}
 
-/* STORY */
-.story{position:absolute;inset:0;transition:opacity .18s ease}
-.story-bg{position:absolute;inset:0;background:#0C0B0A}
-.story-bg img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-.story-gt{position:absolute;top:0;left:0;right:0;height:160px;background:linear-gradient(to bottom,rgba(0,0,0,.75) 0%,transparent 100%);pointer-events:none;z-index:2}
-.story-gb{position:absolute;bottom:0;left:0;right:0;height:62%;background:linear-gradient(to top,rgba(0,0,0,.96) 0%,rgba(0,0,0,.5) 42%,transparent 100%);pointer-events:none;z-index:2}
-.prog{position:absolute;top:12px;left:12px;right:12px;display:flex;gap:3px;z-index:10}
-.pseg{flex:1;height:2px;border-radius:1px;background:rgba(255,255,255,.25);overflow:hidden;cursor:pointer}
-.pfill{height:100%;border-radius:1px;background:rgba(255,255,255,.9);width:0}
-.pseg.past .pfill,.pseg.curr .pfill{width:100%}
-.story-top{position:absolute;top:24px;left:14px;right:14px;display:flex;align-items:center;justify-content:space-between;z-index:10}
-.story-badge{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.45)}
-.story-info{position:absolute;bottom:90px;left:24px;right:24px;z-index:5}
-.story-super{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:5px}
-.story-date{font-size:11px;letter-spacing:2.5px;text-transform:uppercase;color:#C8A87A;margin-bottom:9px}
-.story-title{font-family:'Lora',serif;font-size:30px;font-weight:600;line-height:1.2;color:#F5F0E8;margin-bottom:10px}
-.story-cap{font-size:14px;line-height:1.65;color:rgba(237,232,223,.7);font-weight:300}
-.story-mem-body{position:absolute;inset:0;overflow-y:auto;padding:100px 28px 100px}
-.story-mem-text{font-size:16px;line-height:1.85;color:rgba(237,232,223,.82);font-weight:300;white-space:pre-wrap}
-.tap-l,.tap-r{position:absolute;top:58px;bottom:82px;width:38%;z-index:8;cursor:pointer}
-.tap-l{left:0}.tap-r{right:0}
-.story-acts{position:absolute;bottom:24px;left:24px;right:24px;display:flex;gap:8px;z-index:10}
-.story-acts .btn-ghost{flex:1;font-size:12px;padding:11px 12px}
-.story-acts .btn-gold{flex:1;font-size:12px;padding:11px 12px}
-
-/* COLLAGE */
-.collage{position:absolute;inset:0;display:grid;gap:2px}
-.collage-1{grid-template-columns:1fr}
-.collage-2{grid-template-columns:1fr 1fr}
-.collage-3{grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr}
-.collage-4{grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr}
-.ci{overflow:hidden;background:#111009}
-.ci img{width:100%;height:100%;object-fit:cover}
-
-/* STOPS */
+/* ── STOPS ADD FORM ── */
 .stops-list{display:flex;flex-direction:column;gap:14px}
-.stop-card{background:#0F0D0B;border:1px solid #1A1815;border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:14px}
+.stop-card{background:#0D0B09;border:1px solid #181512;border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:14px}
 .stop-hdr{display:flex;align-items:center;justify-content:space-between}
-.stop-num{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#4A4845}
-.sphoto{width:80px;height:80px;border-radius:10px;background:#0C0B0A;border:1px dashed #1E1C1A;overflow:hidden;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#2A2826;font-size:20px;position:relative;flex-shrink:0}
+.stop-num{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#484440}
+.sphoto{width:80px;height:80px;border-radius:10px;background:#0C0A08;border:1px dashed #1A1816;overflow:hidden;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#2A2623;font-size:20px;position:relative;flex-shrink:0}
 .sphoto img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 
-/* MOMENT PHOTOS */
+/* MOMENT PHOTOS FORM */
 .mphoto-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
-.mphoto-slot{aspect-ratio:1;border-radius:10px;overflow:hidden;background:#111009;position:relative}
+.mphoto-slot{aspect-ratio:1;border-radius:10px;overflow:hidden;background:#0F0D0B;position:relative}
 .mphoto-slot img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-.mphoto-del{position:absolute;top:4px;right:4px;background:rgba(0,0,0,.65);border-radius:50%;width:20px;height:20px;display:flex;align-items:center;justify-content:center;font-size:12px;color:#fff;cursor:pointer;z-index:2;border:none;font-family:'DM Sans',sans-serif;line-height:1}
-.mphoto-add{aspect-ratio:1;border-radius:10px;border:1px dashed #222;background:#111009;display:flex;align-items:center;justify-content:center;color:#2A2826;cursor:pointer;font-size:22px}
-
-/* FORM HEADER */
-.form-title{font-family:'Lora',serif;font-size:22px;font-style:italic}
-.form-sub{font-size:13px;color:#4A4845;font-weight:300;margin-top:4px}
-.form-acts{display:flex;gap:10px;padding-top:4px}
-.form-acts .btn-ghost{flex:1}
-.form-acts .btn-gold{flex:2}
-
-/* ANIMATIONS */
-.fade-in{animation:fi .22s ease}
-.slide-up{animation:su .25s ease}
-@keyframes fi{from{opacity:0}to{opacity:1}}
-@keyframes su{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+.mphoto-del{position:absolute;top:4px;right:4px;background:rgba(0,0,0,.7);border-radius:50%;width:20px;height:20px;display:flex;align-items:center;justify-content:center;font-size:12px;color:#fff;cursor:pointer;z-index:2;border:none;font-family:‘DM Sans’,sans-serif;line-height:1}
+.mphoto-add{aspect-ratio:1;border-radius:10px;border:1px dashed #1E1B18;background:#0F0D0B;display:flex;align-items:center;justify-content:center;color:#2A2623;cursor:pointer;font-size:22px}
 </style>
+
 </head>
 <body>
-<div id="app"></div>
+<div id="app"><div id="view"></div></div>
 <script>
-// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-// INDEXEDDB
-// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-const DB = {
-  db: null,
-  init() {
-    return new Promise((ok, fail) => {
-      const req = indexedDB.open('best-days-v2', 1);
-      req.onupgradeneeded = e => {
-        const d = e.target.result;
-        if (!d.objectStoreNames.contains('entries'))  d.createObjectStore('entries',  { keyPath: 'id' });
-        if (!d.objectStoreNames.contains('settings')) d.createObjectStore('settings', { keyPath: 'k' });
-      };
-      req.onsuccess = e => { this.db = e.target.result; ok(); };
-      req.onerror   = () => fail(req.error);
-    });
-  },
-  tx(store, mode) { return this.db.transaction(store, mode).objectStore(store); },
-  getAll()  { return new Promise((ok,f) => { const r=this.tx('entries','readonly').getAll(); r.onsuccess=()=>ok(r.result||[]); r.onerror=()=>f(r.error); }); },
-  put(e)    { return new Promise((ok,f) => { const t=this.db.transaction('entries','readwrite'); t.objectStore('entries').put(e); t.oncomplete=ok; t.onerror=()=>f(t.error); }); },
-  del(id)   { return new Promise((ok,f) => { const t=this.db.transaction('entries','readwrite'); t.objectStore('entries').delete(id); t.oncomplete=ok; t.onerror=()=>f(t.error); }); },
-  getSetting(k) { return new Promise(ok => { try { const r=this.tx('settings','readonly').get(k); r.onsuccess=()=>ok(r.result?.v); r.onerror=()=>ok(null); } catch(_){ok(null);} }); },
-  setSetting(k,v){ return new Promise((ok,f) => { const t=this.db.transaction('settings','readwrite'); t.objectStore('settings').put({k,v}); t.oncomplete=ok; t.onerror=()=>f(t.error); }); },
+// ━━ INDEXEDDB ━━
+const DB={
+  db:null,
+  init(){return new Promise((ok,fail)=>{const r=indexedDB.open('bd-v3',1);r.onupgradeneeded=e=>{const d=e.target.result;if(!d.objectStoreNames.contains('entries'))d.createObjectStore('entries',{keyPath:'id'});if(!d.objectStoreNames.contains('meta'))d.createObjectStore('meta',{keyPath:'k'});};r.onsuccess=e=>{this.db=e.target.result;ok();};r.onerror=()=>fail(r.error);})},
+  tx(s,m){return this.db.transaction(s,m).objectStore(s)},
+  getAll(){return new Promise((ok,f)=>{const r=this.tx('entries','readonly').getAll();r.onsuccess=()=>ok(r.result||[]);r.onerror=()=>f(r.error)})},
+  put(e){return new Promise((ok,f)=>{const t=this.db.transaction('entries','readwrite');t.objectStore('entries').put(e);t.oncomplete=ok;t.onerror=()=>f(t.error)})},
+  del(id){return new Promise((ok,f)=>{const t=this.db.transaction('entries','readwrite');t.objectStore('entries').delete(id);t.oncomplete=ok;t.onerror=()=>f(t.error)})},
+  getMeta(k){return new Promise(ok=>{try{const r=this.tx('meta','readonly').get(k);r.onsuccess=()=>ok(r.result?.v);r.onerror=()=>ok(null)}catch{ok(null)}})},
+  setMeta(k,v){return new Promise((ok,f)=>{const t=this.db.transaction('meta','readwrite');t.objectStore('meta').put({k,v});t.oncomplete=ok;t.onerror=()=>f(t.error)})},
 };
 
-// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-// IMAGE COMPRESSION
-// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-function compress(file, maxW=1200, q=0.82) {
-  return new Promise(ok => {
-    const rd = new FileReader();
-    rd.onload = e => {
-      const img = new Image();
-      img.onload = () => {
-        const ratio = Math.min(maxW/img.width, maxW/img.height, 1);
-        const c = document.createElement('canvas');
-        c.width = img.width*ratio; c.height = img.height*ratio;
-        c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
-        ok(c.toDataURL('image/jpeg', q));
-      };
-      img.src = e.target.result;
-    };
-    rd.readAsDataURL(file);
-  });
+// ━━ COMPRESS ━━
+function compress(file,maxW=1200,q=0.82){return new Promise(ok=>{const rd=new FileReader();rd.onload=e=>{const img=new Image();img.onload=()=>{const ratio=Math.min(maxW/img.width,maxW/img.height,1);const c=document.createElement(‘canvas’);c.width=img.width*ratio;c.height=img.height*ratio;c.getContext(‘2d’).drawImage(img,0,0,c.width,c.height);ok(c.toDataURL(‘image/jpeg’,q));};img.src=e.target.result;};rd.readAsDataURL(file);})}
+
+// ━━ STATE ━━
+const S={view:‘loading’,entries:[],form:null,openEntry:null};
+const blank=(t=‘day’)=>({type:t,photo:null,photos:[],title:’’,caption:’’,date:’’,startDate:’’,endDate:’’,description:’’,text:’’,stops:[]});
+
+// ━━ UTILS ━━
+const $=id=>document.getElementById(id);
+const V=()=>document.getElementById(‘view’);
+const esc=s=>(s||’’).replace(/&/g,’&’).replace(/</g,’<’).replace(/>/g,’>’).replace(/”/g,’"’);
+const fmt=d=>d?new Date(d+‘T12:00:00’).toLocaleDateString(‘en-AU’,{day:‘numeric’,month:‘long’,year:‘numeric’}):’’;
+const fmtS=d=>d?new Date(d+‘T12:00:00’).toLocaleDateString(‘en-AU’,{day:‘numeric’,month:‘short’}):’’;
+const dateLabel=e=>e.type===‘trip’?`${fmtS(e.startDate)} → ${fmtS(e.endDate)}`:fmt(e.date);
+async function hashKey(k){const buf=await crypto.subtle.digest(‘SHA-256’,new TextEncoder().encode(k+’:bd-salt’));return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,‘0’)).join(’’)}
+const go=v=>{S.view=v;render()};
+
+// ━━ RENDER ━━
+function render(){
+const el=V();el.innerHTML=’’;
+({loading:rLoad,key:rKey,home:rHome,memory:rMemory,‘add-template’:rTemplate,‘add-day’:rAddDay,‘add-trip’:rAddTrip,‘add-moment’:rAddMoment,‘add-memory’:rAddMemory}[S.view]||rLoad)(el);
 }
-
-// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-// STATE
-// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-const S = { view:'loading', entries:[], filter:'all', slides:[], si:0, fading:false, form:null };
-const blankForm = (type='day') => ({ type, photo:null, photos:[], title:'', caption:'', date:'', startDate:'', endDate:'', description:'', text:'', stops:[] });
-
-// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-// UTILS
-// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-const $ = id => document.getElementById(id);
-const app = () => document.getElementById('app');
-const fmt  = d => d ? new Date(d+'T12:00:00').toLocaleDateString('en-AU',{day:'numeric',month:'long',year:'numeric'}) : '';
-const fmtS = d => d ? new Date(d+'T12:00:00').toLocaleDateString('en-AU',{day:'numeric',month:'short'}) : '';
-const esc  = s => (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-
-async function hashKey(k) {
-  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(k+':bd-2025'));
-  return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
-}
-
-function dateLabel(e) {
-  if (e.type==='trip') return `${fmtS(e.startDate)} → ${fmtS(e.endDate)}`;
-  return fmt(e.date);
-}
-
-function buildSlides(entries) {
-  const slides = [];
-  entries.forEach(e => {
-    if (e.type==='trip') {
-      slides.push({ kind:'trip-cover', entry:e });
-      (e.stops||[]).forEach((stop,i) => slides.push({ kind:'trip-stop', entry:e, stop, si:i }));
-    } else {
-      slides.push({ kind:e.type, entry:e });
-    }
-  });
-  return slides;
-}
-
-function filtered() { return S.filter==='all' ? S.entries : S.entries.filter(e=>e.type===S.filter); }
-
-function go(view) { S.view=view; render(); }
-
-// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-// RENDER
-// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-function render() {
-  const el = app(); el.innerHTML = '';
-  ({ loading:rLoading, key:rKey, home:rHome, story:rStory,
-     'add-template':rTemplate, 'add-day':rAddDay, 'add-trip':rAddTrip,
-     'add-moment':rAddMoment, 'add-memory':rAddMemory
-  }[S.view] || rLoading)(el);
-}
-
-function rLoading(el) {
-  el.innerHTML='<div style="display:flex;align-items:center;justify-content:center;height:100vh;font-size:13px;color:#3A3835">loading...</div>';
-}
+function rLoad(el){el.innerHTML=’<div style="display:flex;align-items:center;justify-content:center;height:100vh;font-size:13px;color:#383430">loading…</div>’}
 
 // ━━ KEY ━━
-function rKey(el) {
-  el.innerHTML=`
-    <div class="key-wrap fade-in">
-      <div class="key-title">the best days<br>of your life</div>
-      <div class="key-sub">enter your key to continue</div>
-      <div style="width:100%">
-        <input id="kf" class="key-in" type="password" placeholder="····" autocomplete="off" spellcheck="false">
-        <div id="ke" class="key-err" style="margin-top:10px"></div>
-      </div>
-      <button class="btn btn-gold" id="kb" style="width:100%;padding:15px 0">enter</button>
-    </div>`;
-  $('kf').focus();
-  $('kf').onkeydown = e => { if(e.key==='Enter') submitKey($('kf').value); };
-  $('kb').onclick = () => submitKey($('kf').value);
+function rKey(el){
+el.innerHTML=`<div class="key-wrap fade"><div class="key-title">the best days<br>of your life</div><div class="key-sub">enter your key to continue</div><div style="width:100%"><input id="kf" class="key-in" type="password" placeholder="····" autocomplete="off" spellcheck="false"><div id="ke" class="key-err" style="margin-top:10px"></div></div><button class="btn gold" id="kb" style="width:100%;padding:15px 0">enter</button></div>`;
+$(‘kf’).focus();
+$(‘kf’).onkeydown=e=>{if(e.key===‘Enter’)submitKey($(‘kf’).value)};
+$(‘kb’).onclick=()=>submitKey($(‘kf’).value);
+}
+async function submitKey(raw){
+raw=(raw||’’).trim();if(!raw)return;
+go(‘loading’);
+const hash=await hashKey(raw),stored=await DB.getMeta(‘keyHash’);
+if(!stored)await DB.setMeta(‘keyHash’,hash);
+else if(stored!==hash){S.view=‘key’;render();setTimeout(()=>{if($(‘ke’))$(‘ke’).textContent=‘wrong key’;if($(‘kf’)){$(‘kf’).value=’’;$(‘kf’).focus()}},40);return}
+S.entries=(await DB.getAll()).sort((a,b)=>(b.date||b.startDate||’’).localeCompare(a.date||a.startDate||’’));
+go(‘home’);
 }
 
-async function submitKey(raw) {
-  raw = (raw||'').trim(); if(!raw) return;
-  go('loading');
-  const hash = await hashKey(raw);
-  const stored = await DB.getSetting('keyHash');
-  if (!stored) { await DB.setSetting('keyHash', hash); }
-  else if (stored !== hash) {
-    S.view='key'; render();
-    setTimeout(()=>{ if($('ke')) $('ke').textContent='wrong key'; if($('kf')){$('kf').value='';$('kf').focus();} },40);
-    return;
-  }
-  S.entries = (await DB.getAll()).sort((a,b)=>(b.date||b.startDate||'').localeCompare(a.date||a.startDate||''));
-  go('home');
+// ━━ CONSTELLATION HOME ━━
+function rHome(el){
+el.innerHTML=` <div class="constellation fade"> <canvas id="stars"></canvas> <div class="dot-wrap" id="dot-wrap"></div> <div class="const-hdr"> <div class="const-title">best days</div> <div class="const-count">${S.entries.length} ${S.entries.length===1?'memory':'memories'}</div> </div> ${S.entries.length===0?`<div class="const-empty"><div class="const-empty-icon">✦</div><div class="const-empty-txt">your best days<br>will appear here</div></div>`:''} <div class="const-btns"> <button class="const-add btn" id="fab">+</button> <button class="const-lock btn" id="btn-lock">🔒</button> </div> </div>`;
+
+$(‘btn-lock’).onclick=()=>{S.entries=[];go(‘key’)};
+$(‘fab’).onclick=()=>{S.form=blank();go(‘add-template’)};
+
+// Draw background stars
+const canvas=$(‘stars’);
+const rect=el.getBoundingClientRect();
+canvas.width=rect.width||430;canvas.height=rect.height||window.innerHeight;
+const ctx=canvas.getContext(‘2d’);
+for(let i=0;i<120;i++){
+const x=Math.random()*canvas.width,y=Math.random()*canvas.height,r=Math.random()*0.8+0.2;
+ctx.beginPath();ctx.arc(x,y,r,0,Math.PI*2);
+ctx.fillStyle=`rgba(237,232,223,${Math.random()*0.25+0.03})`;ctx.fill();
 }
 
-// ━━ HOME ━━
-function rHome(el) {
-  const entries = filtered();
-  el.innerHTML=`
-    <div class="home-wrap fade-in">
-      <div class="home-hdr">
-        <div>
-          <div class="home-title">best days</div>
-          <div class="home-count">${S.entries.length} ${S.entries.length===1?'memory':'memories'}</div>
-        </div>
-        <button class="btn-icon" id="btn-lock">🔒</button>
-      </div>
-      <div class="filters">
-        ${['all','day','trip','moment','memory'].map(f=>`<button class="btn chip${S.filter===f?' on':''}" data-f="${f}">${f==='all'?'All':f[0].toUpperCase()+f.slice(1)+'s'}</button>`).join('')}
-      </div>
-      <div class="grid" id="grid">
-        ${entries.length ? entries.map((e,i)=>cardHTML(e,i)).join('') : `<div class="empty-state"><div class="empty-icon">◈</div><div class="empty-txt">your best days<br>will live here</div></div>`}
-      </div>
-    </div>
-    <button class="fab" id="fab">+</button>`;
-  $('btn-lock').onclick=()=>{S.entries=[];S.filter='all';go('key');};
-  $('fab').onclick=()=>{S.form=blankForm();go('add-template');};
-  el.querySelectorAll('.chip').forEach(c=>{ c.onclick=()=>{S.filter=c.dataset.f;rHome(el);}; });
-  el.querySelectorAll('.card').forEach((c,i)=>{ c.onclick=()=>openStory(entries,i); });
+// Place dots
+const wrap=$(‘dot-wrap’);
+const w=canvas.width,h=canvas.height;
+const placed=[];
+const MIN_DIST=62;
+
+S.entries.forEach((entry,i)=>{
+let x,y,tries=0;
+do{x=0.1+Math.random()*0.8;y=0.12+Math.random()*0.76;tries++;}
+while(tries<200&&placed.some(p=>Math.hypot((x-p[0])*w,(y-p[1])*h)<MIN_DIST));
+placed.push([x,y]);
+
+```
+const dot=document.createElement('div');
+dot.className=`dot ${entry.type}`;
+dot.style.left=`${x*100}%`;dot.style.top=`${y*100}%`;
+const cover=entry.photo||entry.photos?.[0]||entry.stops?.find(s=>s.photo)?.photo||null;
+dot.innerHTML=`
+  <div class="dot-inner"></div>
+  ${cover?`<img class="dot-photo" src="${cover}" style="transform:translate(-50%,-50%);left:50%;top:50%;position:absolute">`:''}
+  <div class="dot-label">${esc(entry.title||'untitled')}</div>`;
+dot.onclick=()=>{S.openEntry=entry;go('memory')};
+wrap.appendChild(dot);
+```
+
+});
 }
 
-function cardHTML(e,i) {
-  const isWide = e.type==='trip';
-  const cover = e.photo || e.photos?.[0] || e.stops?.find(s=>s.photo)?.photo || null;
-  const date = dateLabel(e);
+// ━━ MEMORY PAGE ━━
+function rMemory(el){
+const e=S.openEntry;if(!e){go(‘home’);return}
+const cover=e.photo||e.photos?.[0]||e.stops?.find(s=>s.photo)?.photo||null;
+const badgeMap={day:‘Day’,trip:‘Trip’,moment:‘Moment’,memory:‘Memory’};
+const colorMap={day:’#C8A87A’,trip:’#A8C8C0’,moment:’#C8A8C0’,memory:’#A0A8C8’};
+const accentColor=colorMap[e.type]||’#C8A87A’;
 
-  if (e.type==='memory' && !cover) {
-    return `<div class="card${isWide?' card-wide':''}" data-i="${i}">
-      <div class="card-no-photo" style="background:#0F0D0B"></div>
-      <div class="card-text-preview">
-        <span class="card-badge">memory</span>
-        <div class="card-title" style="margin-bottom:6px">${esc(e.title)}</div>
-        <div class="card-text-snip">${esc(e.text||'')}</div>
-        <div class="card-date" style="margin-top:8px">${date}</div>
-      </div>
-    </div>`;
-  }
+let heroHTML=’’,bodyHTML=’’;
 
-  if (e.type==='moment' && (e.photos||[]).length > 1) {
-    const photos=e.photos.slice(0,4); const n=photos.length;
-    const grid=n===2?'grid-template-columns:1fr 1fr':n===3?'grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr':'grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr';
-    return `<div class="card${isWide?' card-wide':''}" data-i="${i}">
-      <div style="position:absolute;inset:0;display:grid;gap:2px;${grid}">
-        ${photos.map((p,pi)=>`<div style="overflow:hidden;background:#111009;${n===3&&pi===0?'grid-row:1/3':''}"><img src="${p}" style="width:100%;height:100%;object-fit:cover" loading="lazy"></div>`).join('')}
-      </div>
-      <div class="card-grad"></div>
-      <div class="card-body"><span class="card-badge">moment</span><div class="card-title">${esc(e.title||'untitled')}</div><div class="card-date">${date}</div></div>
-    </div>`;
-  }
-
-  return `<div class="card${isWide?' card-wide':''}" data-i="${i}">
-    ${cover?`<img src="${cover}" loading="lazy">`:`<div class="card-no-photo">◈</div>`}
-    <div class="card-grad"></div>
-    <div class="card-body"><span class="card-badge">${e.type}</span><div class="card-title">${esc(e.title||'untitled')}</div><div class="card-date">${date}</div></div>
-  </div>`;
+// ── Hero
+if(cover){
+heroHTML=`<div class="mem-hero"><img src="${cover}"><div class="mem-hero-grad"></div><div class="mem-hero-overlay"><div class="mem-badge" style="color:${accentColor}">${badgeMap[e.type]}</div><div class="mem-title">${esc(e.title||'untitled')}</div><div class="mem-date" style="color:${accentColor}">${dateLabel(e)}</div></div></div>`;
+} else {
+heroHTML=`<div style="padding:100px 24px 28px"><div class="mem-badge" style="color:${accentColor};margin-bottom:8px">${badgeMap[e.type]}</div><div class="mem-title">${esc(e.title||'untitled')}</div><div class="mem-date" style="color:${accentColor};margin-top:8px">${dateLabel(e)}</div></div>`;
 }
 
-function openStory(entries, idx) {
-  S.slides = buildSlides(entries);
-  const target = entries[idx];
-  const found = S.slides.findIndex(sl=>sl.entry.id===target.id);
-  S.si = found >= 0 ? found : 0;
-  go('story');
+// ── Body sections
+const sections=[];
+
+if(e.type===‘day’){
+if(e.caption) sections.push(`<div><div class="mem-caption">${esc(e.caption)}</div></div>`);
+const extraPhotos=(e.photos||[]).slice(1);
+if(extraPhotos.length){
+const n=Math.min(extraPhotos.length,4);
+const cls=[’’,‘mc-1’,‘mc-2’,‘mc-3’,‘mc-4’][n];
+const cells=extraPhotos.slice(0,4).map((p,i)=>`<div class="mc-cell" style="${n===3&&i===0?'aspect-ratio:auto':''}"><img src="${p}"></div>`).join(’’);
+sections.push(`<div><div class="mem-section-lbl">more photos</div><div class="moment-collage ${cls}" style="border-radius:14px;overflow:hidden">${cells}</div></div>`);
+}
 }
 
-// ━━ STORY ━━
-function rStory(el) {
-  const total = S.slides.length;
-  const slide = S.slides[S.si];
-  const { entry } = slide;
-  let bg='', extra='', info='';
-
-  if (slide.kind==='day') {
-    bg = entry.photo ? `<img src="${entry.photo}">` : '';
-    info = `<div class="story-date">${fmt(entry.date)}</div><div class="story-title">${esc(entry.title||'untitled')}</div>${entry.caption?`<div class="story-cap">${esc(entry.caption)}</div>`:''}`;
-  } else if (slide.kind==='trip-cover') {
-    bg = entry.photo ? `<img src="${entry.photo}">` : '';
-    info = `<div class="story-date">${fmtS(entry.startDate)} → ${fmtS(entry.endDate)}</div><div class="story-title">${esc(entry.title||'untitled')}</div>${entry.description?`<div class="story-cap">${esc(entry.description)}</div>`:''}`;
-  } else if (slide.kind==='trip-stop') {
-    bg = slide.stop.photo ? `<img src="${slide.stop.photo}">` : '';
-    info = `<div class="story-super">${esc(entry.title)}</div><div class="story-date">stop ${slide.si+1} of ${entry.stops.length}</div><div class="story-title">${esc(slide.stop.name||'stop')}</div>${slide.stop.notes?`<div class="story-cap">${esc(slide.stop.notes)}</div>`:''}`;
-  } else if (slide.kind==='moment') {
-    const photos = entry.photos||[];
-    if (photos.length===1) { bg=`<img src="${photos[0]}">`; }
-    else if (photos.length>1) {
-      const n=Math.min(photos.length,4);
-      const grid=n===2?'grid-template-columns:1fr 1fr':n===3?'grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr':'grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr';
-      extra=`<div class="collage" style="${grid}">
-        ${photos.slice(0,4).map((p,pi)=>`<div class="ci" style="${n===3&&pi===0?'grid-row:1/3':''}"><img src="${p}"></div>`).join('')}
-      </div>`;
-    }
-    info = `<div class="story-date">${fmt(entry.date)}</div>${entry.title?`<div class="story-title">${esc(entry.title)}</div>`:''}${entry.caption?`<div class="story-cap">${esc(entry.caption)}</div>`:''}`;
-  } else if (slide.kind==='memory') {
-    extra = `<div class="story-mem-body"><div class="story-date" style="position:relative;z-index:1">${fmt(entry.date)}</div><div class="story-title" style="margin-top:6px;margin-bottom:18px;font-size:26px;position:relative;z-index:1">${esc(entry.title||'untitled')}</div><div class="story-mem-text">${esc(entry.text||'')}</div></div>`;
-    info = '';
-  }
-
-  const badgeMap = {'day':'DAY','trip-cover':'TRIP','trip-stop':'TRIP / STOP','moment':'MOMENT','memory':'MEMORY'};
-
-  el.innerHTML=`
-    <div class="story fade-in">
-      <div class="story-bg">${bg}</div>
-      ${extra}
-      ${slide.kind!=='memory'?'<div class="story-gt"></div><div class="story-gb"></div>':''}
-      <div class="prog">
-        ${S.slides.map((_,i)=>`<div class="pseg${i<S.si?' past':i===S.si?' curr':''}" data-i="${i}"><div class="pfill"></div></div>`).join('')}
-      </div>
-      <div class="story-top">
-        <span class="story-badge">${badgeMap[slide.kind]||''}</span>
-        <button class="btn-icon" id="s-lock">🔒</button>
-      </div>
-      ${info?`<div class="story-info">${info}</div>`:''}
-      ${S.si>0?'<div class="tap-l" id="tap-l"></div>':''}
-      ${S.si<total-1?'<div class="tap-r" id="tap-r"></div>':''}
-      <div class="story-acts">
-        <button class="btn btn-ghost" id="s-back">← back</button>
-        <button class="btn btn-ghost" id="s-del">remove</button>
-        <button class="btn btn-gold" id="s-add">+ add</button>
-      </div>
-    </div>`;
-
-  $('s-lock').onclick=()=>{S.entries=[];S.filter='all';go('key');};
-  $('s-back').onclick=()=>go('home');
-  $('s-del').onclick=deleteEntry;
-  $('s-add').onclick=()=>{S.form=blankForm();go('add-template');};
-  $('tap-l')?.addEventListener('click',()=>nav(-1));
-  $('tap-r')?.addEventListener('click',()=>nav(1));
-  el.querySelectorAll('.pseg').forEach(seg=>{
-    seg.onclick=e=>{e.stopPropagation();const i=parseInt(seg.dataset.i);if(i!==S.si){S.si=i;rStory(el);}};
-  });
-  let tx=0;
-  el.querySelector('.story').addEventListener('touchstart',e=>{tx=e.touches[0].clientX;},{passive:true});
-  el.querySelector('.story').addEventListener('touchend',e=>{const dx=e.changedTouches[0].clientX-tx;if(Math.abs(dx)>48)nav(dx<0?1:-1);},{passive:true});
-  document.onkeydown=e=>{if(e.key==='ArrowLeft')nav(-1);if(e.key==='ArrowRight')nav(1);if(e.key==='Escape')go('home');};
+if(e.type===‘trip’){
+if(e.description) sections.push(`<div><div class="mem-caption">${esc(e.description)}</div></div>`);
+if((e.stops||[]).length){
+const stopsHTML=e.stops.map((s,i)=>` <div class="stop-item"> <div class="stop-num-lbl">stop ${i+1}</div> ${s.name?`<div class="stop-name-txt">${esc(s.name)}</div>`:''} ${s.photo?`<div class="stop-photo-view"><img src="${s.photo}"></div>`:''} ${s.notes?`<div class="stop-notes-txt">${esc(s.notes)}</div>`:''} </div>`).join(’’);
+sections.push(`<div><div class="mem-section-lbl">timeline</div><div style="display:flex;flex-direction:column;gap:12px">${stopsHTML}</div></div>`);
+}
 }
 
-function nav(dir) {
-  if(S.fading) return;
-  const n=S.si+dir;
-  if(n<0||n>=S.slides.length) return;
-  S.fading=true;
-  const s=app().querySelector('.story'); if(s) s.style.opacity='0';
-  setTimeout(()=>{S.si=n;S.fading=false;rStory(app());},160);
+if(e.type===‘moment’){
+const photos=e.photos||[];
+if(photos.length){
+const n=Math.min(photos.length,4);
+const cls=[’’,‘mc-1’,‘mc-2’,‘mc-3’,‘mc-4’][n];
+const cells=photos.slice(0,4).map((p,i)=>`<div class="mc-cell" style="${n===3&&i===0?'aspect-ratio:auto':''}"><img src="${p}"></div>`).join(’’);
+sections.push(`<div><div class="moment-collage ${cls}" style="border-radius:14px;overflow:hidden">${cells}</div></div>`);
+}
+if(e.caption) sections.push(`<div><div class="mem-caption">${esc(e.caption)}</div></div>`);
+// Extra photos beyond 4
+if((e.photos||[]).length>4){
+const extra=e.photos.slice(4);
+const extraHTML=extra.map(p=>`<div class="mem-photo mem-photo-sq"><img src="${p}"></div>`).join(’’);
+sections.push(`<div><div class="mem-section-lbl">more photos</div><div class="mem-photos mem-photos-2">${extraHTML}</div></div>`);
+}
+}
+
+if(e.type===‘memory’){
+if(e.text) sections.push(`<div><div class="mem-text-full">${esc(e.text)}</div></div>`);
+}
+
+sections.push(`<button class="mem-del btn" id="mem-del">remove this memory</button>`);
+bodyHTML=`<div class="mem-body">${sections.join('')}</div>`;
+
+el.innerHTML=` <div class="mem-page fade"> <button class="mem-back btn" id="mem-back">←</button> ${heroHTML} ${bodyHTML} </div>`;
+
+$(‘mem-back’).onclick=()=>go(‘home’);
+$(‘mem-del’).onclick=async()=>{
+if(!confirm(‘Remove this memory?’))return;
+await DB.del(e.id);
+S.entries=S.entries.filter(x=>x.id!==e.id);
+go(‘home’);
+};
 }
 
 // ━━ TEMPLATE ━━
-function rTemplate(el) {
-  el.innerHTML=`
-    <div class="tmpl-wrap slide-up">
-      <div class="tmpl-head">what kind of memory?</div>
-      <div class="tmpl-sub">choose a template</div>
-      <div class="tmpl-list">
-        ${[
-          {t:'day',    i:'📷',n:'Day',    d:'A single standout day — one photo, date and a caption'},
-          {t:'trip',   i:'🗺️',n:'Trip',   d:'A multi-day journey with a timeline of stops'},
-          {t:'moment', i:'✨',n:'Moment', d:'Just a vibe — up to 6 photos, minimal text'},
-          {t:'memory', i:'📝',n:'Memory', d:'A written memory, no photo needed'},
-        ].map(x=>`<div class="tmpl-card" data-t="${x.t}"><div class="tmpl-icon">${x.i}</div><div><div class="tmpl-name">${x.n}</div><div class="tmpl-desc">${x.d}</div></div></div>`).join('')}
-      </div>
-      <button class="btn btn-bare" id="tb">← back</button>
-    </div>`;
-  el.querySelectorAll('.tmpl-card').forEach(c=>{c.onclick=()=>{S.form=blankForm(c.dataset.t);go('add-'+c.dataset.t);};});
-  $('tb').onclick=()=>go('home');
+function rTemplate(el){
+el.innerHTML=` <div class="scroll"><div class="inner up" style="justify-content:center;min-height:100vh"> <div><div class="tmpl-head">what kind of memory?</div><div style="font-size:13px;color:#4A4540;font-weight:300;margin-top:6px">choose a template</div></div> <div class="tmpl-list"> ${[{t:'day',i:'📷',n:'Day',d:'A standout day — photo, date, caption'},{t:'trip',i:'🗺️',n:'Trip',d:'Multi-day journey with a timeline of stops'},{t:'moment',i:'✨',n:'Moment',d:'Just vibes — up to 6 photos, minimal text'},{t:'memory',i:'📝',n:'Memory',d:'Written memory, no photo needed'}].map(x=>`<div class="tmpl-card" data-t="${x.t}"><div class="tmpl-icon">${x.i}</div><div><div class="tmpl-name">${x.n}</div><div class="tmpl-desc">${x.d}</div></div></div>`).join('')} </div> <button class="btn bare" id="tb" style="text-align:center">← back</button> </div></div>`;
+el.querySelectorAll(’.tmpl-card’).forEach(c=>{c.onclick=()=>{S.form=blank(c.dataset.t);go(‘add-’+c.dataset.t)}});
+$(‘tb’).onclick=()=>go(‘home’);
 }
 
 // ━━ ADD DAY ━━
-function rAddDay(el) {
-  el.innerHTML=`
-    <div class="scroll slide-up"><div class="inner">
-      <div><div class="form-title">a new day</div><div class="form-sub">something worth keeping</div></div>
-      <div class="ubox ubox-cover" id="ub"><div class="uico">+</div><div class="utxt">add a photo</div><input type="file" accept="image/*" id="ufi" style="display:none">${S.form.photo?`<img src="${S.form.photo}">`:''}
-      </div>
-      <div class="field"><label class="lbl">title</label><input class="fin" id="f-t" placeholder="what made this day?" value="${esc(S.form.title)}"></div>
-      <div class="field"><label class="lbl">date</label><input class="fin" id="f-d" type="date" value="${S.form.date}"></div>
-      <div class="field"><label class="lbl">caption</label><textarea class="fta" id="f-c" placeholder="anything you want to remember...">${esc(S.form.caption)}</textarea></div>
-      <div class="form-acts">
-        <button class="btn btn-ghost" id="fb">back</button>
-        <button class="btn btn-gold" id="fs">save this day</button>
-      </div>
-    </div></div>`;
-  setupUpload('ufi','ub','photo');
-  $('f-t').oninput=e=>S.form.title=e.target.value;
-  $('f-d').oninput=e=>S.form.date=e.target.value;
-  $('f-c').oninput=e=>S.form.caption=e.target.value;
-  $('fb').onclick=()=>go('add-template');
-  $('fs').onclick=async()=>{
-    if(!S.form.title.trim()||!S.form.date){alert('Title and date required');return;}
-    const e={id:Date.now(),type:'day',photo:S.form.photo,title:S.form.title,date:S.form.date,caption:S.form.caption};
-    await DB.put(e); S.entries=[e,...S.entries]; afterSave(e.id);
-  };
+function rAddDay(el){
+el.innerHTML=`<div class="scroll"><div class="inner up"><div><div class="form-head">a new day</div><div class="form-sub">something worth keeping</div></div><div><div class="lbl" style="margin-bottom:12px">photos (up to 6)</div><div class="mphoto-grid" id="mpg">${dayPhotosHTML()}</div></div><div class="field"><label class="lbl">title</label><input class="fin" id="ft" placeholder="what made this day?" value="${esc(S.form.title)}"></div><div class="field"><label class="lbl">date</label><input class="fin" id="fd" type="date" value="${S.form.date}"></div><div class="field"><label class="lbl">caption</label><textarea class="fta" id="fc" placeholder="anything you want to remember...">${esc(S.form.caption)}</textarea></div><div class="form-acts"><button class="btn ghost" id="fb">back</button><button class="btn gold" id="fs">save this day</button></div></div></div>`;
+bindDayPhotos();
+$(‘ft’).oninput=e=>S.form.title=e.target.value;
+$(‘fd’).oninput=e=>S.form.date=e.target.value;
+$(‘fc’).oninput=e=>S.form.caption=e.target.value;
+$(‘fb’).onclick=()=>go(‘add-template’);
+$(‘fs’).onclick=async()=>{
+if(!S.form.title.trim()||!S.form.date){alert(‘Title and date required’);return}
+const e={id:Date.now(),type:‘day’,photos:S.form.photos,photo:S.form.photos[0]||null,title:S.form.title,date:S.form.date,caption:S.form.caption};
+await DB.put(e);S.entries=[e,…S.entries];S.openEntry=e;go(‘memory’);
+};
+}
+function dayPhotosHTML(){return[…S.form.photos.map((p,i)=>`<div class="mphoto-slot"><img src="${p}"><button class="mphoto-del" data-ddi="${i}">×</button></div>`),…(S.form.photos.length<6?[`<div class="mphoto-add" id="dp-add">+<input type="file" accept="image/*" multiple id="dp-fi" style="display:none"></div>`]:[])].join(’’)}
+function bindDayPhotos(){
+document.querySelectorAll(’[data-ddi]’).forEach(b=>{b.onclick=e=>{e.stopPropagation();S.form.photos.splice(+b.dataset.ddi,1);$(‘mpg’).innerHTML=dayPhotosHTML();bindDayPhotos()}});
+const add=$(‘dp-add’);
+if(add){add.onclick=()=>$(‘dp-fi’).click();$(‘dp-fi’).onchange=async e=>{const files=Array.from(e.target.files).slice(0,6-S.form.photos.length);for(const f of files)S.form.photos.push(await compress(f));$(‘mpg’).innerHTML=dayPhotosHTML();bindDayPhotos()}}
 }
 
 // ━━ ADD TRIP ━━
-function rAddTrip(el) {
-  el.innerHTML=`
-    <div class="scroll slide-up"><div class="inner">
-      <div><div class="form-title">a new trip</div><div class="form-sub">a journey across multiple days</div></div>
-      <div class="ubox ubox-cover" id="ub"><div class="uico">+</div><div class="utxt">cover photo</div><input type="file" accept="image/*" id="ufi" style="display:none">${S.form.photo?`<img src="${S.form.photo}">`:''}
-      </div>
-      <div class="field"><label class="lbl">trip name</label><input class="fin" id="f-t" placeholder="where did you go?" value="${esc(S.form.title)}"></div>
-      <div class="row2">
-        <div class="field"><label class="lbl">from</label><input class="fin" id="f-s" type="date" value="${S.form.startDate}"></div>
-        <div class="field"><label class="lbl">to</label><input class="fin" id="f-e" type="date" value="${S.form.endDate}"></div>
-      </div>
-      <div class="field"><label class="lbl">description</label><textarea class="fta" id="f-d" placeholder="what was this trip about...">${esc(S.form.description)}</textarea></div>
-      <div>
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
-          <div class="lbl">timeline stops</div>
-          <button class="btn btn-bare" id="add-stop" style="color:#C8A87A;font-size:12px">+ add stop</button>
-        </div>
-        <div class="stops-list" id="slist">${stopsHTML()}</div>
-      </div>
-      <div class="form-acts">
-        <button class="btn btn-ghost" id="fb">back</button>
-        <button class="btn btn-gold" id="fs">save this trip</button>
-      </div>
-    </div></div>`;
-  setupUpload('ufi','ub','photo');
-  $('f-t').oninput=e=>S.form.title=e.target.value;
-  $('f-s').oninput=e=>S.form.startDate=e.target.value;
-  $('f-e').oninput=e=>S.form.endDate=e.target.value;
-  $('f-d').oninput=e=>S.form.description=e.target.value;
-  $('add-stop').onclick=()=>{S.form.stops.push({photo:null,name:'',notes:''});refreshStops();};
-  $('fb').onclick=()=>go('add-template');
-  $('fs').onclick=async()=>{
-    if(!S.form.title.trim()||!S.form.startDate||!S.form.endDate){alert('Trip name and dates required');return;}
-    const e={id:Date.now(),type:'trip',photo:S.form.photo,title:S.form.title,startDate:S.form.startDate,endDate:S.form.endDate,description:S.form.description,stops:S.form.stops};
-    await DB.put(e); S.entries=[e,...S.entries]; afterSave(e.id);
-  };
-  bindStops();
+function rAddTrip(el){
+el.innerHTML=`<div class="scroll"><div class="inner up"><div><div class="form-head">a new trip</div><div class="form-sub">a journey across multiple days</div></div><div class="ubox ubox-tall" id="ub">${S.form.photo?`<img src="${S.form.photo}">`:'<div class="uico">+</div><div class="utxt">cover photo</div>'}<input type="file" accept="image/*" id="ufi" style="display:none"></div><div class="field"><label class="lbl">trip name</label><input class="fin" id="ft" placeholder="where did you go?" value="${esc(S.form.title)}"></div><div class="row2"><div class="field"><label class="lbl">from</label><input class="fin" id="fs2" type="date" value="${S.form.startDate}"></div><div class="field"><label class="lbl">to</label><input class="fin" id="fe" type="date" value="${S.form.endDate}"></div></div><div class="field"><label class="lbl">description</label><textarea class="fta" id="fd" placeholder="what was this trip about...">${esc(S.form.description)}</textarea></div><div><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px"><div class="lbl">timeline stops</div><button class="btn bare" id="add-stop" style="color:#C8A87A;font-size:12px">+ add stop</button></div><div class="stops-list" id="slist">${stopsHTML()}</div></div><div class="form-acts"><button class="btn ghost" id="fb">back</button><button class="btn gold" id="fs">save this trip</button></div></div></div>`;
+setupUpload(‘ufi’,‘ub’,‘photo’);
+$(‘ft’).oninput=e=>S.form.title=e.target.value;
+$(‘fs2’).oninput=e=>S.form.startDate=e.target.value;
+$(‘fe’).oninput=e=>S.form.endDate=e.target.value;
+$(‘fd’).oninput=e=>S.form.description=e.target.value;
+$(‘add-stop’).onclick=()=>{S.form.stops.push({photo:null,name:’’,notes:’’});refreshStops()};
+$(‘fb’).onclick=()=>go(‘add-template’);
+$(‘fs’).onclick=async()=>{
+if(!S.form.title.trim()||!S.form.startDate||!S.form.endDate){alert(‘Trip name and dates required’);return}
+const e={id:Date.now(),type:‘trip’,photo:S.form.photo,title:S.form.title,startDate:S.form.startDate,endDate:S.form.endDate,description:S.form.description,stops:S.form.stops};
+await DB.put(e);S.entries=[e,…S.entries];S.openEntry=e;go(‘memory’);
+};
+bindStops();
 }
-
-function stopsHTML() {
-  if(!S.form.stops.length) return `<div style="font-size:13px;color:#3A3835;text-align:center;padding:14px">no stops yet</div>`;
-  return S.form.stops.map((s,i)=>`
-    <div class="stop-card">
-      <div class="stop-hdr"><div class="stop-num">stop ${i+1}</div><button class="btn btn-bare" style="color:#C87A7A;font-size:11px" data-del="${i}">remove</button></div>
-      <div class="sphoto" data-spi="${i}">${s.photo?`<img src="${s.photo}">`:'+'}<input type="file" accept="image/*" class="sfi" data-fi="${i}" style="display:none"></div>
-      <div class="field"><label class="lbl">location name</label><input class="fin sname" data-i="${i}" placeholder="e.g. Boonah, The Pyramid..." value="${esc(s.name)}"></div>
-      <div class="field"><label class="lbl">notes</label><textarea class="fta snotes" data-i="${i}" placeholder="what happened here...">${esc(s.notes)}</textarea></div>
-    </div>`).join('');
-}
-
-function refreshStops() { $('slist').innerHTML=stopsHTML(); bindStops(); }
-
-function bindStops() {
-  document.querySelectorAll('[data-del]').forEach(b=>{b.onclick=()=>{S.form.stops.splice(+b.dataset.del,1);refreshStops();};});
-  document.querySelectorAll('.sname').forEach(inp=>{inp.oninput=e=>S.form.stops[+inp.dataset.i].name=e.target.value;});
-  document.querySelectorAll('.snotes').forEach(ta=>{ta.oninput=e=>S.form.stops[+ta.dataset.i].notes=e.target.value;});
-  document.querySelectorAll('[data-spi]').forEach(box=>{
-    const i=+box.dataset.spi; const fi=box.querySelector('.sfi');
-    box.onclick=()=>fi.click();
-    fi.onchange=async e=>{const f=e.target.files[0];if(!f)return;S.form.stops[i].photo=await compress(f);refreshStops();};
-  });
+function stopsHTML(){if(!S.form.stops.length)return`<div style="font-size:13px;color:#383430;text-align:center;padding:14px">no stops yet</div>`;return S.form.stops.map((s,i)=>`<div class="stop-card"><div class="stop-hdr"><div class="stop-num">stop ${i+1}</div><button class="btn bare" style="color:#C87A7A;font-size:11px" data-del="${i}">remove</button></div><div class="sphoto" data-spi="${i}">${s.photo?`<img src="${s.photo}">`:'+'}<input type="file" accept="image/*" class="sfi" data-fi="${i}" style="display:none"></div><div class="field"><label class="lbl">location name</label><input class="fin sname" data-i="${i}" placeholder="e.g. Boonah, The Pyramid..." value="${esc(s.name)}"></div><div class="field"><label class="lbl">notes</label><textarea class="fta snotes" data-i="${i}" placeholder="what happened here...">${esc(s.notes)}</textarea></div></div>`).join(’’)}
+function refreshStops(){$(‘slist’).innerHTML=stopsHTML();bindStops()}
+function bindStops(){
+document.querySelectorAll(’[data-del]’).forEach(b=>{b.onclick=()=>{S.form.stops.splice(+b.dataset.del,1);refreshStops()}});
+document.querySelectorAll(’.sname’).forEach(i=>{i.oninput=e=>S.form.stops[+i.dataset.i].name=e.target.value});
+document.querySelectorAll(’.snotes’).forEach(t=>{t.oninput=e=>S.form.stops[+t.dataset.i].notes=e.target.value});
+document.querySelectorAll(’[data-spi]’).forEach(box=>{const i=+box.dataset.spi,fi=box.querySelector(’.sfi’);box.onclick=()=>fi.click();fi.onchange=async e=>{const f=e.target.files[0];if(!f)return;S.form.stops[i].photo=await compress(f);refreshStops()}});
 }
 
 // ━━ ADD MOMENT ━━
-function rAddMoment(el) {
-  el.innerHTML=`
-    <div class="scroll slide-up"><div class="inner">
-      <div><div class="form-title">a moment</div><div class="form-sub">photos say everything</div></div>
-      <div><div class="lbl" style="margin-bottom:12px">photos (up to 6)</div><div class="mphoto-grid" id="mpg">${momentPhotosHTML()}</div></div>
-      <div class="field"><label class="lbl">title (optional)</label><input class="fin" id="f-t" placeholder="name this moment..." value="${esc(S.form.title)}"></div>
-      <div class="field"><label class="lbl">date</label><input class="fin" id="f-d" type="date" value="${S.form.date}"></div>
-      <div class="field"><label class="lbl">caption (optional)</label><textarea class="fta" id="f-c" placeholder="how did it feel?">${esc(S.form.caption)}</textarea></div>
-      <div class="form-acts">
-        <button class="btn btn-ghost" id="fb">back</button>
-        <button class="btn btn-gold" id="fs">save this moment</button>
-      </div>
-    </div></div>`;
-  bindMomentPhotos();
-  $('f-t').oninput=e=>S.form.title=e.target.value;
-  $('f-d').oninput=e=>S.form.date=e.target.value;
-  $('f-c').oninput=e=>S.form.caption=e.target.value;
-  $('fb').onclick=()=>go('add-template');
-  $('fs').onclick=async()=>{
-    if(!S.form.photos.length||!S.form.date){alert('At least one photo and a date required');return;}
-    const e={id:Date.now(),type:'moment',photos:S.form.photos,title:S.form.title,date:S.form.date,caption:S.form.caption};
-    await DB.put(e); S.entries=[e,...S.entries]; afterSave(e.id);
-  };
+function rAddMoment(el){
+el.innerHTML=`<div class="scroll"><div class="inner up"><div><div class="form-head">a moment</div><div class="form-sub">photos say everything</div></div><div><div class="lbl" style="margin-bottom:12px">photos (up to 6)</div><div class="mphoto-grid" id="mpg">${momentPhotosHTML()}</div></div><div class="field"><label class="lbl">title (optional)</label><input class="fin" id="ft" placeholder="name this moment..." value="${esc(S.form.title)}"></div><div class="field"><label class="lbl">date</label><input class="fin" id="fd" type="date" value="${S.form.date}"></div><div class="field"><label class="lbl">caption (optional)</label><textarea class="fta" id="fc" placeholder="how did it feel?">${esc(S.form.caption)}</textarea></div><div class="form-acts"><button class="btn ghost" id="fb">back</button><button class="btn gold" id="fs">save this moment</button></div></div></div>`;
+bindMomentPhotos();
+$(‘ft’).oninput=e=>S.form.title=e.target.value;
+$(‘fd’).oninput=e=>S.form.date=e.target.value;
+$(‘fc’).oninput=e=>S.form.caption=e.target.value;
+$(‘fb’).onclick=()=>go(‘add-template’);
+$(‘fs’).onclick=async()=>{
+if(!S.form.photos.length||!S.form.date){alert(‘At least one photo and date required’);return}
+const e={id:Date.now(),type:‘moment’,photos:S.form.photos,title:S.form.title,date:S.form.date,caption:S.form.caption};
+await DB.put(e);S.entries=[e,…S.entries];S.openEntry=e;go(‘memory’);
+};
 }
-
-function momentPhotosHTML() {
-  return [
-    ...S.form.photos.map((p,i)=>`<div class="mphoto-slot"><img src="${p}"><button class="mphoto-del" data-mdi="${i}">×</button></div>`),
-    ...(S.form.photos.length<6?[`<div class="mphoto-add" id="mp-add">+<input type="file" accept="image/*" multiple id="mp-fi" style="display:none"></div>`]:[])
-  ].join('');
-}
-
-function bindMomentPhotos() {
-  document.querySelectorAll('.mphoto-del').forEach(b=>{b.onclick=e=>{e.stopPropagation();S.form.photos.splice(+b.dataset.mdi,1);$('mpg').innerHTML=momentPhotosHTML();bindMomentPhotos();};});
-  const add=$('mp-add');
-  if(add){
-    add.onclick=()=>$('mp-fi').click();
-    $('mp-fi').onchange=async e=>{
-      const files=Array.from(e.target.files).slice(0,6-S.form.photos.length);
-      for(const f of files) S.form.photos.push(await compress(f));
-      $('mpg').innerHTML=momentPhotosHTML(); bindMomentPhotos();
-    };
-  }
+function momentPhotosHTML(){return[…S.form.photos.map((p,i)=>`<div class="mphoto-slot"><img src="${p}"><button class="mphoto-del" data-mdi="${i}">×</button></div>`),…(S.form.photos.length<6?[`<div class="mphoto-add" id="mp-add">+<input type="file" accept="image/*" multiple id="mp-fi" style="display:none"></div>`]:[])].join(’’)}
+function bindMomentPhotos(){
+document.querySelectorAll(’.mphoto-del’).forEach(b=>{b.onclick=e=>{e.stopPropagation();S.form.photos.splice(+b.dataset.mdi,1);$(‘mpg’).innerHTML=momentPhotosHTML();bindMomentPhotos()}});
+const add=$(‘mp-add’);
+if(add){add.onclick=()=>$(‘mp-fi’).click();$(‘mp-fi’).onchange=async e=>{const files=Array.from(e.target.files).slice(0,6-S.form.photos.length);for(const f of files)S.form.photos.push(await compress(f));$(‘mpg’).innerHTML=momentPhotosHTML();bindMomentPhotos()}}
 }
 
 // ━━ ADD MEMORY ━━
-function rAddMemory(el) {
-  el.innerHTML=`
-    <div class="scroll slide-up"><div class="inner">
-      <div><div class="form-title">a memory</div><div class="form-sub">write it down before it fades</div></div>
-      <div class="field"><label class="lbl">title</label><input class="fin" id="f-t" placeholder="give it a name..." value="${esc(S.form.title)}"></div>
-      <div class="field"><label class="lbl">date</label><input class="fin" id="f-d" type="date" value="${S.form.date}"></div>
-      <div class="field">
-        <label class="lbl">write it out</label>
-        <textarea id="f-tx" style="background:transparent;border:none;border-bottom:1px solid #1E1C1A;color:#EDE8DF;font-size:15px;padding:10px 0;width:100%;outline:none;font-family:'DM Sans',sans-serif;resize:none;height:240px;font-weight:300;line-height:1.75" placeholder="everything you want to remember...">${esc(S.form.text)}</textarea>
-      </div>
-      <div class="form-acts">
-        <button class="btn btn-ghost" id="fb">back</button>
-        <button class="btn btn-gold" id="fs">save this memory</button>
-      </div>
-    </div></div>`;
-  $('f-t').oninput=e=>S.form.title=e.target.value;
-  $('f-d').oninput=e=>S.form.date=e.target.value;
-  $('f-tx').oninput=e=>S.form.text=e.target.value;
-  $('fb').onclick=()=>go('add-template');
-  $('fs').onclick=async()=>{
-    if(!S.form.title.trim()||!S.form.date){alert('Title and date required');return;}
-    const e={id:Date.now(),type:'memory',title:S.form.title,date:S.form.date,text:S.form.text};
-    await DB.put(e); S.entries=[e,...S.entries]; afterSave(e.id);
-  };
+function rAddMemory(el){
+el.innerHTML=`<div class="scroll"><div class="inner up"><div><div class="form-head">a memory</div><div class="form-sub">write it down before it fades</div></div><div class="field"><label class="lbl">title</label><input class="fin" id="ft" placeholder="give it a name..." value="${esc(S.form.title)}"></div><div class="field"><label class="lbl">date</label><input class="fin" id="fd" type="date" value="${S.form.date}"></div><div class="field"><label class="lbl">write it out</label><textarea id="ftx" style="background:transparent;border:none;border-bottom:1px solid #1A1816;color:#EDE8DF;font-size:15px;padding:10px 0;width:100%;outline:none;font-family:'DM Sans',sans-serif;resize:none;height:240px;font-weight:300;line-height:1.75" placeholder="everything you want to remember...">${esc(S.form.text)}</textarea></div><div class="form-acts"><button class="btn ghost" id="fb">back</button><button class="btn gold" id="fs">save this memory</button></div></div></div>`;
+$(‘ft’).oninput=e=>S.form.title=e.target.value;
+$(‘fd’).oninput=e=>S.form.date=e.target.value;
+$(‘ftx’).oninput=e=>S.form.text=e.target.value;
+$(‘fb’).onclick=()=>go(‘add-template’);
+$(‘fs’).onclick=async()=>{
+if(!S.form.title.trim()||!S.form.date){alert(‘Title and date required’);return}
+const e={id:Date.now(),type:‘memory’,title:S.form.title,date:S.form.date,text:S.form.text};
+await DB.put(e);S.entries=[e,…S.entries];S.openEntry=e;go(‘memory’);
+};
 }
 
 // ━━ SHARED ━━
-function setupUpload(inputId, boxId, field) {
-  const box=$( boxId), inp=$(inputId); if(!box||!inp) return;
-  box.onclick=()=>inp.click();
-  inp.onchange=async e=>{const f=e.target.files[0];if(!f)return;S.form[field]=await compress(f);render();};
-}
-
-function afterSave(id) {
-  const entries = filtered();
-  S.slides = buildSlides(entries);
-  const si = S.slides.findIndex(sl=>sl.entry.id===id);
-  S.si = si>=0?si:0;
-  go('story');
-}
-
-async function deleteEntry() {
-  if(!confirm('Remove this memory?')) return;
-  const id = S.slides[S.si].entry.id;
-  await DB.del(id);
-  S.entries = S.entries.filter(e=>e.id!==id);
-  S.slides = buildSlides(filtered());
-  S.si = Math.max(0,S.si-1);
-  go('home');
-}
+function setupUpload(inputId,boxId,field){const box=$(boxId),inp=$(inputId);if(!box||!inp)return;box.onclick=()=>inp.click();inp.onchange=async e=>{const f=e.target.files[0];if(!f)return;S.form[field]=await compress(f);render()}}
 
 // ━━ INIT ━━
-(async()=>{
-  render();
-  await DB.init();
-  go('key');
-})();
+(async()=>{render();await DB.init();go(‘key’)})();
 </script>
+
 </body>
 </html>
